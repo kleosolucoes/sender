@@ -1,0 +1,43 @@
+<!-- MAIN CONTENT SECTION -->
+<div id="wrapper">
+  <div class="content transition animate-panel fadeIn">
+    <div class="row">
+      <div class="col-lg-offset-4 col-lg-4">
+        <div class="hpanel hgreen">
+          <div class="panel-body">
+            <h3><?php echo $responsavel->getNome(); ?></h3>
+            <p><?php echo $responsavel->getTelefone(); ?></p>
+            <p><?php echo $responsavel->getEmail(); ?></p>
+            <p><?php echo $responsavel->getDataNascimento(); ?></p>
+            <p><?php echo $responsavel->getCPF(); ?></p>
+            <div class="text-muted font-bold m-b-xs">Empresa</div>
+            <h3><?php echo $responsavel->getNomeFantasia(); ?></h3>
+            <p><?php echo $responsavel->getRazaoSocial(); ?></p>
+            <p><?php echo $responsavel->getTelefoneEmpresa(); ?></p>
+            <p><?php echo $responsavel->getEmailEmpresa(); ?></p>
+            <p>Lojas: <?php echo $responsavel->getNumeroLojas(); ?></p>
+          </div>
+          <div class="panel-footer contact-footer">
+            <div class="row">
+              <div class="col-md-4">
+                <?php
+                $urlCPF = '/assets/'.$responsavel->getUploadCPF();                       
+                echo $this->botao('Ver CPF', $this->funcaoOnClick('window.open("'.$urlCPF.'", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400")'));
+                ?>
+              </div>
+              <div class="col-md-4">
+                <?php 
+                $urlContratoSocial = '/assets/'.$responsavel->getUploadContratoSocial();
+                echo $this->botao('Ver ContratoSocial', $this->funcaoOnClick('window.open("'.$urlContratoSocial.'", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400")'));
+                ?>
+              </div>
+              <div class="col-md-4">
+                <?php echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/admResponsaveis")'), 2);?>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>   
+    </div>
+  </div>
+</div>

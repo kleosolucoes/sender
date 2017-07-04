@@ -1,0 +1,9 @@
+CREATE TABLE `situacao` (
+  `id` int(1) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(30) NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -1,0 +1,22 @@
+CREATE TABLE `campanha` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(60) DEFAULT NULL,
+  `descricao` varchar(100) DEFAULT NULL,
+  `preco` double(7,2) unsigned DEFAULT NULL,
+  `foto1` varchar(30) DEFAULT NULL,
+  `foto2` varchar(30) NOT NULL,
+  `foto3` varchar(30) NOT NULL,
+  `foto4` varchar(30) NOT NULL,
+  `foto5` varchar(30) NOT NULL,
+  `responsavel_id` int(6) unsigned DEFAULT NULL,
+  `data_criacao` date DEFAULT NULL,
+  `hora_criacao` time DEFAULT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `responsavel_id` (`responsavel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `campanha`
+  ADD CONSTRAINT `fk_campanha_responsavel_id` FOREIGN KEY (`responsavel_id`) REFERENCES `responsavel` (`id`);

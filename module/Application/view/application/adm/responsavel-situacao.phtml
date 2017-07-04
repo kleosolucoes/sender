@@ -1,0 +1,40 @@
+<?php
+
+use Application\Form\KleoForm;
+
+$formulario = $this->formulario;
+$formulario->prepare();
+
+$formulario->setAttribute(KleoForm::stringAction, 'admResponsavelSituacaoFinalizar');
+echo $this->form()->openTag($formulario);
+echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
+echo $this->formHidden($formulario->get(KleoForm::inputId));
+?>
+<div class="register-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="hpanel">
+        <div class="panel-body">
+          <div class='text-center'>
+            <h3>Alterar Situacao</h3>
+          </div>
+           <div class='well'>
+            <p>NomeFantasia: <?php echo $this->responsavel->getNomeFantasia(); ?></p>
+            <p>Responsavel: <?php echo $this->responsavel->getNome(); ?></p>
+            <p>Telefone: <?php echo $this->responsavel->getTelefone(); ?></p>
+            <p>Email: <?php echo $this->responsavel->getEmail(); ?></p>
+          </div>
+          <?php
+          echo $this->inputFormulario(KleoForm::traducaoSituacao, $formulario->get(KleoForm::inputSituacao));
+          ?>
+          <div class="text-center">
+            <?php echo $this->botao('Atualizar', $this->funcaoOnClickSubmeterFormulario()); ?>
+            <?php echo $this->botao('Voltar', $this->funcaoOnClick('mudarPaginaComLoader("/admResponsaveis")'), 2); ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+echo $this->form()->closeTag();

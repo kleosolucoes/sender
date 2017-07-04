@@ -1,0 +1,16 @@
+CREATE TABLE `responsavel_situacao` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `responsavel_id` int(6) unsigned NOT NULL,
+  `situacao_id` int(1) unsigned NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `situacao_id` (`situacao_id`),
+  KEY `responsavel_id` (`responsavel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `responsavel_situacao`
+  ADD CONSTRAINT `fk_responsavel_situacao_situacao_id` FOREIGN KEY (`situacao_id`) REFERENCES `situacao` (`id`),
+  ADD CONSTRAINT `fk_responsavel_situacao_resposavel_id` FOREIGN KEY (`responsavel_id`) REFERENCES `responsavel` (`id`);

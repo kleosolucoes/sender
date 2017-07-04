@@ -1,0 +1,31 @@
+<?php
+
+use Application\Form\KleoForm;
+
+$formulario = $this->formulario;
+$formulario->prepare();
+
+$formulario->setAttribute(KleoForm::stringAction, 'pubLogar');
+echo $this->form()->openTag($formulario);
+echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
+?>
+<div class="login-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-center m-b-md">
+        <h3>Login - ToNoShop.com</h3>
+      </div>
+      <div class="hpanel">
+        <div class="panel-body">
+          <?php
+          echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
+          echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha));
+          echo $this->botao('Logar', $this->funcaoOnClickSubmeterFormulario());
+          ?> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+echo $this->form()->closeTag();

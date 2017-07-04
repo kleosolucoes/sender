@@ -1,0 +1,38 @@
+<?php
+
+use Application\Form\KleoForm;
+
+$formulario = $this->formulario;
+$formulario->prepare();
+
+$formulario->setAttribute(KleoForm::stringAction, '/pubResponsavelSenhaAtualizar');
+echo $this->form()->openTag($formulario);
+echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
+echo $this->formHidden($formulario->get(KleoForm::inputId));
+?>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix signUp">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3>Cadastrar Senha</h3>
+          </div>
+          <div class="panel-body">              
+            <?php
+            echo "<p class='text-center'>Usu&aacute;rio: $this->inputEmail</p>";
+            echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha));
+            echo $this->inputFormulario(KleoForm::traducaoRepetirSenha, $formulario->get(KleoForm::inputRepetirSenha));
+            echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
+            ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php
+echo $this->form()->closeTag();
