@@ -27,6 +27,7 @@ class KleoController extends AbstractActionController {
     const stringId = 'id';
     const stringToken = 'token';
     const stringLogin = 'login';
+    const stringIdResponsavel = 'responsavel_id';
     const controllerPub = 'Application\Controller\Pub';
     const controllerAdm = 'Application\Controller\Adm';
     const rotaPub = 'pub';
@@ -65,7 +66,7 @@ class KleoController extends AbstractActionController {
             $mail->Password = 'Leonardo142857';
             //      $mail->SMTPSecure = 'tls';                            
             $mail->Port = 587;
-            $mail->setFrom('leonardo@circuitodavisao.com.br', 'ToNoShop');
+            $mail->setFrom('leonardo@circuitodavisao.com.br', self::nomeAplicacao);
 
             foreach ($emails as $email) {
                 $mail->addAddress($email);
@@ -131,34 +132,10 @@ class KleoController extends AbstractActionController {
             if ($adaptadorHttp->isUploaded($file) && $adaptadorHttp->isValid($file)) {
                 $extension = substr($info['name'], strrpos($info['name'], '.') + 1);
                 $filename = '';
-
-                if ($file === KleoForm::inputUploadCPF) {
-                    $filename = $entidade->getId() . '_cpf.' . $extension;
-                    $entidade->setUploadCPF($filename);
-                }
-                if ($file === KleoForm::inputUploadContratoSocial) {
-                    $filename = $entidade->getId() . '_contrato_social.' . $extension;
-                    $entidade->setUploadContratoSocial($filename);
-                }
-                if ($file === KleoForm::inputFoto1) {
-                    $filename = $entidade->getId() . '_foto1.' . $extension;
-                    $entidade->setFoto1($filename);
-                }
-                if ($file === KleoForm::inputFoto2) {
-                    $filename = $entidade->getId() . '_foto2.' . $extension;
-                    $entidade->setFoto2($filename);
-                }
-                if ($file === KleoForm::inputFoto3) {
-                    $filename = $entidade->getId() . '_foto3.' . $extension;
-                    $entidade->setFoto3($filename);
-                }
-                if ($file === KleoForm::inputFoto4) {
-                    $filename = $entidade->getId() . '_foto4.' . $extension;
-                    $entidade->setFoto4($filename);
-                }
-                if ($file === KleoForm::inputFoto5) {
-                    $filename = $entidade->getId() . '_foto5.' . $extension;
-                    $entidade->setFoto5($filename);
+             
+                if ($file === KleoForm::inputFoto) {
+                    $filename = $entidade->getId() . '_foto.' . $extension;
+                    $entidade->setFoto($filename);
                 }
 
                 if ($apenasAjustarEntidade) {

@@ -48,13 +48,7 @@ class KleoForm extends Form {
   const inputTitulo = 'inputTitulo';
   const inputDescricao = 'inputDescricao';
   const inputPreco = 'inputPreco';
-  const inputFoto1 = 'inputFoto1';
-  const inputFoto2 = 'inputFoto2';
-  const inputFoto3 = 'inputFoto3';
-  const inputFoto4 = 'inputFoto4';
-  const inputFoto5 = 'inputFoto5';
-  const inputDiaValidade = 'inputDiaValidade';
-  const inputMesValidade = 'inputMesValidade';
+  const inputFoto = 'inputFoto';
 
   const stringClass = 'class';
   const stringClassFormControl = 'form-control';

@@ -5,7 +5,6 @@ namespace Application\Form;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Number;
 use Zend\Form\Element\Email;
-use Zend\Form\Element\Tel;
 
 /**
  * Nome: CadastroResponsavelForm.php
@@ -42,7 +41,7 @@ class CadastroResponsavelForm extends KleoForm {
     );
 
     $this->add(
-      (new Tel())
+      (new Number())
       ->setName(self::inputTelefone)
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,

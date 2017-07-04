@@ -75,7 +75,7 @@ class Module {
 			$response = $e->getResponse();
 			$response->setStatusCode(302);
 			//this is the login screen redirection url
-			$url = $e->getRequest()->getBaseUrl() . '/login';
+			$url = $e->getRequest()->getBaseUrl() . '/pubLogin';
 			$response->getHeaders()->addHeaderLine('Location', $url);
 			$app = $e->getTarget();
 			//dont do anything other - just finish here

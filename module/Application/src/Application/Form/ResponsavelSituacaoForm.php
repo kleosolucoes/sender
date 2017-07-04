@@ -3,6 +3,7 @@
 namespace Application\Form;
 
 use Zend\Form\Element\Select;
+use Application\Model\Entity\Situacao;
 
 /**
  * Nome: ResponsavelSituacaoForm.php
@@ -18,10 +19,8 @@ class ResponsavelSituacaoForm extends KleoForm {
     $inputId = $this->get(self::inputId);
     $inputId->setValue($idResponsavel);
 
-    $situacaoPrimeiroContato = 1;
-    $situacaoRecusado = 5;
-
     $arraySituacoes = [];
+    echo '###'.$idSituacao;
     foreach($todasSituacoes as $situacao){
       $adicionar = false;
       if($situacao->getId() === $idSituacao){
@@ -30,7 +29,7 @@ class ResponsavelSituacaoForm extends KleoForm {
       if($situacao->getId() === ($idSituacao + 1)){
         $adicionar = true;
       }
-      if($situacao->getId() === $situacaoRecusado && $idSituacao === $situacaoPrimeiroContato){
+      if($situacao->getId() === Situacao::recusado && $idSituacao === Situacao::primeiroContato){
         $adicionar = true;
       }
       if($adicionar){

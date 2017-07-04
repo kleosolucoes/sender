@@ -1,36 +1,32 @@
-<?php echo $this->cabecalhoPagina('Listagem de Anuncios', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admAnuncio", 0);'))); ?>  
+<?php echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admCampanha", 0);'))); ?>  
 <div class="content transition animate-panel fadeIn">
   <div class="row">
     <div class="col-lg-12">
       <div class="hpanel">         
         <div class="panel-body">
-          <table id="tabelaAnunciosParaAnalise" class="table table-striped table-bordered table-hover">
+          <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
                 <th>Titulo</th>
-                <th>Descriacao</th>
-                <th>Preço</th>
-                <th>Foto1</th>
-                <th>Foto2</th>
-                <th>Foto3</th>
-                <th>Foto4</th>
-                <th>Foto5</th>
+                <th>Descricao</th>
+                <th>Foto</th>
                 <th>Situacao</th>
               </tr>
             </thead>
             <tbody>
               <?php
-              foreach($this->anuncios as $anuncio){
+              if($this->campanhas){
+                foreach($this->campanhas as $campanha){
+                  echo '<tr>';
+                  echo '<td>'.$campanha->getTitulo(). '</td>';
+                  echo '<td>'.$campanha->getDescricao().'</td>';
+                  echo '<td>'.$campanha->getFoto().'</td>';
+                  echo '<td>'.$campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome().'</td>';
+                  echo '</tr>'; 
+                }
+              }else{
                 echo '<tr>';
-                echo '<td>'.$anuncio->getTitulo(). '</td>';
-                echo '<td>'.$anuncio->getDescricao().'</td>';
-                echo '<td>'.$anuncio->getPreco().'</td>';
-                echo '<td>'.$anuncio->getFoto1().'</td>';
-                echo '<td>'.$anuncio->getFoto2().'</td>';
-                echo '<td>'.$anuncio->getFoto3().'</td>';
-                echo '<td>'.$anuncio->getFoto4().'</td>';
-                echo '<td>'.$anuncio->getFoto5().'</td>';
-                echo '<td>'.$anuncio->getAnuncioSituacaoAtivo()->getSituacao()->getNome().'</td>';
+                echo '<td colspan="4" class="text-center">'.'Sem campanhas cadastradas!'.'</td>';
                 echo '</tr>'; 
               }
               ?>                                
@@ -41,11 +37,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  window.onload = initPage;
-
-  function initPage() {
-    $('#tabelaAnunciosParaAnalise').dataTable();
-  }
-</script>
