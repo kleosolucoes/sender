@@ -28,17 +28,6 @@ class CadastroResponsavelForm extends KleoForm {
     ])
     );
 
-    $this->add(
-      (new Number())
-      ->setName(self::inputDDD)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputDDD,
-      self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
-
-    ])
-    );
 
     $this->add(
       (new Number())
@@ -76,28 +65,5 @@ class CadastroResponsavelForm extends KleoForm {
     ])
     );
 
-    $this->add(
-      (new Text())
-      ->setName(self::inputNomeFantasia)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputNomeFantasia,
-      self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
-
-    ])
-    );
-
-    $this->add(
-      (new Number())
-      ->setName(self::inputCNPJ)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputCNPJ,
-      self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
-
-    ])
-    ); 
   }
 }

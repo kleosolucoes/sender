@@ -1,8 +1,10 @@
-CREATE TABLE `campanha` (
+CREATE TABLE IF NOT EXISTS `campanha` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(60) DEFAULT NULL,
-  `descricao` varchar(100) DEFAULT NULL,
-  `foto` varchar(30) DEFAULT NULL,
+  `nome` varchar(60) DEFAULT NULL,
+  `data_envio` date DEFAULT NULL,
+  `foto_perfil` varchar(60) DEFAULT NULL,
+  `upload` varchar(60) NOT NULL,
+  `mensagem` varchar(300) DEFAULT NULL,
   `responsavel_id` int(6) unsigned DEFAULT NULL,
   `data_criacao` date DEFAULT NULL,
   `hora_criacao` time DEFAULT NULL,
@@ -10,7 +12,7 @@ CREATE TABLE `campanha` (
   `hora_inativacao` time DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `responsavel_id` (`responsavel_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 
 ALTER TABLE `campanha`

@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS `contato` (
+  `id` bigint(10) NOT NULL AUTO_INCREMENT,
+  `data_criacao` date DEFAULT NULL,
+  `hora_criacao` time DEFAULT NULL,
+  `data_inativacao` date NOT NULL,
+  `hora_inativaaco` time NOT NULL,
+  `numero` bigint(11) unsigned DEFAULT NULL,
+  `lista_id` bigint(10) unsigned DEFAULT NULL,
+  `whatsapp` enum('N','S') DEFAULT 'N',
+  PRIMARY KEY (`id`),
+  KEY `lista_id` (`lista_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `contato`
+  ADD CONSTRAINT `fk_contato_lista` FOREIGN KEY (`lista_id`) REFERENCES `lista` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

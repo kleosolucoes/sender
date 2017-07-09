@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace Application\Controller;
 
 use Doctrine\ORM\EntityManager;
@@ -37,6 +29,101 @@ class PubController extends KleoController {
     }
     if (!is_null($doctrineAuthenticationService)) {
       $this->_doctrineAuthenticationService = $doctrineAuthenticationService;
+    }
+  }
+
+  /**
+     * Função padrão, traz a tela principal
+     * GET /
+     */
+  public function indexAction() {
+
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+    if ($formulario) {
+      $cadastroResponsavelForm = $formulario;
+    } else {
+      $cadastroResponsavelForm = new CadastroResponsavelForm('cadastroResponsavel');
+    }
+
+    return new ViewModel(
+      array(
+      self::stringFormulario => $cadastroResponsavelForm,
+    )
+    );
+  }
+  
+   /**     
+     * POST /responsavelFinalizar
+     */
+  public function responsavelFinalizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+      try {
+        $repositorioORM->iniciarTransacao();
+        $post_data = $request->getPost();
+        $responsavel = new Responsavel();
+        $cadastrarResponsavelForm = new CadastroResponsavelForm();
+        $cadastrarResponsavelForm->setInputFilter($responsavel->getInputFilterCadastrarResponsavel());
+        $cadastrarResponsavelForm->setData($post_data);
+
+        /* validação */
+        if ($cadastrarResponsavelForm->isValid()) {
+
+          $validatedData = $cadastrarResponsavelForm->getData();
+          $responsavel->exchangeArray($cadastrarResponsavelForm->getData());
+
+          $repositorioORM->getResponsavelORM()->persistir($responsavel);
+
+          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::primeiroContato);
+          $responsavelSituacao = new ResponsavelSituacao();
+          $responsavelSituacao->setResponsavel($responsavel);
+          $responsavelSituacao->setSituacao($situacao);
+
+          $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
+
+          $emails[] = $validatedData[KleoForm::inputEmail];
+
+          $titulo = self::emailTitulo;
+          $mensagem = '<p>Seu cadastro inicial foi concluido</p>
+          <p>Em breve um dos nosso executivos entrará em contato.</p>';
+
+          self::enviarEmail($emails, $titulo, $mensagem);
+          unset($emails);
+          $emails[] = self::emailLeo;
+          $emails[] = self::emailKort;
+          $urlResponsaveis = self::url . 'admResponsaveis';
+
+          $titulo = 'Primeiro Contato';
+          $mensagem .= '<p>Resposavel ' . $responsavel->getNome() . '</p>';
+          $mensagem .= '<p>Telefone <a href="tel:' . $responsavel->getTelefone() . '">' . $responsavel->getTelefone() . '</a></p>';
+          $mensagem .= '<p>Email ' . $responsavel->getEmail() . '</p>';
+          $mensagem .= '<p><a href="' . $urlResponsaveis . '">Visualizar</a></p>';
+
+          self::enviarEmail($emails, $titulo, $mensagem);
+
+          $repositorioORM->fecharTransacao();
+
+          return $this->redirect()->toRoute(self::rotaPub, array(
+            self::stringAction => 'responsavelFinalizado',
+          ));
+
+        } else {
+                   
+          self::mostrarMensagensDeErroFormulario($cadastrarResponsavelForm->getMessages());
+          
+          $repositorioORM->desfazerTransacao();       
+
+          return $this->forward()->dispatch(self::controllerPub, array(
+            self::stringAction =>  self::stringIndex,
+            self::stringFormulario => $cadastrarResponsavelForm,
+          ));
+
+        }
+      } catch (Exception $exc) {
+        $repositorioORM->desfazerTransacao();
+        echo $exc->getMessage();
+      }
     }
   }
 
@@ -94,97 +181,7 @@ class PubController extends KleoController {
     }
   }
 
-  /**
-     * Função padrão, traz a tela principal
-     * GET /pubResponsavel
-     */
-  public function responsavelAction() {
-
-    $formulario = $this->params()->fromRoute(self::stringFormulario);
-    if ($formulario) {
-      $cadastroResponsavelForm = $formulario;
-    } else {
-      $cadastroResponsavelForm = new CadastroResponsavelForm('cadastroResponsavel');
-    }
-
-    return new ViewModel(
-      array(
-      self::stringFormulario => $cadastroResponsavelForm,
-    )
-    );
-  }
-
-  /**
-     * Função padrão, traz a tela principal
-     * GET /pubResponsavelFinalizar
-     */
-  public function responsavelFinalizarAction() {
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-      try {
-        $repositorioORM->iniciarTransacao();
-        $post_data = $request->getPost();
-        $responsavel = new Responsavel();
-        $cadastrarResponsavelForm = new CadastroResponsavelForm();
-        $cadastrarResponsavelForm->setInputFilter($responsavel->getInputFilterCadastrarResponsavel());
-        $cadastrarResponsavelForm->setData($post_data);
-
-        /* validação */
-        if ($cadastrarResponsavelForm->isValid()) {
-
-          $validatedData = $cadastrarResponsavelForm->getData();
-          $responsavel->exchangeArray($cadastrarResponsavelForm->getData());
-
-          $repositorioORM->getResponsavelORM()->persistir($responsavel);
-
-          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::primeiroContato);
-          $responsavelSituacao = new ResponsavelSituacao();
-          $responsavelSituacao->setResponsavel($responsavel);
-          $responsavelSituacao->setSituacao($situacao);
-
-          $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
-
-          $emails[] = $validatedData[KleoForm::inputEmail];
-
-          $titulo = self::emailTitulo;
-          $mensagem = '<p>Seu cadastro inicial foi concluido</p>
-          <p>Em breve um dos nosso executivos entrará em contato.</p>';
-
-          self::enviarEmail($emails, $titulo, $mensagem);
-          unset($emails);
-          $emails[] = self::emailLeo;
-          $emails[] = self::emailKort;
-          $urlResponsaveis = self::url . 'admResponsaveis';
-
-          $titulo = 'Primeiro Contato';
-          $mensagem = '<p>NomeFantasia ' . $responsavel->getNomeFantasia() . '</p>';
-          $mensagem .= '<p>Resposavel ' . $responsavel->getNome() . '</p>';
-          $mensagem .= '<p>Telefone <a href="tel:' . $responsavel->getTelefone() . '">' . $responsavel->getTelefone() . '</a></p>';
-          $mensagem .= '<p>Email ' . $responsavel->getEmail() . '</p>';
-          $mensagem .= '<p><a href="' . $urlResponsaveis . '">Visualizar</a></p>';
-
-          self::enviarEmail($emails, $titulo, $mensagem);
-
-          $repositorioORM->fecharTransacao();
-
-           return $this->redirect()->toRoute(self::rotaPub, array(
-             self::stringAction => 'responsavelFinalizado',
-           ));
-        } else {
-          $repositorioORM->desfazerTransacao();
-          return $this->forward()->dispatch(self::controllerPub, array(
-            self::stringAction => 'responsavel',
-            self::stringFormulario => $cadastrarResponsavelForm,
-          ));
-        }
-      } catch (Exception $exc) {
-        $repositorioORM->desfazerTransacao();
-        echo $exc->getMessage();
-      }
-    }
-    return new ViewModel();
-  }
+ 
 
   /**
      * Função padrão, traz a tela principal

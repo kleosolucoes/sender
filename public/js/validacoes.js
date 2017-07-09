@@ -10,16 +10,10 @@ function validacoesFormulario(campo){
         mensagemDeErro = 'Nome precisa ter 3 a 50 caracteres';
       }
       break;
-    case 'inputDDD':
-      if(campo.value.length < 2 || campo.value.length > 2){
-        temErro = true;
-        mensagemDeErro = 'DDD precisa ter 2 caracteres';
-      }
-      break;
     case 'inputTelefone':
-      if(campo.value.length < 8 || campo.value.length > 9){
+      if(campo.value.length < 10 || campo.value.length > 11){
         temErro = true;
-        mensagemDeErro = 'Telefone precisa ter 8 ou 9 caracteres';
+        mensagemDeErro = 'Telefone precisa ter 10 ou 11 caracteres';
       }
       break;
     case 'inputEmail':

@@ -19,9 +19,9 @@ use DateTime;
 
 /**
  * @ORM\Entity 
- * @ORM\Table(name="campanha")
+ * @ORM\Table(name="contato")
  */
-class Campanha extends KleoEntity implements InputFilterAwareInterface {
+class Contato extends KleoEntity implements InputFilterAwareInterface {
 
   protected $inputFilter;
   protected $inputFilterCadastrarCampanha;
@@ -32,29 +32,19 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
      */
   private $responsavel;
 
-  /**
-     * @ORM\OneToMany(targetEntity="CampanhaSituacao", mappedBy="campanha") 
-     */
-  protected $campanhaSituacao;
 
   public function __construct() {
-    $this->campanhaSituacao = new ArrayCollection();
+  
   }
 
   /** @ORM\Column(type="string") */
   protected $nome;
 
-  /** @ORM\Column(type="date_time") */
-  protected $data_envio;
+  /** @ORM\Column(type="string") */
+  protected $descricao;
 
   /** @ORM\Column(type="string") */
-  protected $foto_perfil;
-  
-  /** @ORM\Column(type="string") */
-  protected $upload;
-  
-  /** @ORM\Column(type="string") */
-  protected $mensagem;
+  protected $foto;
 
   /** @ORM\Column(type="integer") */
   protected $responsavel_id;
@@ -74,44 +64,28 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
     return $campanhaSituacao;
   }
 
-  function setNome($nome) {
-    $this->nome = $nome;
+  function setTitulo($titulo) {
+    $this->titulo = $titulo;
   }
 
-  function getNome() {
-    return $this->nome;
+  function getTitulo() {
+    return $this->titulo;
   }
 
-  function setData_envio($data_envio) {
-    $this->data_envio = $data_envio;
+  function setDescricao($descricao) {
+    $this->descricao = $descricao;
   }
 
-  function getData_envio() {
-    return $this->data_envio;
+  function getDescricao() {
+    return $this->descricao;
   }
 
-  function setFoto_perfil($foto_perfil) {
-    $this->foto_perfil = $foto_perfil;
+  function setFoto($foto) {
+    $this->foto = $foto;
   }
 
-  function getFoto_perfil() {
-    return $this->foto_perfil;
-  }
-
-  function setUpload($upload) {
-    $this->upload = $upload;
-  }
-
-  function getUpload() {
-    return $this->upload;
-  }
-
-  function setMensagem($mensagem) {
-    $this->mensagem = $mensagem;
-  }
-
-  function getMensagem() {
-    return $this->mensagem;
+  function getFoto() {
+    return $this->foto;
   }
 
   function setCampanhaSituacao($campanhaSituacao) {
@@ -131,11 +105,9 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
   }
 
   public function exchangeArray($data) {
-    $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
-    $this->data_envio = (!empty($data[KleoForm::inputDataEnvio]) ? $data[KleoForm::inputDataEnvio] : null);
-    $this->foto_perfil = (!empty($data[KleoForm::inputFotoPerfil]) ? $data[KleoForm::inputFotoPerfil] : null);
-    $this->upload = (!empty($data[KleoForm::inputUpload]) ? $data[KleoForm::inputUpload] : null);
-    $this->mensagem = (!empty($data[KleoForm::inputMensagem]) ? $data[KleoForm::inputMensagem] : null);
+    $this->titulo = (!empty($data[KleoForm::inputTitulo]) ? strtoupper($data[KleoForm::inputTitulo]) : null);
+    $this->descricao = (!empty($data[KleoForm::inputDescricao]) ? $data[KleoForm::inputDescricao] : null);
+    $this->foto = (!empty($data[KleoForm::inputFoto]) ? $data[KleoForm::inputFoto] : null);
   }
 
   public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -151,7 +123,7 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
 
       $inputFilter = new InputFilter();
       $inputFilter->add(array(
-        'name' => KleoForm::inputNome,
+        'name' => KleoForm::inputTitulo,
         'required' => true,
         'filter' => array(
         array('name' => 'StripTags'), // removel xml e html string
@@ -174,51 +146,24 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
       ));
 
       $inputFilter->add(array(
-        'name' => KleoForm::inputDataEnvio,
-        'required' => true,
-        'filter' => array(
-        array('name' => 'StripTags'), // removel xml e html string
-        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
-      ),
-        'validators' => array(
-        array(
-        'name' => 'NotEmpty',
-      ),
-      ),
-      ));
-      
-      $inputFilter->add(array(
-        'name' => KleoForm::inputFotoPerfil,
-        'required' => true,
-        'filter' => array(
-        array('name' => 'StripTags'), // removel xml e html string
-        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
-      ),
-        'validators' => array(
-        array(
-        'name' => 'NotEmpty',
-      ),
-      ),
-      ));
-      
-      $inputFilter->add(array(
         'name' => KleoForm::inputDescricao,
         'required' => true,
         'filter' => array(
         array('name' => 'StripTags'), // removel xml e html string
         array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+        array('name' => 'StringToUpper'), // transforma em maiusculo
       ),
         'validators' => array(
         array(
         'name' => 'NotEmpty',
       ),
-      ),        
         array(
         'name' => 'StringLength',
         'options' => array(
         'encoding' => 'UTF-8',
         'min' => 10,
-        'max' => 300,
+        'max' => 100,
+      ),
       ),
       ),
       ));

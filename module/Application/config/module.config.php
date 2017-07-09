@@ -6,34 +6,23 @@ return array(
     # definir e gerenciar controllers
     'controllers' => array(
         'factories' => array(
-            'Application\Controller\Index' => 'Application\Controller\Factory\IndexControllerFactory',
             'Application\Controller\Pub' => 'Application\Controller\Factory\PubControllerFactory',
             'Application\Controller\Adm' => 'Application\Controller\Factory\AdmControllerFactory',
         ),
     ),
     'router' => array(
-        'routes' => array(
-            'home' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
+        'routes' => array(            
             'pub' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/pub[:action][/:token]',
+                    'route' => '/[:action][/:token]',
                     'constraints' => array(
                         'action' => '[a-zA-Z]+',
                         'token' => '[a-zA-Z0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Pub',
-                        'action' => 'login',
+                        'action' => 'index',
                     ),
                 ),
             ),
