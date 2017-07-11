@@ -51,8 +51,8 @@ class PubController extends KleoController {
     )
     );
   }
-  
-   /**     
+
+  /**     
      * POST /responsavelFinalizar
      */
   public function responsavelFinalizarAction() {
@@ -109,9 +109,9 @@ class PubController extends KleoController {
           ));
 
         } else {
-                   
+
           self::mostrarMensagensDeErroFormulario($cadastrarResponsavelForm->getMessages());
-          
+
           $repositorioORM->desfazerTransacao();       
 
           return $this->forward()->dispatch(self::controllerPub, array(
@@ -125,6 +125,114 @@ class PubController extends KleoController {
         echo $exc->getMessage();
       }
     }
+  }
+
+  /**
+     * Função padrão, traz a tela principal
+     * GET /cadastroResponsavelFinalizado
+     */
+  public function responsavelFinalizadoAction() {
+    return new ViewModel();
+  }
+
+  /**
+     * Função padrão, traz a tela principal
+     * GET /cadastroResponsavelAlterado
+     */
+  public function responsavelAlteradoAction() {
+    return new ViewModel();
+  }
+
+  /**
+     * Função padrão, traz a tela principal
+     * GET /cadastroResponsavelAlterado
+     */
+  public function responsavelSenhaCadastradoAction() {
+    return new ViewModel();
+  }
+
+  /**
+     * Formulario para alterar dados do responsavel
+     * GET /cadastroResponsavelSenhaAtualizacao
+     */
+  public function responsavelSenhaAtualizacaoAction() {
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+    if ($formulario) {
+      $responsavelSenhaAtualizacaoForm = $formulario;
+      $inputToken = $formulario->get(KleoForm::inputId);
+      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($inputToken->getValue());
+      $responsavel->setId($inputToken->getValue());
+    } else {
+      $token = $this->getEvent()->getRouteMatch()->getParam(self::stringToken);
+      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token);
+      $responsavel->setId($token);
+      $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm('ResponsavelSenhaAtualizacao', $responsavel);
+    }
+
+    return new ViewModel(
+      array(
+      self::stringFormulario => $responsavelSenhaAtualizacaoForm,
+      KleoForm::inputEmail => $responsavel->getEmail(),
+    ));
+  }
+
+  /**
+     * Atualiza a senha do responsavel
+     * GET /cadastroResponsavelSenhaAtualizar
+     */
+  public function responsavelSenhaAtualizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+      try {
+        $repositorioORM->iniciarTransacao();
+
+        $post_data = $request->getPost();
+        $token = $post_data[KleoForm::inputId];
+        $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token);
+
+        $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm(null, $responsavel);
+        $responsavelSenhaAtualizacaoForm->setInputFilter($responsavel->getInputFilterCadastrarSenhaResponsavel());
+
+        $responsavelSenhaAtualizacaoForm->setData($post_data);
+
+        if ($responsavelSenhaAtualizacaoForm->isValid()) {
+
+          $responsavel->exchangeArray($responsavelSenhaAtualizacaoForm->getData());
+          $responsavel->setToken(null);
+
+          $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+          $repositorioORM->getResponsavelORM()->persistir($responsavel);
+
+          $emails[] = $responsavel->getEmail();
+          $titulo = self::emailTitulo;
+          $mensagem = '';
+          $mensagem = '<p>Senha Cadastra com Sucesso</p>';
+          $mensagem .= '<p>Usuario: ' . $responsavel->getEmail() . '</p>';
+          $mensagem .= '<p>Senha: ' . $responsavel->getSenha() . '</p>';
+          $mensagem .= '<p><a href="' . self::url . 'login">Clique aqui acessar</a></p>';
+          self::enviarEmail($emails, $titulo, $mensagem);
+
+          $repositorioORM->fecharTransacao();
+
+          return $this->redirect()->toRoute(self::rotaPub, array(
+            self::stringAction => 'responsavelSenhaCadastrado',
+          ));
+        } else {
+          $repositorioORM->desfazerTransacao();
+          return $this->forward()->dispatch(self::controllerPub, array(
+            self::stringAction => 'responsavelSenhaAtualizacao',
+            self::stringFormulario => $responsavelSenhaAtualizacaoForm,
+          ));
+        }
+      } catch (Exception $exc) {
+        $repositorioORM->desfazerTransacao();
+        echo $exc->getMessage();
+      }
+    }
+    return new ViewModel();
   }
 
   public function loginAction() {
@@ -179,109 +287,6 @@ class PubController extends KleoController {
         self::stringAction => self::stringLogin,
       ));
     }
-  }
-
- 
-
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsavelFinalizado
-     */
-  public function responsavelFinalizadoAction() {
-    return new ViewModel();
-  }
-
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsavelAlterado
-     */
-  public function responsavelAlteradoAction() {
-    return new ViewModel();
-  }
-
-  /**
-     * Função padrão, traz a tela principal
-     * GET /cadastroResponsavelAlterado
-     */
-  public function responsavelSenhaCadastradoAction() {
-    return new ViewModel();
-  }
-
-  /**
-     * Formulario para alterar dados do responsavel
-     * GET /cadastroResponsavelSenhaAtualizacao
-     */
-  public function responsavelSenhaAtualizacaoAction() {
-
-    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-    $formulario = $this->params()->fromRoute(self::stringFormulario);
-    if ($formulario) {
-      $responsavelSenhaAtualizacaoForm = $formulario;
-      $idToken = $formulario->get(KleoForm::inputId);
-      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token);
-    } else {
-      $token = $this->getEvent()->getRouteMatch()->getParam(self::stringToken);
-      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token);
-      $responsavel->setId($token);
-      $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm('ResponsavelSenhaAtualizacao', $responsavel);
-    }
-
-    return new ViewModel(
-      array(
-      self::stringFormulario => $responsavelSenhaAtualizacaoForm,
-      KleoForm::inputEmail => $responsavel->getEmail(),
-    ));
-  }
-
-  /**
-     * Atualiza a senha do responsavel
-     * GET /cadastroResponsavelSenhaAtualizar
-     */
-  public function responsavelSenhaAtualizarAction() {
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      try {
-        $post_data = $request->getPost();
-        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-        $token = $post_data[KleoForm::inputId];
-        $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorToken($token);
-
-        $responsavelSenhaAtualizacaoForm = new ResponsavelSenhaAtualizacaoForm(null, $responsavel);
-        $responsavelSenhaAtualizacaoForm->setInputFilter($responsavel->getInputFilterCadastrarSenhaResponsavel());
-
-        $responsavelSenhaAtualizacaoForm->setData($post_data);
-
-        if ($responsavelSenhaAtualizacaoForm->isValid()) {
-
-          $responsavel->setSenha($post_data[KleoForm::inputSenha]);
-          $responsavel->setToken(null);
-
-          $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-          $repositorioORM->getResponsavelORM()->persistir($responsavel);
-
-          $emails[] = $responsavel->getEmail();
-          $titulo = self::emailTitulo;
-          $mensagem = '';
-          $mensagem = '<p>Senha Cadastra com Sucesso</p>';
-          $mensagem .= '<p>Usuario: ' . $responsavel->getEmail() . '</p>';
-          $mensagem .= '<p>Senha: ' . $responsavel->getSenha() . '</p>';
-          $mensagem .= '<p><a href="' . self::url . 'pubLogin">Clique aqui acessar</a></p>';
-          self::enviarEmail($emails, $titulo, $mensagem);
-
-          return $this->redirect()->toRoute(self::rotaPub, array(
-            self::stringAction => 'responsavelSenhaCadastrado',
-          ));
-        } else {
-          return $this->forward()->dispatch(self::controllerPub, array(
-            self::stringAction => 'responsavelSenhaAtualizacao',
-            self::stringFormulario => $responsavelSenhaAtualizacaoForm,
-          ));
-        }
-      } catch (Exception $exc) {
-        echo $exc->getMessage();
-      }
-    }
-    return new ViewModel();
   }
 
   /**

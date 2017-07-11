@@ -11,6 +11,7 @@ use Zend\Form\Element\Email;
 use Zend\Form\Element\Tel;
 use Zend\Form\Element\File;
 use Zend\Form\Element\Password;
+use Zend\Form\Element\Checkbox;
 
 /**
  * Nome: InputFormulario.php
@@ -59,6 +60,9 @@ class InputFormulario extends AbstractHelper {
     }
     if ($this->getInput() instanceOf Password) {
       $html .= $this->view->formPassword($this->getInput());
+    }
+    if ($this->getInput() instanceOf Checkbox) {
+      $html .= $this->view->formCheckbox($this->getInput());
     }
     $idDivMEnsagemDeErro = 'mensagemErro'.$this->getInput()->getName(); 
     $html .= '<div id="'.$idDivMEnsagemDeErro.'"></div>';

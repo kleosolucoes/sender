@@ -5,7 +5,7 @@ use Application\Form\KleoForm;
 $formulario = $this->formulario;
 $formulario->prepare();
 
-$formulario->setAttribute(KleoForm::stringAction, '/pubResponsavelSenhaAtualizar');
+$formulario->setAttribute(KleoForm::stringAction, '/responsavelSenhaAtualizar');
 echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
@@ -23,8 +23,25 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           <div class="panel-body">              
             <?php
             echo "<p class='text-center'>Usu&aacute;rio: $this->inputEmail</p>";
+            
+             echo $this->inputFormulario(KleoForm::traducaoPrimeiroNome, $formulario->get(KleoForm::inputNome), 6);
+            echo $this->inputFormulario(KleoForm::traducaoUltimoNome, $formulario->get(KleoForm::inputUltimoNome), 6);  
+            
+            echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
+            
+            echo $this->inputFormulario(KleoForm::traducaoRepetirEmail, $formulario->get(KleoForm::inputRepetirEmail));
+            
+            echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 6);  
+            echo $this->inputFormulario(KleoForm::traducaoSelecioneOPais, $formulario->get(KleoForm::inputPais), 6);  
+            
             echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha));
             echo $this->inputFormulario(KleoForm::traducaoRepetirSenha, $formulario->get(KleoForm::inputRepetirSenha));
+            
+            echo $this->inputFormulario(KleoForm::traducaoNomeEmpresa, $formulario->get(KleoForm::inputNomeEmpresa), 6);
+            echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ), 6);            
+            
+            echo $this->inputFormulario(KleoForm::traducaoTermo, $formulario->get(KleoForm::inputTermo));
+            
             echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
             ?>
           </div>

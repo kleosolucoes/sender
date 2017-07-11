@@ -126,7 +126,7 @@ class AdmController extends KleoController {
           if ($intValIdSituacao === Situacao::ativo) {
             $mensagem = '<p>Cadastro ativado</p>';
             $mensagem .= '<p>Usuario: ' . $responsavel->getEmail() . '</p>';
-            $mensagem .= '<p><a href="' . self::url . 'pubResponsavelSenhaAtualizacao/' . $token . '">Clique aqui cadastrar sua senha</a></p>';
+            $mensagem .= '<p><a href="' . self::url . 'responsavelSenhaAtualizacao/' . $token . '">Clique aqui cadastrar sua senha</a></p>';
           }
           self::enviarEmail($emails, $titulo, $mensagem);
           $repositorioORM->fecharTransacao();

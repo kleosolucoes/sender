@@ -15,6 +15,7 @@ use Zend\Form\Form;
 class KleoForm extends Form {
 
   const inputNome = 'inputNome';
+  const inputUltimoNome = 'inputUltimoNome';
   const inputTelefone = 'inputTelefone';
   const inputEmail = 'inputEmail';
   const inputRepetirEmail = 'inputRepetirEmail';
@@ -22,6 +23,8 @@ class KleoForm extends Form {
   const inputCNPJ = 'inputCNPJ';  
   const inputSenha = 'inputSenha';
   const inputRepetirSenha = 'inputRepetirSenha';
+  const inputPais = 'inputPais';
+  const inputTermo = 'inputTermo';
 
   const inputId = 'inputId';
   const inputCSRF = 'inputCSRF';
@@ -44,6 +47,8 @@ class KleoForm extends Form {
   const stringValidacoesFormulario = 'validacoesFormulario(this);';
 
   const traducaoNome = 'Nome do Responsável';
+  const traducaoPrimeiroNome = 'Primeiro Nome';
+  const traducaoUltimoNome = 'Último Nome';
   const traducaoTelefone = 'Telefone';
   const traducaoEmail = 'Email';
   const traducaoRepetirEmail = 'Repita o Email';
@@ -51,6 +56,8 @@ class KleoForm extends Form {
   const traducaoCNPJ = 'CNPJ';
   const traducaoSenha = 'Senha';
   const traducaoRepetirSenha = 'Repetir Senha';
+  const traducaoSelecioneOPais = 'Selecione o Pais';
+  const traducaoTermo = 'Termo de Aceita&ccedil;&atilde;o';
 
   const traducaoSituacao = 'Situação';
   const traducaoSelecione = 'Selecione';
@@ -60,6 +67,8 @@ class KleoForm extends Form {
   const traducaoFotoPerfil = 'Foto de Perfil';
   const traducaoUpload = 'Imagem / Video / Audio';
   const traducaoMensagem = 'Mensagem';
+  
+  const traducaoBrasil = 'BRASIL';
 
   public function __construct($name = null) {
 
