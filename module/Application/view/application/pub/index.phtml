@@ -1,41 +1,981 @@
-<h1>
-  Site
-</h1>
-<h2>
-  Primerio contato
-</h2>
-<?php
-
-use Application\Form\KleoForm;
-
-$formulario = $this->formulario;
-$formulario->prepare();
-
-$formulario->setAttribute(KleoForm::stringAction, 'responsavelFinalizar');
-echo $this->form()->openTag($formulario);
-echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
-echo $this->formHidden($formulario->get(KleoForm::inputId));
-?>
-<!-- MAIN CONTENT SECTION -->
-<section class="mainContent clearfix signUp">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading"><h3>seja um parceiro</h3></div>
-          <div class="panel-body">                       
-            <?php
-            echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome), 6);
-            echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 6);
-            echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
-            echo $this->inputFormulario(KleoForm::traducaoRepetirEmail, $formulario->get(KleoForm::inputRepetirEmail));
-            echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario());
-            ?>
+<div class="page-mask">
+  <div class="page-loader">
+    <div class="spinner"></div>
+    Zap...
+  </div>
+</div>
+<!-- Wrap -->
+<div class="wrap">
+  <!-- Header -->
+  <header id="header">
+    <!-- Header Top Bar -->
+    <div class="top-bar">
+      <div class="slidedown collapse">
+        <div class="container">        
+          <div class="phone-login pull-right">
+            <i class="fa fa-comments-o fa-2x"></i> WhatsApp : +55 61 99670-4040 - <a href="#contato"><b>Ligamos para você - Clique Aqui!</b></a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<?php
-echo $this->form()->closeTag();
+    <!-- /Header Top Bar -->
+    <!-- Main Header -->
+    <div class="main-header">
+      <div class="container">
+        <!-- TopNav -->
+        <div class="topnav navbar-header">
+          <a class="navbar-toggle down-button" data-toggle="collapse" data-target=".slidedown">
+            <i class="fa fa-angle-down icon-current"></i>
+          </a> 
+        </div>
+        <!-- /TopNav-->
+        <!-- Logo -->
+        <div class="logo pull-left">
+          <h1>
+            <a href="index.html">
+              <img class="logo-color" src="img/site/logo_green.png" alt="ZapMarketing" width="260" height="46">
+            </a>
+          </h1>
+        </div>
+        <!-- /Logo -->
+        <!-- Mobile Menu -->
+        <div class="mobile navbar-header">
+          <a class="navbar-toggle" data-toggle="collapse" href=".navbar-collapse">
+            <i class="fa fa-bars fa-2x"></i>
+          </a> 
+        </div>
+        <!-- /Mobile Menu -->
+        <!-- Menu Start -->
+        <nav class="collapse navbar-collapse menu">
+          <ul class="nav navbar-nav sf-menu">
+
+            <li>
+              <a href="#oque" class="sf-with-ul">
+                O que é? 
+
+              </a>
+            </li>
+            <li>
+              <a href="#funciona" class="sf-with-ul">
+                Como Funciona 
+              </a>
+
+            </li>
+            <li>
+              <a href="#beneficios" class="sf-with-ul">
+                Benefícios
+
+              </a>
+
+            </li>
+            <li>
+              <a href="#planos" class="sf-with-ul">
+                Planos e Pacotes
+
+              </a>
+            </li>
+            <li>
+              <a href="#contato">
+
+                Contato
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /Menu --> 
+      </div>
+    </div>
+    <!-- /Main Header -->
+  </header>
+  <!-- /Header --> 
+  <!-- Main Section -->
+  <section id="main">
+    <!-- Slider -->
+    <div class="fullwidthbanner-container tp-banner-container">
+      <div class="fullwidthbanner rslider tp-banner">
+        <ul>
+          <!-- THE FIRST SLIDE -->
+          <li data-transition="fade" data-slotamount="7" data-masterspeed="2000" data-thumb="homeslider_thumb2.jpg" data-delay="10000"  data-saveperformance="on">
+            <!-- MAIN IMAGE -->
+            <img src="img/site/dummy.png"  alt="laptopmockup_sliderdy" data-lazyload="img/slider/slider-bg-1.jpg" data-bgposition="right top" data-kenburns="on" data-duration="12000" data-ease="Power0.easeInOut" data-bgfit="115" data-bgfitend="100" data-bgpositionend="center bottom">
+            <!-- LAYERS -->
+            <!-- LAYER NR. 1 -->
+            <div class="tp-caption customin fadeout rs-parallaxlevel-10"
+                 data-x="783"
+                 data-y="146" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="2700"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 2;"><img src="img/site/dummy.png" alt="" data-lazyload="img/redbg_big.png">
+            </div>
+
+            <!-- LAYER NR. 2 -->
+            <div class="tp-caption light_heavy_50 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="797"
+                 data-y="154" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="2850"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;">Marketing
+            </div>
+            <!-- LAYER NR. 3 -->
+            <div class="tp-caption black_heavy_70  skewfromleftshort fadeout tp-resizeme rs-parallaxlevel-10" 
+                 data-x="550"
+                 data-y="83" 
+                 data-speed="500"
+                 data-start="2400"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="chars"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 4; max-width: auto; max-height: auto; white-space: nowrap; text-shadow:#FFF 1px -1px, #FFF -1px 1px, #FFF 1px 1px, #FFF -1px -1px">WhatsApp
+            </div>
+
+            <!-- LAYER NR. 4 -->
+            <div class="tp-caption black_heavy_70 skewfromrightshort fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="900"
+                 data-y="210" 
+                 data-speed="500"
+                 data-start="3200"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="chars"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap; text-shadow:#FFF 1px -1px, #FFF -1px 1px, #FFF 1px 1px, #FFF -1px -1px">R$0,03*
+            </div>
+            <!-- LAYER NR. 5 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="933"
+                 data-y="300" 
+                 data-speed="300"
+                 data-start="4000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">Envio em Massa
+            </div>
+            <!-- LAYER NR. 6 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="902"
+                 data-y="300" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="4000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 7; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+
+            <!-- LAYER NR. 7 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="911"
+                 data-y="306" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="4200"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 8;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+            <!-- LAYER NR. 8 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="933"
+                 data-y="340" 
+                 data-speed="300"
+                 data-start="4500"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 9; max-width: auto; max-height: auto; white-space: nowrap;">Garantia de Entrega
+            </div>
+            <!-- LAYER NR. 9 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="902"
+                 data-y="340" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="4500"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 10; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+            <!-- LAYER NR. 10 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="911"
+                 data-y="347" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="4700"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 11;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+            <!-- LAYER NR. 11 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="933"
+                 data-y="380" 
+                 data-speed="300"
+                 data-start="5000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 12; max-width: auto; max-height: auto; white-space: nowrap;">Relatórios de Envio
+            </div>
+            <!-- LAYER NR. 12 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="902"
+                 data-y="380" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="5000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 13; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+            <!-- LAYER NR. 13 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="911"
+                 data-y="386" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="5200"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 14;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+          </li>
+          <!-- /THE FIRST SLIDE -->
+          <!-- THE RESPONSIVE SLIDE -->
+          <li data-transition="fade" data-slotamount="1" data-masterspeed="300">            
+            <img src="img/site/slider-bg-2.jpg" data-fullwidthcentering="on" alt="">
+            <div class="caption large_text sft"
+                 data-x="660"
+                 data-y="54"
+                 data-speed="300"
+                 data-start="800"
+                 data-easing="easeOutExpo"  >FERRAMENTA IDEAL</div>
+            <div class="caption medium_text sfl"
+                 data-x="689"
+                 data-y="92"
+                 data-speed="300"
+                 data-start="1100"
+                 data-easing="easeOutExpo"  >para</div>
+            <div class="caption large_text sfr"
+                 data-x="738"
+                 data-y="88"
+                 data-speed="300"
+                 data-start="1100"
+                 data-easing="easeOutExpo"  ><span class="dblue">o seu negócio</span></div>
+            <!-- LAYER NR. 5 1 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="691"
+                 data-y="220" 
+                 data-speed="300"
+                 data-start="1000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">Envio de Fotos e Vídeos
+            </div>
+            <!-- LAYER NR. 6 1 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="660"
+                 data-y="220" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="1200"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 7; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+            <!-- LAYER NR. 7 1 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="669"
+                 data-y="232" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="1500"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 8;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+            <!-- LAYER NR. 5 1 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="691"
+                 data-y="260" 
+                 data-speed="300"
+                 data-start="1500"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">Envio de PDF*
+            </div>
+            <!-- LAYER NR. 6 1 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="660"
+                 data-y="260" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="1700"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 7; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+            <!-- LAYER NR. 7 1 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="669"
+                 data-y="272" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="2000"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 8;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+            <!-- LAYER NR. 5 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="691"
+                 data-y="300" 
+                 data-speed="300"
+                 data-start="2000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;">Plataforma Totalmente WEB
+            </div>
+            <!-- LAYER NR. 6 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="660"
+                 data-y="300" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="2000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 7; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+            <!-- LAYER NR. 7 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="669"
+                 data-y="306" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="2200"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 8;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+            <!-- LAYER NR. 8 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="691"
+                 data-y="340" 
+                 data-speed="300"
+                 data-start="2500"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 9; max-width: auto; max-height: auto; white-space: nowrap;">Imagem de Perfil Incluída
+            </div>
+            <!-- LAYER NR. 9 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="660"
+                 data-y="340" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="2500"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 10; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+            <!-- LAYER NR. 10 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="669"
+                 data-y="347" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="2700"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 11;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+            <!-- LAYER NR. 11 -->
+            <div class="tp-caption black_bold_bg_20 sfr fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="691"
+                 data-y="380" 
+                 data-speed="300"
+                 data-start="3000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 12; max-width: auto; max-height: auto; white-space: nowrap;"> Super Capacidade de Envio
+            </div>
+            <!-- LAYER NR. 12 -->
+            <div class="tp-caption greenbox30 customin fadeout tp-resizeme rs-parallaxlevel-10"
+                 data-x="660"
+                 data-y="380" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="3000"
+                 data-easing="Power3.easeInOut"
+                 data-splitin="none"
+                 data-splitout="none"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 13; max-width: auto; max-height: auto; white-space: nowrap;">&nbsp;
+            </div>
+            <!-- LAYER NR. 13 -->
+            <div class="tp-caption arrowicon customin fadeout rs-parallaxlevel-10"
+                 data-x="669"
+                 data-y="386" 
+                 data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                 data-speed="300"
+                 data-start="3200"
+                 data-easing="Power3.easeInOut"
+                 data-elementdelay="0.1"
+                 data-endelementdelay="0.1"
+                 data-endspeed="300"
+                 style="z-index: 14;"><img src="img/site/dummy.png" alt="" data-ww="17" data-hh="17" data-lazyload="img/check.png">
+            </div>
+            <div class="caption lfl"
+                 data-x="53"
+                 data-y="30"
+                 data-speed="300"
+                 data-start="1400"
+                 data-easing="easeOutExpo">
+              <img src="img/site/responsive-imac.png" alt="iMac Responsive">
+            </div>
+
+            <div class="caption lfl"
+                 data-x="323"
+                 data-y="145"
+                 data-speed="300"
+                 data-start="1500"
+                 data-easing="easeOutExpo">
+              <img src="img/site/responsive-ipad.png" alt="iPad Responsive">
+            </div>
+          </li>
+        </ul>
+        <a name="oque"></a>
+        <div class="caption lfl"
+             data-x="472"
+             data-y="253"
+             data-speed="300"
+             data-start="1600"
+             data-easing="easeOutExpo">
+          <img src="img/site/responsive-iphone.png" alt="iPhone Responsive">                                   
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Content -->
+
+    <div class="product-lead bottom-pad margin-top100">
+      <div class="pattern-overlay">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12 text-center wow fadeInLeft">
+              <img class="app-img" src="img/iphone5c.png" alt="iPhone5c">
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 wow fadeInRight">
+              <div class="app-service padding-bottom50">
+                <h2 class="light">O que é a ZapMarketing?</h2>
+                <h4>A ZapMarketing é um empresa especializada em Marketing de alta performance através da maior ferramenta de comunicação do mundo, o WhatsApp.</h4>
+
+                <p> Através da nossa tecnologia, temos a capacidade de interligar o seu negócio aos seus clientes potenciais através de envio de mensagens em MASSA pelo WhatsApp. Tudo através de uma ferramenta 100% on line.   
+                </p>
+                <p>Clique Abaixo e Preencha  o formulário, entraremos em contato e liberaremos 10 créditos para testar a ferramente de envio em massa.
+                </p>
+                <div class="divider"></div>
+                <div class="learnmore">
+                  <a class="btn-special btn-grey" href="#contato">Clique Aqui - Ligamos para Você!</a><a name="funciona"></a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Our funciona-->
+    <div class="our-clients">
+      <div class="container">
+        <div class="row">
+          <div class="client">
+            <div class="client-logo">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="text-center">
+                  <h2 class="wow fadeIn"> Como Funciona.</h2>
+                  <h4 class="wow fadeInRight">
+                    A nossa plataforma é muito simples e pode ser gerenciada por qualquer pessoa.
+                  </h4>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="clearfix"></div>
+                <div class="row text-center padding-top40">
+                  <div id="client-carousel" class="client-carousel carousel slide">
+                    <div class="carousel-inner">
+                      <div class="item active">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item wow fadeIn">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/01.png"></a></div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item wow fadeIn">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/02.png"></a></div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item wow fadeIn">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/03.png"></a></div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item wow fadeIn">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/04.png"></a></div>
+                        </div>
+                      </div>
+                      <a name="beneficios"></a>
+                      <div class="item">
+
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/04.png"></a></div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/03.png"></a></div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/02.png"></a></div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 item">
+                          <div class="item-inner"><a href="#"><img alt="Upportdash" src="img/site/01.png"></a></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div id="services" class="margin-top80">
+      <div class="pattern-overlay">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="padding-top40 text-center">
+                <h2 class="light wow fadeIn">Benefícios da ZapMarketing</h2>
+                <!--<h4 class="light wow fadeInRight">
+We have a strong team of web design, email marketing and corporate solution.Feel free to get a free quote!!!
+</h4>
+-->
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center wow fadeInLeft">
+              <div class="service-box padding-top30 padding-bottom40">
+                <div class="service-box-icon">
+                  <img alt="Web Design" src="img/site/entrega.png">
+                </div>
+                <div class="service-box-info">
+
+                  <h3 class="padding-top25">Entrega Garantida</h3>
+
+                  <p>
+                    Única ferramenta que Garante 95% de entrega para números válidos. Caso o número seja inválido devolvemos o crédito.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center wow fadeInUp">
+              <div class="service-box padding-top30 padding-bottom40">
+                <div class="service-box-icon">
+                  <img alt="Email Marketing" src="img/site/web.png">
+                </div>
+                <div class="service-box-info">
+
+                  <h3 class="padding-top25">Plataforma Web</h3>
+
+                  <p>
+                    Não é necessário baixar um software para agendar os seus envios, nossa plataforma é totalmente WEB e de fácil entendendimento.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center wow fadeInRight">
+              <div class="service-box padding-top30 padding-bottom40">
+                <div class="service-box-icon">
+                  <img alt="Multimídia" src="img/site/multimidia.png">
+                </div>
+                <div class="service-box-info">
+
+                  <h3 class="padding-top25">Envio Multimídia</h3>
+
+                  <p>
+                    Além de enviar campanhas de texto, a ferramenta possibilita envio de Imagens e Vídeos. Com Custos baixos e alta eficiência.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center wow fadeInLeft">
+              <div class="service-box padding-top30 padding-bottom40">
+                <div class="service-box-icon">
+                  <img alt="Relatório Detalhados" src="img/site/relatorio.png">
+                </div>
+                <div class="service-box-info">
+
+                  <h3 class="padding-top25">Relatório Avançados</h3>
+
+                  <p>
+                    Faça o download dos relatórios de suas campanhas e veja detalhadamente o horário de envio para cada número.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center wow fadeInUp">
+              <div class="service-box padding-top30 padding-bottom40">
+                <div class="service-box-icon">
+                  <img alt="Imagem de Perfil" src="img/site/profile.png">
+                </div>
+                <div class="service-box-info">
+
+                  <h3 class="padding-top25">Imagem de Perfil Incluída</h3>
+
+                  <p>
+                    Envie Campanhas de WhatsApp com Imagem de Perfil sem nenhum custo adicional. Facilitando assim a sua identificação da sua marca em suas campanhas.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-center wow fadeInRight">
+              <div class="service-box padding-top30 padding-bottom40">
+                <div class="service-box-icon">
+                  <img alt="Corportate Solutions" src="img/site/seguranca.png">
+                </div>
+                <div class="service-box-info">
+
+                  <h3 class="padding-top25">Segurança da sua Base</h3><a name="planos"></a>
+                  <p>
+                    Mantemos a sua base de dados protegida. Não comercializamos bases de dados temos um compromisso com a Confidencialidade de Informação.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="text-center">
+        <h2 class="wow fadeIn">Planos e Pacotes.</h2>
+        <h4 class="wow fadeInRight">
+          A nossa empresa tem a melhor relação custo benefício do mercado. Além de contar com toda a nossa equipe de suporte.
+        </h4>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content margin-bottom60 margin-top60">
+      <div class="container">
+        <!-- Three Column Pricing Table -->
+        <div class="row">
+          <div class="col-sm-4 col-md-4">
+            <div class="pricing_plan bottom-pad-small wow fadeInUp">
+              <h3>Básico<strong>1</strong> <small>5.000 créditos</small></h3>
+              <div class="the_price"><span>R$</span>0,091<small>/R$455,00</small></div>
+              <div class="the_offerings">
+                <p><i class="fa fa-chevron-right fa-1x"></i> Foto de Perfil. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Créditos não Expiram. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Painel Administrativo.<p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Suporte por E-mail. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Relatório detalhado de Envio. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Envie Texto/Foto/Vídeo.<p>
+              </div>
+              <!-- <a href="#" class="btn btn-color">Contrate</a> --> 
+            </div>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="pricing_plan bottom-pad-small special wow fadeInUp">
+              <h3>Básico<strong>2</strong> <small>10.000 créditos</small></h3>
+              <div class="the_price"><span>R$</span>0,089<small>/R$890,00</small></div>
+              <div class="the_offerings">
+                <p><i class="fa fa-chevron-right fa-1x"></i> Foto de Perfil. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Créditos não Expiram. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Painel Administrativo.<p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Suporte por E-mail. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Relatório detalhado de Envio. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Envie Texto/Foto/Vídeo.<p>
+              </div>
+              <!-- <a href="#" class="btn btn-color">Contrate</a> --> 
+            </div>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="pricing_plan wow fadeInUp">
+              <h3>Básico<strong>3</strong> <small>30.000 créditos</small></h3>
+              <div class="the_price"><span>R$</span>0,085<small>/R$2.550,00</small></div>
+              <div class="the_offerings">
+                <p><i class="fa fa-chevron-right fa-1x"></i> Foto de Perfil. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Créditos não Expiram. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Painel Administrativo.<p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Suporte por E-mail. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Relatório detalhado de Envio. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Envie Texto/Foto/Vídeo.<p>
+              </div>
+              <!-- <a href="#" class="btn btn-color">Contrate</a> --> 
+            </div>
+          </div>
+
+
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-4 col-md-4">
+            <div class="pricing_plan bottom-pad-small wow fadeInUp">
+              <h3>Intermediário<strong> I</strong> <small>50.000 créditos</small></h3>
+              <div class="the_price"><span>R$</span>0,065<small>/R$3.250,00</small></div>
+              <div class="the_offerings">
+                <p><i class="fa fa-chevron-right fa-1x"></i> Foto de Perfil. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Créditos não Expiram. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Painel Administrativo.<p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Suporte por SKYPE. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Relatório detalhado de Envio. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Envie Texto/Foto/Vídeo/PDF.<p>
+              </div>
+              <!-- <a href="#" class="btn btn-color">Contrate</a> -->
+            </div>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="pricing_plan bottom-pad-small special wow fadeInUp">
+              <h3>Intermediário<strong>2</strong> <small>100.000 créditos</small></h3>
+              <div class="the_price"><span>R$</span>0,055<small>/R$5.500,00</small></div>
+              <div class="the_offerings">
+                <p><i class="fa fa-chevron-right fa-1x"></i> Foto de Perfil. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Créditos não Expiram. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Painel Administrativo.<p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Suporte por SKYPE. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Relatório detalhado de Envio. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Envie Texto/Foto/Vídeo/PDF.<p>
+              </div>
+              <!-- <a href="#" class="btn btn-color">Contrate</a> -->
+            </div>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="pricing_plan wow fadeInUp">
+              <h3>Intermediário<strong>3</strong> <small>300.000 créditos</small></h3>
+              <div class="the_price"><span>R$</span>0,042<small>/R$12.600,00</small></div>
+              <div class="the_offerings">
+                <p><i class="fa fa-chevron-right fa-1x"></i> Foto de Perfil. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Créditos não Expiram. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Painel Administrativo.<p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Suporte por SKYPE. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Relatório detalhado de Envio. </p>
+                <p><i class="fa fa-chevron-right fa-1x"></i> Envie Texto/Foto/Vídeo/PDF.<p>
+              </div>
+              <!-- <a href="#" class="btn btn-color">Contrate</a> -->
+            </div>
+          </div>
+
+
+        </div>
+        <p>*Para contratações maiores do que 300k entre em contato conosco temos pacotes e preços especiais. <br><i>*Texto e Imagem = 1 crédito, Texto e Vídeo = 2 créditos.</i></p>
+      </div>
+    </div>
+    <!-- /Main Section -->
+    <!-- Footer -->
+    <a name="contato"></a>
+    <footer id="footer">
+      <div class="pattern-overlay">
+        <!-- Footer Top -->
+        <div class="footer-top">
+          <div class="container">
+            <div class="row">
+              <section class="col-lg-3 col-md-3 col-xs-12 col-sm-3 footer-one wow fadeIn">
+                <h3 class="light">Links</h3>
+                <p> 
+                  <i class="fa fa-sign-out fa-1x"></i> <a href="#" class="sf-with-ul">Home</a><br>
+                  <i class="fa fa-sign-out fa-1x"></i> <a href="#oque" class="sf-with-ul">O que é?</a><br>
+                  <i class="fa fa-sign-out fa-1x"></i> <a href="#funciona" class="sf-with-ul">Como funciona</a><br>
+                  <i class="fa fa-sign-out fa-1x"></i> <a href="#beneficios" class="sf-with-ul">Benefícios</a><br>
+                  <i class="fa fa-sign-out fa-1x"></i> <a href="#planos" class="sf-with-ul">Planos e Pacotes</a><br>
+                  <i class="fa fa-sign-out fa-1x"></i> <a href="#oque" class="sf-with-ul">Termos de Uso</a><br>
+                </p>
+              </section>
+              <section class="col-lg-3 col-md-3 col-xs-12 col-sm-3 footer-two wow fadeIn">
+                <h3 class="light">Fale Conosco</h3>
+                <ul class="contact-us">
+                  <li>
+                    <i class="fa fa-map-marker"></i>
+                    <p> 
+                      <strong class="contact-pad">Endereço:</strong> SCRN 708/709 bloco A<br> Asa Norte, Brasília <br>
+                      Distrito Federal 
+                    </p>
+                  </li>
+                  <li>
+                    <i class="fa fa-phone"></i>
+                    <p><strong>WhatsApp:</strong> +55 61 99670-4040</p>
+                  </li>
+                  <li>
+                    <i class="fa fa-envelope"></i>
+                    <p><strong></strong><a href="mailto:support@fifothemes.com">comercial@zapmarketing.com.br</a></p>
+                  </li>
+                </ul>
+              </section>
+              <?php
+
+              use Application\Form\KleoForm;
+
+              $formulario = $this->formulario;
+              $formulario->prepare();
+
+              $formulario->setAttribute(KleoForm::stringAction, 'responsavelFinalizar');
+              echo $this->form()->openTag($formulario);
+              echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
+              echo $this->formHidden($formulario->get(KleoForm::inputId));
+              ?>
+              <h4 class="light"><b>Ligamos para Você - Preencha o Formulário</b></h4>
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-6 ">
+                <?php 
+                echo $this->formInput($formulario->get(KleoForm::inputNome));            
+                echo $this->formElementErrors()
+                  ->setMessageOpenFormat('<div><p class="text-danger"><small>')
+                  ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')
+                  ->setMessageCloseString('</small></p></div>')
+                  ->render($formulario->get(KleoForm::inputNome));
+                ?>
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-6 ">
+                <?php 
+                echo $this->formInput($formulario->get(KleoForm::inputTelefone));
+
+                echo $this->formElementErrors()
+                  ->setMessageOpenFormat('<div><p class="text-danger"><small>')
+                  ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')
+                  ->setMessageCloseString('</small></p></div>')
+                  ->render($formulario->get(KleoForm::inputTelefone));
+                ?>
+
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6 ">
+                <div class="input-group">
+                  <?php 
+                  echo $this->formInput($formulario->get(KleoForm::inputEmail));                
+                  echo $this->formElementErrors()
+                    ->setMessageOpenFormat('<div><p class="text-danger"><small>')
+                    ->setMessageSeparatorString('</small></p><p class="text-danger"><small>')
+                    ->setMessageCloseString('</small></p></div>')
+                    ->render($formulario->get(KleoForm::inputEmail));
+                  ?>
+                  <span class="input-group-btn">
+                    <?php echo $this->botao('Enviar', $this->funcaoOnClickSubmeterFormulario(), 2); ?>
+                  </span>
+                </div>
+              </div>            
+              <?php echo $this->form()->closeTag(); ?>      
+            </div>
+          </div>
+
+          <!-- /Footer Bottom --> 
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-24 col-md-6 col-xs-12 col-sm-6 ">
+              <p class="credits">&copy; Copyright 2016 by <a href="#">ZapMarketing</a>. All Rights Reserved. </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+  </section>
+</div>

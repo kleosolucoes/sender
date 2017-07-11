@@ -21,7 +21,7 @@ class KleoController extends AbstractActionController {
   private $_doctrineORMEntityManager;
   private $sessao;
 
-  const nomeAplicacao = 'Sender';
+  const nomeAplicacao = 'Zapmarketing';
   const stringFormulario = 'formulario';
   const stringAction = 'action';
   const stringId = 'id';
@@ -38,7 +38,8 @@ class KleoController extends AbstractActionController {
   const diretorioDocumentos = '/../../../../public/assets';
   const emailTitulo = 'Sender';
   const emailLeo = 'falecomleonardopereira@gmail.com';
-  const emailKort = 'diegokort@gmail.com';
+  const emailKort = 'diegokort@zapmarketing.com.br';
+  const emailSilverio = 'comercial@zapmarketing.com.br';
 
   /**
      * Contrutor sobrecarregado com os serviços de ORM
@@ -172,5 +173,13 @@ class KleoController extends AbstractActionController {
   public function getDoctrineORMEntityManager() {
     return $this->_doctrineORMEntityManager;
   }
+  
+  /**
+     * Seta o layout da administracao
+     */
+  public function setLayoutSite() {
+    $this->layout('layout/site');
+  }
+
 
 }

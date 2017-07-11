@@ -24,7 +24,7 @@ class CadastroResponsavelForm extends KleoForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputNome,
       self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
+      self::stringPlaceholder => self::traducaoNome      
     ])
     );
 
@@ -36,8 +36,7 @@ class CadastroResponsavelForm extends KleoForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputTelefone,
       self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
-
+      self::stringPlaceholder => self::traducaoTelefone .' DDD + Numero'
     ])
     );
 
@@ -48,20 +47,7 @@ class CadastroResponsavelForm extends KleoForm {
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputEmail,
       self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
-
-    ])
-    );
-
-    $this->add(
-      (new Text())
-      ->setName(self::inputRepetirEmail)
-      ->setAttributes([
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputRepetirEmail,
-      self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
-
+      self::stringPlaceholder => self::traducaoEmail 
     ])
     );
 

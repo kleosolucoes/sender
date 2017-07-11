@@ -47,7 +47,7 @@ class KleoForm extends Form {
   const stringOnblur = 'onblur';
   const stringValidacoesFormulario = 'validacoesFormulario(this);';
 
-  const traducaoNome = 'Nome do Responsável';
+  const traducaoNome = 'Nome';
   const traducaoPrimeiroNome = 'Primeiro Nome';
   const traducaoUltimoNome = 'Último Nome';
   const traducaoTelefone = 'Telefone';

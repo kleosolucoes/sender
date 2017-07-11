@@ -228,26 +228,6 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         ->attach(new Validator\EmailAddress());
       $inputFilter->add($email);
 
-      $inputFilter->add(array(
-        'name' => KleoForm::inputRepetirEmail,
-        'required' => true,
-        'validators' => array(
-        array(
-        'name' => 'NotEmpty',        
-      ),
-        array(
-        'name'    => 'Identical',        
-        'options' => array(
-        'token' => KleoForm::inputEmail,
-        'messages' => array(
-        \Zend\Validator\Identical::NOT_SAME => 'Emails são diferentes',
-        \Zend\Validator\Identical::MISSING_TOKEN => 'Repita o Email'      
-      ),
-      ),
-      ),
-      ),
-      ));
-
       $this->inputFilterCadastrarResponsavel = $inputFilter;
     }
     return $this->inputFilterCadastrarResponsavel;

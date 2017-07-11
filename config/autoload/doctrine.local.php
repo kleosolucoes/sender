@@ -11,12 +11,15 @@ return array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    'host' => 'localhost',
-                    'port' => '3306',
-                    'user' => 'zapma087_root',
-                    'password' => 'VgmHR5UJ',
-                    'dbname' => 'zapma087_zap',
-                    'encoding' => 'utf8',
+//                     'user' => 'zapma087_root',
+//                     'password' => 'VgmHR5UJ',
+//                     'dbname' => 'zapma087_zap',
+                      'host' => 'localhost',
+                      'port' => '3306',
+                      'user' => 'root',
+                      'password' => '',
+                      'dbname' => 'mysql',
+ +                    'encoding' => 'utf8',
                 )
             )
         ),

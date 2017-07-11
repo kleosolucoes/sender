@@ -3,7 +3,7 @@
 use Application\Controller\KleoController;
 
 echo $this->doctype();
-$versao = '?v=1.0';
+$versao = '?v=1.2.5';
 ?>
 <html lang="pt-BR">
   <head>
@@ -31,7 +31,6 @@ $versao = '?v=1.0';
     <?php
     echo $this
       ->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'))
-      ->prependStylesheet($this->basePath() . '/css/splash.css' . $versao)
       ->prependStylesheet('css/site/spectrum.css')      
       ->prependStylesheet('css/site/switcher.css')
       ->prependStylesheet('css/site/theme-responsive.css')
@@ -42,8 +41,8 @@ $versao = '?v=1.0';
       ->prependStylesheet('css/site/settings.css')
       ->prependStylesheet('css/site/superfish.css')
       ->prependStylesheet('css/site/animations.css')
-      ->prependStylesheet('css/site/font-awesome.css')
-      ->prependStylesheet('css/site/bootstrap-theme.css')
+      ->prependStylesheet('css/site/font-awesome.min.css')
+      ->prependStylesheet('css/site/bootstrap-theme.min.css')
       ->prependStylesheet('css/site/bootstrap.min.css')
       ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:100,200,300,700,800,900')
       ->prependStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700')
@@ -52,12 +51,11 @@ $versao = '?v=1.0';
   </head>
   <body class="home">
     <?php 
-    echo $this->splash(); 
     echo $this->content; 
     ?>      
     <!-- BEGIN: PAGE SCRIPTS -->
     <?php
-   
+
     echo $this
       ->headScript()
       ->prependFile($this->basePath() . '/js/validacoes.js' . $versao)
@@ -65,6 +63,7 @@ $versao = '?v=1.0';
       ->prependFile($this->basePath() . '/js/site/custom.js')
       ->prependFile($this->basePath() . '/js/site/switcher.js')
       ->prependFile($this->basePath() . '/js/site/spectrum.js')
+      ->prependFile($this->basePath() . '/js/site/jquery.fitvids.js')
       ->prependFile($this->basePath() . '/js/site/wow.js')
       ->prependFile($this->basePath() . '/js/site/waypoints.min.js')
       ->prependFile($this->basePath() . '/js/site/imagesloaded.pkgd.min.js')
@@ -83,14 +82,13 @@ $versao = '?v=1.0';
       ->prependFile($this->basePath() . '/js/site/jquery.parallax.js')
       ->prependFile($this->basePath() . '/js/site/jquery.themepunch.revolution.min.js')
       ->prependFile($this->basePath() . '/js/site/jquery.themepunch.plugins.min.js')
-      ->prependFile($this->basePath() . '/js/site/bootstrap.js')
-      ->prependFile($this->basePath() . '/js/site/jquery-ui.js')
+      ->prependFile($this->basePath() . '/js/site/bootstrap.min.js')
       ->prependFile($this->basePath() . '/js/site/jquery-migrate-1.0.0.js')
-      ->prependFile($this->basePath() . '/vendor/jquery/jquery_ui/jquery-ui.min.js')
-      ->prependFile($this->basePath() . '/vendor/jquery/jquery-1.11.1.min.js')
+      ->prependFile($this->basePath() . '/js/site/jquery-ui.js')
+      ->prependFile($this->basePath() . '/js/site/jquery.min.js')
       ;
     echo $this->inlineScript();
-    ?>   
+    ?> 
     <!-- END: PAGE SCRIPTS -->
   </body>
 </html>

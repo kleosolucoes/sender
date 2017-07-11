@@ -69,7 +69,7 @@ return array(
         'exception_template' => 'error/index',
         'template_map' => array(
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'layout/adm' => __DIR__ . '/../view/layout/layout-adm.phtml',
+            'layout/site' => __DIR__ . '/../view/layout/layout-site.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ),

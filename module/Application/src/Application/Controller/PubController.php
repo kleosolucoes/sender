@@ -39,6 +39,8 @@ class PubController extends KleoController {
      * GET /
      */
   public function indexAction() {
+    
+    $this->setLayoutSite();
 
     $formulario = $this->params()->fromRoute(self::stringFormulario);
     if ($formulario) {
@@ -71,7 +73,7 @@ class PubController extends KleoController {
 
         /* validação */
         if ($cadastrarResponsavelForm->isValid()) {
-
+          
           $validatedData = $cadastrarResponsavelForm->getData();
           $responsavel->exchangeArray($cadastrarResponsavelForm->getData());
 
@@ -94,6 +96,7 @@ class PubController extends KleoController {
           unset($emails);
           $emails[] = self::emailLeo;
           $emails[] = self::emailKort;
+          $emails[] = self::emailSilverio;
           $urlResponsaveis = self::url . 'admResponsaveis';
 
           $titulo = 'Primeiro Contato';
@@ -111,8 +114,7 @@ class PubController extends KleoController {
           ));
 
         } else {
-
-          self::mostrarMensagensDeErroFormulario($cadastrarResponsavelForm->getMessages());
+          //self::mostrarMensagensDeErroFormulario($cadastrarResponsavelForm->getMessages());
 
           $repositorioORM->desfazerTransacao();       
 
