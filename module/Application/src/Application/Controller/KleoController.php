@@ -101,7 +101,7 @@ class KleoController extends AbstractActionController {
   public function kleoAction() {
     $request = $this->getRequest();
     $response = $this->getResponse();
-    if ($request->isPost()) {
+    if ($request->isPost()) { 
       try {
         $post_data = $request->getPost();
         $action = $post_data[self::stringAction];

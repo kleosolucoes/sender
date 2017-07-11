@@ -24,9 +24,9 @@ echo $this->cabecalhoPagina('Listagem de Responsaveis'); ?>
                 echo '<td class="hidden-xs">'.$responsavel->getTelefone().'</td>';
                 echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome();
                 if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === Situacao::primeiroContato){                  
-                  echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admResponsavelSituacao", '.$responsavel->getId().');'));
+                  echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admResponsavelSituacao", '.$responsavel->getId().')'));
                 }
-                echo $this->botao('Ver', $this->funcaoOnClick('kleo("admResponsavelVer", '.$responsavel->getId().');'));
+                echo $this->botao('Ver', $this->funcaoOnClick('kleo("admResponsavelVer", '.$responsavel->getId().')'));
                 echo '</td>';
                 echo '</tr>';
               }

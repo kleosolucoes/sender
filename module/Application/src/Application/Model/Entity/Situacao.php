@@ -18,6 +18,7 @@ class Situacao extends KleoEntity {
     const primeiroContato = 1;
     const ativo = 2;
     const recusado = 3;
+    const pendente = 4;
 
     /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavelSituacao") 

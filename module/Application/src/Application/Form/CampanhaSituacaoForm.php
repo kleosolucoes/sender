@@ -6,18 +6,18 @@ use Zend\Form\Element\Select;
 use Application\Model\Entity\Situacao;
 
 /**
- * Nome: ResponsavelSituacaoForm.php
+ * Nome: CampanhaSituacaoForm.php
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
  * Descricao: Formulario para mudar a situação  
  *              
  */
-class ResponsavelSituacaoForm extends KleoForm {
+class CampanhaSituacaoForm extends KleoForm {
 
-  public function __construct($name = null, $idResponsavel, $todasSituacoes, $idSituacao) {
+  public function __construct($name = null, $id, $todasSituacoes, $idSituacao) {
     parent::__construct($name);
 
     $inputId = $this->get(self::inputId);
-    $inputId->setValue($idResponsavel);
+    $inputId->setValue($id);
 
     $arraySituacoes = [];
     foreach($todasSituacoes as $situacao){
@@ -25,10 +25,10 @@ class ResponsavelSituacaoForm extends KleoForm {
       if($situacao->getId() === $idSituacao){
         $adicionar = true;
       }
-      if($situacao->getId() === ($idSituacao + 1)){
+      if($situacao->getId() === ($idSituacao - 1)){
         $adicionar = true;
       }
-      if($situacao->getId() === Situacao::recusado && $idSituacao === Situacao::primeiroContato){
+      if($situacao->getId() === ($idSituacao - 2)){
         $adicionar = true;
       }
       if($adicionar){

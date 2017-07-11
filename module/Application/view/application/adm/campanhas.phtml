@@ -1,4 +1,6 @@
-<?php echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admCampanha", 0);'))); ?>  
+<?php 
+use Application\Model\Entity\Situacao;
+echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admCampanha", 0);'))); ?>  
 <div class="content transition animate-panel fadeIn">
   <div class="row">
     <div class="col-lg-12">
@@ -29,7 +31,11 @@
                   echo '<td>'.$campanha->getUpload().'</td>';
                   echo '<td><img src="assets/'.$campanha->getUpload().'" width="124px" height="124px"/></td>';
                   echo '<td>'.$campanha->getMensagem().'</td>';
-                  echo '<td>'.$campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome().'</td>';
+                  echo '<td>'.$campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome();
+                  if($campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::pendente){                  
+                    echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admCampanhaSituacao", '.$campanha->getId().')'));
+                  }
+                  echo  '</td>';
                   echo '</tr>'; 
                 }
               }else{

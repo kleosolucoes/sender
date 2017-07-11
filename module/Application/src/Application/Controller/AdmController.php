@@ -12,6 +12,7 @@ use Application\Model\Entity\Situacao;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
 use Application\Form\ResponsavelSituacaoForm;
+use Application\Form\CampanhaSituacaoForm;
 use Application\Form\ResponsavelSenhaAtualizacaoForm;
 use Application\Form\CadastroCampanhaForm;
 use Application\Form\KleoForm;
@@ -240,10 +241,10 @@ class AdmController extends KleoController {
           $campanha = self::escreveDocumentos($campanha);
           $repositorioORM->getCampanhaORM()->persistir($campanha);
 
-          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::primeiroContato);
+          $situacaoPendente = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::pendente);
           $campanhaSituacao = new CampanhaSituacao();
           $campanhaSituacao->setCampanha($campanha);
-          $campanhaSituacao->setSituacao($situacao);
+          $campanhaSituacao->setSituacao($situacaoPendente);
           $repositorioORM->getCampanhaSituacaoORM()->persistir($campanhaSituacao);
 
           $repositorioORM->fecharTransacao();
@@ -263,6 +264,89 @@ class AdmController extends KleoController {
       }
     }
     return new ViewModel();
+  }
+
+  /**
+     * Formulario para alterar situacao
+     * GET /admCampanhaSituacao
+     */
+  public function campanhaSituacaoAction() {
+
+    $this->getSessao();
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $sessao = self::getSessao();
+    $idSessao = $sessao->idSessao;
+    if (empty($idSessao)) {
+      return $this->redirect()->toRoute(self::rotaAdm, array(
+        self::stringAction => 'campanhas',
+      ));
+    }
+    unset($sessao->idSessao);
+
+    $campanha = $repositorioORM->getCampanhaORM()->encontrarPorId($idSessao);
+    $situacoes = $repositorioORM->getSituacaoORM()->encontrarTodos();
+
+    $campanhaSituacaoForm = new CampanhaSituacaoForm('CampanhaSituacao', $idSessao, $situacoes, $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId());
+    return new ViewModel(
+      array(
+      self::stringFormulario => $campanhaSituacaoForm,
+      'campanha' => $campanha,
+    ));
+  }
+
+  /**
+     * Ação para alterar situacao
+     * GET /admCampanhaSituacaoFinalizar
+     */
+  public function campanhaSituacaoFinalizarAction() {
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+      try {
+        $repositorioORM->iniciarTransacao();
+        $post_data = $request->getPost();
+        $campanha = $repositorioORM->getCampanhaORM()->encontrarPorId($post_data[KleoForm::inputId]);
+        $intValIdSituacao = intval($post_data[KleoForm::inputSituacao]);
+
+        $gerar = false;
+        if ($campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() !== $intValIdSituacao) {
+          $gerar = true;
+        }
+        if ($gerar) {        
+
+          $campanhaSituacaoAtivo = $campanha->getCampanhaSituacaoAtivo();
+          $campanhaSituacaoAtivo->setDataEHoraDeInativacao();
+          $repositorioORM->getCampanhaSituacaoORM()->persistir($campanhaSituacaoAtivo, false);
+
+          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId($post_data[KleoForm::inputSituacao]);
+          $campanhaSituacao = new CampanhaSituacao();
+          $campanhaSituacao->setCampanha($campanha);
+          $campanhaSituacao->setSituacao($situacao);
+          $repositorioORM->getCampanhaSituacaoORM()->persistir($campanhaSituacao);
+
+          $emails[] = $campanha->getResponsavel()->getEmail();
+          $titulo = self::emailTitulo;
+          $mensagem = '';
+
+          if ($intValIdSituacao === Situacao::ativo) {
+            $mensagem = '<p>Campanha aprovada</p>';
+            $mensagem .= '<p>Campanha: ' . $campanha->getNome() . '</p>';
+            $mensagem .= '<p>Data de envio: ' . $campanha->getData_envio()->format('d/m/Y') . '</p>';
+          }
+          self::enviarEmail($emails, $titulo, $mensagem);
+          $repositorioORM->fecharTransacao();
+        }else{
+          $repositorioORM->desfazerTransacao();
+        }
+        return $this->redirect()->toRoute(self::rotaAdm, array(
+          self::stringAction => 'campanhas',
+        ));
+      } catch (Exception $exc) {
+        $repositorioORM->desfazerTransacao();
+        echo $exc->getMessage();
+      }
+    }
   }
 
 }
