@@ -35,6 +35,7 @@ class KleoForm extends Form {
   const inputFotoPerfil = 'inputFotoPerfil';
   const inputUpload = 'inputUpload';
   const inputMensagem = 'inputMensagem';
+  const onChange = 'onChange';
 
   const stringClass = 'class';
   const stringClassFormControl = 'form-control';
@@ -62,6 +63,7 @@ class KleoForm extends Form {
   const traducaoSituacao = 'Situação';
   const traducaoSelecione = 'Selecione';
 
+  const traducaoNomeCampanha = 'Nome da campanha';
   const traducaoDescricao = 'Desci&ccedil;&atilde;o';
   const traducaoDataEnvio = 'Data de Envio';
   const traducaoFotoPerfil = 'Foto de Perfil';

@@ -14,10 +14,11 @@ class RepositorioORM {
   private $_doctrineORMEntityManager;
   private $_responsavelORM;
   private $_situacaoORM;
-  private $_paisORM;
   private $_responsavelSituacaoORM;
   private $_campanhaORM;
   private $_campanhaSituacaoORM;
+  private $_contaCorrenteORM;
+  private $_contaCorrenteSituacaoORM;
 
   /**
      * Contrutor
@@ -92,6 +93,28 @@ class RepositorioORM {
       $this->_campanhaSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\CampanhaSituacao');
     }
     return $this->_campanhaSituacaoORM;
+  }
+  
+  /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+  public function getContaCorrenteORM() {
+    if (is_null($this->_contaCorrenteORM)) {
+      $this->_contaCorrenteORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\ContaCorrente');
+    }
+    return $this->_contaCorrenteORM;
+  }
+
+  /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+  public function getContaCorrenteSituacaoORM() {
+    if (is_null($this->_contaCorrenteSituacaoORM)) {
+      $this->_contaCorrenteSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\ContaCorrenteSituacao');
+    }
+    return $this->_contaCorrenteSituacaoORM;
   }
 
   /**

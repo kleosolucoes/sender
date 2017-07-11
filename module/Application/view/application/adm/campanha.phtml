@@ -5,71 +5,49 @@ use Application\Form\KleoForm;
 $formulario = $this->formulario;
 $formulario->prepare();
 
-$formulario->setAttribute(KleoForm::stringAction, 'admCampanhaFinalizar');
+$formulario->setAttribute(KleoForm::stringAction, '/admCampanhaFinalizar');
 echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
 ?>
-<?php echo $this->cabecalhoPagina('Cadastro de Campanha'); ?>
-<div class="content animate-panel">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="hpanel">
-        <div class="panel-body">
-          <div class="text-center m-b-md" id="wizardControl"> 
-            <a class="btn btn-default" href="#step1" data-toggle="tab">Passo 1 - Dados</a>
-            <a class="btn btn-default" href="#step2" data-toggle="tab">Passo 2 - Foto</a>
-            <a class="btn btn-default" href="#step3" data-toggle="tab">Passo 3 - Confirmação</a>
+
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix signUp">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3>Nova Campanha</h3>
           </div>
-          <div class="tab-content">          
-            <div id="step1" class="p-m tab-pane active">
-              <div class="row">
-                <?php
-                echo $this->inputFormulario(KleoForm::traducaoTitulo, $formulario->get(KleoForm::inputTitulo));
-                ?>
-              </div>
-              <div class="text-right m-t-xs">
-                <button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-info pull-right ml10 next">Próximo</button>
-                <button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-right ml10 prev">Anterior</button>
-              </div>
-            </div>
-            <div id="step2" class="p-m tab-pane">
-              <div class="row">
-                <div class="form-group">
-                  <img id="image_upload_preview1" src="" />
-                  <?php
-                  echo $this->inputFormulario(KleoForm::traducaoFotoPrincipal, $formulario->get(KleoForm::inputFoto, 6));
-                echo $this->inputFormulario(KleoForm::traducaoDescricao, $formulario->get(KleoForm::inputDescricao), 6);
-                  ?>
-                </div>               
-              </div>
-              <div class="text-right m-t-xs">
-                <button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-info pull-right ml10 next">Próximo</button>
-                <button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-right ml10 prev">Anterior</button>
-              </div>
-            </div>
-            <div id="step3" class="tab-pane">
-              <div class="row text-center m-t-lg m-b-lg">
-                <div class="col-lg-12">
-                  <i class="pe-7s-check fa-5x text-muted"></i>
-                  <p class="small m-t-md">
-                    <strong>There are many</strong> variations of passages of Lorem Ipsum available, but the majority have suffered
-                  </p>
-                </div>
-                <div class="checkbox col-lg-12">
-                  <input type="checkbox" class="i-checks approveCheck" name="approve"> Eu concordo com os termos
-                </div>
-              </div>
-              <div class="text-right m-t-xs">
-                <?php echo $this->botao('Cadastrar', $this->funcaoOnClickSubmeterFormulario()); ?>
-                <button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-right ml10 prev">Anterior</button>
-              </div>
-            </div>
+          <div class="panel-body">              
+            <?php            
+            echo $this->inputFormulario(KleoForm::traducaoNomeCampanha, $formulario->get(KleoForm::inputNome));
+
+            echo $this->inputFormulario(KleoForm::traducaoDataEnvio, $formulario->get(KleoForm::inputDataEnvio));
+
+            echo $this->inputFormulario(KleoForm::traducaoFotoPerfil, $formulario->get(KleoForm::inputFotoPerfil), 9);  
+            ?>
+            <div class="col-md-3">
+              <img id="image_upload_preview_fotoPerfil" src="" />
+            </div>             
+            <?php
+            echo $this->inputFormulario(KleoForm::traducaoUpload, $formulario->get(KleoForm::inputUpload), 9);
+            ?>
+            <div class="col-md-3">
+              <img id="image_upload_preview_upload" src="" />
+            </div>             
+            <?php
+            echo $this->inputFormulario(KleoForm::traducaoMensagem, $formulario->get(KleoForm::inputMensagem));              
+
+            echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
+            ?>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
 <?php
 echo $this->form()->closeTag();

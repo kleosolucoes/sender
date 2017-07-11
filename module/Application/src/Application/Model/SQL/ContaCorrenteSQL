@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS `conta_corrente` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
-  `data_criacao` date DEFAULT NULL,
-  `hora_criacao` time DEFAULT NULL,
-  `data_inativacao` date NOT NULL,
-  `hora_inativacao` time NOT NULL,
-  `valor` bigint(10) unsigned DEFAULT NULL,
+  `valor` bigint(10) unsigned NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
   `responsavel_id` int(6) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_conta_corrente_responsavel_id` (`responsavel_id`)

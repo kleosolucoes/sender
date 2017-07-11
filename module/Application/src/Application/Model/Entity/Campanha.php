@@ -44,15 +44,15 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
   /** @ORM\Column(type="string") */
   protected $nome;
 
-  /** @ORM\Column(type="date_time") */
+  /** @ORM\Column(type="datetime", name="data_envio") */
   protected $data_envio;
 
   /** @ORM\Column(type="string") */
   protected $foto_perfil;
-  
+
   /** @ORM\Column(type="string") */
   protected $upload;
-  
+
   /** @ORM\Column(type="string") */
   protected $mensagem;
 
@@ -132,7 +132,9 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
 
   public function exchangeArray($data) {
     $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
-    $this->data_envio = (!empty($data[KleoForm::inputDataEnvio]) ? $data[KleoForm::inputDataEnvio] : null);
+    if(!empty($data[KleoForm::inputDataEnvio])){
+      $this->data_envio = DateTime::createFromFormat('Y-m-d', $data[KleoForm::inputDataEnvio]);  
+    }    
     $this->foto_perfil = (!empty($data[KleoForm::inputFotoPerfil]) ? $data[KleoForm::inputFotoPerfil] : null);
     $this->upload = (!empty($data[KleoForm::inputUpload]) ? $data[KleoForm::inputUpload] : null);
     $this->mensagem = (!empty($data[KleoForm::inputMensagem]) ? $data[KleoForm::inputMensagem] : null);
@@ -150,6 +152,7 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
     if (!$this->inputFilterCadastrarCampanha) {
 
       $inputFilter = new InputFilter();
+      
       $inputFilter->add(array(
         'name' => KleoForm::inputNome,
         'required' => true,
@@ -186,7 +189,7 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
       ),
       ),
       ));
-      
+
       $inputFilter->add(array(
         'name' => KleoForm::inputFotoPerfil,
         'required' => true,
@@ -200,9 +203,9 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
       ),
       ),
       ));
-      
+
       $inputFilter->add(array(
-        'name' => KleoForm::inputDescricao,
+        'name' => KleoForm::inputUpload,
         'required' => true,
         'filter' => array(
         array('name' => 'StripTags'), // removel xml e html string
@@ -212,13 +215,27 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
         array(
         'name' => 'NotEmpty',
       ),
-      ),        
+      ),               
+      ));
+      
+      $inputFilter->add(array(
+        'name' => KleoForm::inputMensagem,
+        'required' => true,
+        'filter' => array(
+        array('name' => 'StripTags'), // removel xml e html string
+        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+      ),
+        'validators' => array(
+        array(
+        'name' => 'NotEmpty',
+      ),
         array(
         'name' => 'StringLength',
         'options' => array(
         'encoding' => 'UTF-8',
         'min' => 10,
         'max' => 300,
+      ),
       ),
       ),
       ));

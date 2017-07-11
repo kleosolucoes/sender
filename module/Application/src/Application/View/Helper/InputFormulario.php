@@ -8,10 +8,10 @@ use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;
 use Zend\Form\Element\Number;
 use Zend\Form\Element\Email;
-use Zend\Form\Element\Tel;
 use Zend\Form\Element\File;
 use Zend\Form\Element\Password;
 use Zend\Form\Element\Checkbox;
+use Zend\Form\Element\Date;
 
 /**
  * Nome: InputFormulario.php
@@ -63,6 +63,9 @@ class InputFormulario extends AbstractHelper {
     }
     if ($this->getInput() instanceOf Checkbox) {
       $html .= $this->view->formCheckbox($this->getInput());
+    }
+    if ($this->getInput() instanceOf Date) {
+      $html .= $this->view->formDate($this->getInput());
     }
     $idDivMEnsagemDeErro = 'mensagemErro'.$this->getInput()->getName(); 
     $html .= '<div id="'.$idDivMEnsagemDeErro.'"></div>';

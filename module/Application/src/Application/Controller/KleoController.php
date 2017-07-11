@@ -134,9 +134,13 @@ class KleoController extends AbstractActionController {
         $extension = substr($info['name'], strrpos($info['name'], '.') + 1);
         $filename = '';
 
-        if ($file === KleoForm::inputFoto) {
-          $filename = $entidade->getId() . '_foto.' . $extension;
-          $entidade->setFoto($filename);
+        if ($file === KleoForm::inputFotoPerfil) {
+          $filename = $entidade->getId() . '_fotoPerfil.' . $extension;
+          $entidade->setFoto_perfil($filename);
+        }
+        if ($file === KleoForm::inputUpload) {
+          $filename = $entidade->getId() . '_upload.' . $extension;
+          $entidade->setUpload($filename);
         }
 
         if ($apenasAjustarEntidade) {

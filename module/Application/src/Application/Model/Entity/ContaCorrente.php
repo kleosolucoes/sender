@@ -46,6 +46,14 @@ class ContaCorrente extends KleoEntity implements InputFilterAwareInterface {
 
   /** @ORM\Column(type="integer") */
   protected $responsavel_id;
+  
+   function setValor($valor) {
+    $this->valor = $valor;
+  }
+
+  function getValor() {
+    return $this->valor;
+  }
 
   /**
      * Retorna a situacao ativo

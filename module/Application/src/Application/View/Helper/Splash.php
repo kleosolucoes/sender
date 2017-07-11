@@ -3,12 +3,7 @@
 namespace Application\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Zend\Form\Element\Select;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Number;
-use Zend\Form\Element\Email;
-use Zend\Form\Element\Tel;
-use Zend\Form\Element\File;
+use Application\Controller\KleoController;
 
 /**
  * Nome: Splash.php
@@ -31,7 +26,7 @@ class Splash extends AbstractHelper {
     $html .= '<div class="splash">';
     $html .= '<div class="color-line"></div>';
     $html .= '<div class="splash-title">';
-    $html .= '<h1>www.tonoshop.com.br</h1>';
+    $html .= '<h1>' . $this->view->translate(KleoController::nomeAplicacao) . '</h1>';
     $html .= '<div class="spinner">'; 
     $html .= '<div class="rect1"></div>'; 
     $html .= '<div class="rect2"></div>'; 

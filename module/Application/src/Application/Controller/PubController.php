@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManager;
 use Zend\Authentication\AuthenticationService;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Responsavel;
+use Application\Model\Entity\ContaCorrente;
+use Application\Model\Entity\ContaCorrenteSituacao;
 use Application\Model\Entity\ResponsavelSituacao;
 use Application\Model\Entity\Situacao;
 use Application\Model\ORM\RepositorioORM;
@@ -75,10 +77,10 @@ class PubController extends KleoController {
 
           $repositorioORM->getResponsavelORM()->persistir($responsavel);
 
-          $situacao = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::primeiroContato);
+          $situacaoPrimeiroContato = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::primeiroContato);
           $responsavelSituacao = new ResponsavelSituacao();
           $responsavelSituacao->setResponsavel($responsavel);
-          $responsavelSituacao->setSituacao($situacao);
+          $responsavelSituacao->setSituacao($situacaoPrimeiroContato);
 
           $repositorioORM->getResponsavelSituacaoORM()->persistir($responsavelSituacao);
 
@@ -205,6 +207,19 @@ class PubController extends KleoController {
 
           $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
           $repositorioORM->getResponsavelORM()->persistir($responsavel);
+
+          /* Colocando 10 creditos */
+          $contaCorrente = new ContaCorrente();
+          $contaCorrente->setResponsavel($responsavel);
+          $contaCorrente->setValor(10);
+          $repositorioORM->getContaCorrenteORM()->persistir($contaCorrente);
+                    
+          $situacaoAtivo = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::ativo);
+          $contaCorrenteSituacao = new ContaCorrenteSituacao();
+          $contaCorrenteSituacao->setConta_corrente($contaCorrente);
+          $contaCorrenteSituacao->setSituacao($situacaoAtivo);
+          $repositorioORM->getContaCorrenteSituacaoORM()->persistir($contaCorrenteSituacao);
+          /* Fim creditos */
 
           $emails[] = $responsavel->getEmail();
           $titulo = self::emailTitulo;

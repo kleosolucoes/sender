@@ -43,6 +43,14 @@ function carregarFoto(input, qualFoto) {
   var file = input.files[0];
   var imagefile = file.type;
   var match= ["image/jpeg","image/png","image/jpg"];
+	var tipoPreviewer = '';
+	if(qualFoto == 1){
+		tipoPreviewer = 'fotoPerfil';
+	}
+	if(qualFoto == 2){
+		tipoPreviewer = 'upload';
+	}
+	
   if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
     alert('tipo errado');
     return false;
@@ -50,9 +58,9 @@ function carregarFoto(input, qualFoto) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
-        $('#image_upload_preview'+qualFoto).attr('src', e.target.result);
-        $('#image_upload_preview'+qualFoto).attr('width', '100px');
-        $('#image_upload_preview'+qualFoto).attr('height', '100px');
+        $('#image_upload_preview_'+tipoPreviewer).attr('src', e.target.result);
+        $('#image_upload_preview_'+tipoPreviewer).attr('width', '100px');
+        $('#image_upload_preview_'+tipoPreviewer).attr('height', '100px');
       }
       reader.readAsDataURL(input.files[0]);
     }

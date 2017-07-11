@@ -7,9 +7,13 @@
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <th>Titulo</th>
-                <th>Descricao</th>
-                <th>Foto</th>
+                <th>Nome</th>
+                <th>Data Envio</th>
+                <th>Foto Perfil</th>
+                <th></th>
+                <th>Upload</th>
+                <th></th>
+                <th>Mensagem</th>
                 <th>Situacao</th>
               </tr>
             </thead>
@@ -18,9 +22,13 @@
               if($this->campanhas){
                 foreach($this->campanhas as $campanha){
                   echo '<tr>';
-                  echo '<td>'.$campanha->getTitulo(). '</td>';
-                  echo '<td>'.$campanha->getDescricao().'</td>';
-                  echo '<td>'.$campanha->getFoto().'</td>';
+                  echo '<td>'.$campanha->getNome(). '</td>';
+                  echo '<td>'.$campanha->getData_envio()->format('d/m/Y').'</td>';
+                  echo '<td>'.$campanha->getFoto_perfil().'</td>';
+                  echo '<td><img src="assets/'.$campanha->getFoto_perfil().'" width="124px" height="124px" /></td>';
+                  echo '<td>'.$campanha->getUpload().'</td>';
+                  echo '<td><img src="assets/'.$campanha->getUpload().'" width="124px" height="124px"/></td>';
+                  echo '<td>'.$campanha->getMensagem().'</td>';
                   echo '<td>'.$campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome().'</td>';
                   echo '</tr>'; 
                 }
