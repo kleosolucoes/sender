@@ -13,9 +13,9 @@ return array(
                 'params' => array(
                     'host' => 'localhost',
                     'port' => '3306',
-                    'user' => 'root',
-                    'password' => '',
-                    'dbname' => 'mysql',
+                    'user' => 'zapma087_root',
+                    'password' => 'VgmHR5UJ',
+                    'dbname' => 'zapma087_zap',
                     'encoding' => 'utf8',
                 )
             )
