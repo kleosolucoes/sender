@@ -94,7 +94,7 @@ class PubController extends KleoController {
 
           self::enviarEmail($emails, $titulo, $mensagem);
           unset($emails);
-          $emails[] = self::emailLeo;
+//          $emails[] = self::emailLeo;
           $emails[] = self::emailKort;
           $emails[] = self::emailSilverio;
           $urlResponsaveis = self::url . 'admResponsaveis';

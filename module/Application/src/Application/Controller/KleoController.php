@@ -22,6 +22,7 @@ class KleoController extends AbstractActionController {
   private $sessao;
 
   const nomeAplicacao = 'Zapmarketing';
+  const nomeAplicacaoDescricao = 'Envios em Massa pelo WhatsApp'; 
   const stringFormulario = 'formulario';
   const stringAction = 'action';
   const stringId = 'id';

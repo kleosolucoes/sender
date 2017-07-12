@@ -6,89 +6,90 @@ echo $this->doctype();
 $versao = '?v=1.2.5';
 ?>
 <html lang="pt-BR">
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <!-- Title Head -->
-    <?php
-    $NAME_APPLICATION = $this->translate(KleoController::nomeAplicacao);
-    echo $this
-      ->headTitle($NAME_APPLICATION)
-      ->setSeparator(' - ')
-      ->setAutoEscape(false)
-      ;
-    ?>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <!-- Title Head -->
+        <?php
+        $NAME_APPLICATION = $this->translate(KleoController::nomeAplicacao) . ' - ' . $this->translate(KleoController::nomeAplicacaoDescricao);
+        echo $this
+                ->headTitle($NAME_APPLICATION)
+                ->setSeparator(' - ')
+                ->setAutoEscape(false)
+        ;
+        ?>
+        <!-- Meta Head -->
+        <?php
+        echo $this
+                ->headMeta()
+                ->appendName('keywords', 'whatsapp, whatsapp marketing, whatsapp em massa')
+                ->appendName('author', KleoController::nomeAplicacao)
+                ->appendName('description', $NAME_APPLICATION)
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ;
+        ?>
 
-    <!-- Meta Head -->
-    <?php
-    echo $this
-      ->headMeta()
-      ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-      ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-      ;
-    ?>
-
-    <!-- Styles -->
-    <?php
-    echo $this
-      ->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'))
-      ->prependStylesheet('css/site/spectrum.css')      
-      ->prependStylesheet('css/site/switcher.css')
-      ->prependStylesheet('css/site/theme-responsive.css')
-      ->prependStylesheet('css/site/green.css')
-      ->prependStylesheet('css/site/style.css')
-      ->prependStylesheet('css/site/prettyPhoto.css')
-      ->prependStylesheet('css/site/extralayers.css')
-      ->prependStylesheet('css/site/settings.css')
-      ->prependStylesheet('css/site/superfish.css')
-      ->prependStylesheet('css/site/animations.css')
-      ->prependStylesheet('css/site/font-awesome.min.css')
-      ->prependStylesheet('css/site/bootstrap-theme.min.css')
-      ->prependStylesheet('css/site/bootstrap.min.css')
-      ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:100,200,300,700,800,900')
-      ->prependStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700')
-      ;    
-    ?>       
-  </head>
-  <body class="home">
-    <?php 
-    echo $this->content; 
-    ?>      
-    <!-- BEGIN: PAGE SCRIPTS -->
-    <?php
-
-    echo $this
-      ->headScript()
-      ->prependFile($this->basePath() . '/js/validacoes.js' . $versao)
-      ->prependFile($this->basePath() . '/js/funcoes.js' . $versao)
-      ->prependFile($this->basePath() . '/js/site/custom.js')
-      ->prependFile($this->basePath() . '/js/site/switcher.js')
-      ->prependFile($this->basePath() . '/js/site/spectrum.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.fitvids.js')
-      ->prependFile($this->basePath() . '/js/site/wow.js')
-      ->prependFile($this->basePath() . '/js/site/waypoints.min.js')
-      ->prependFile($this->basePath() . '/js/site/imagesloaded.pkgd.min.js')
-      ->prependFile($this->basePath() . '/js/site/jflickrfeed.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.countTo.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.sticky.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.gmap.min.js')
-      ->prependFile($this->basePath() . '/js/site/tytabs.js')
-      ->prependFile($this->basePath() . '/js/site/tweetMachine.js')
-      ->prependFile($this->basePath() . '/js/site/superfish.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.prettyPhoto.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.bxslider.min.js')
-      ->prependFile($this->basePath() . '/js/site/modernizr-2.6.2.min.js')
-      ->prependFile($this->basePath() . '/js/site/fappear.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.wait.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.parallax.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.themepunch.revolution.min.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.themepunch.plugins.min.js')
-      ->prependFile($this->basePath() . '/js/site/bootstrap.min.js')
-      ->prependFile($this->basePath() . '/js/site/jquery-migrate-1.0.0.js')
-      ->prependFile($this->basePath() . '/js/site/jquery-ui.js')
-      ->prependFile($this->basePath() . '/js/site/jquery.min.js')
-      ;
-    echo $this->inlineScript();
-    ?> 
-    <!-- END: PAGE SCRIPTS -->
-  </body>
+        <!-- Styles -->
+        <?php
+        echo $this
+                ->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.jpeg'))
+                ->prependStylesheet('css/site/spectrum.css')
+                ->prependStylesheet('css/site/switcher.css')
+                ->prependStylesheet('css/site/theme-responsive.css')
+                ->prependStylesheet('css/site/green.css')
+                ->prependStylesheet('css/site/style.css')
+                ->prependStylesheet('css/site/prettyPhoto.css')
+                ->prependStylesheet('css/site/extralayers.css')
+                ->prependStylesheet('css/site/settings.css')
+                ->prependStylesheet('css/site/superfish.css')
+                ->prependStylesheet('css/site/animations.css')
+                ->prependStylesheet('css/site/font-awesome.min.css')
+                ->prependStylesheet('css/site/bootstrap-theme.min.css')
+                ->prependStylesheet('css/site/bootstrap.min.css')
+                ->prependStylesheet('https://fonts.googleapis.com/css?family=Raleway:100,200,300,700,800,900')
+                ->prependStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700')
+        ;
+        ?>       
+    </head>
+    <body class="home">
+        <?php
+        echo $this->content;
+        ?>      
+        <!-- BEGIN: PAGE SCRIPTS -->
+        <?php
+        echo $this
+                ->headScript()
+                ->prependFile($this->basePath() . '/js/validacoes.js' . $versao)
+                ->prependFile($this->basePath() . '/js/funcoes.js' . $versao)
+                ->prependFile($this->basePath() . '/js/site/custom.js')
+                ->prependFile($this->basePath() . '/js/site/switcher.js')
+                ->prependFile($this->basePath() . '/js/site/spectrum.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.fitvids.js')
+                ->prependFile($this->basePath() . '/js/site/wow.js')
+                ->prependFile($this->basePath() . '/js/site/waypoints.min.js')
+                ->prependFile($this->basePath() . '/js/site/imagesloaded.pkgd.min.js')
+                ->prependFile($this->basePath() . '/js/site/jflickrfeed.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.countTo.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.sticky.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.gmap.min.js')
+                ->prependFile($this->basePath() . '/js/site/tytabs.js')
+                ->prependFile($this->basePath() . '/js/site/tweetMachine.js')
+                ->prependFile($this->basePath() . '/js/site/superfish.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.prettyPhoto.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.bxslider.min.js')
+                ->prependFile($this->basePath() . '/js/site/modernizr-2.6.2.min.js')
+                ->prependFile($this->basePath() . '/js/site/fappear.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.wait.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.parallax.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.themepunch.revolution.min.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.themepunch.plugins.min.js')
+                ->prependFile($this->basePath() . '/js/site/bootstrap.min.js')
+                ->prependFile($this->basePath() . '/js/site/jquery-migrate-1.0.0.js')
+                ->prependFile($this->basePath() . '/js/site/jquery-ui.js')
+                ->prependFile($this->basePath() . '/js/site/jquery.min.js')
+        ;
+        echo $this->inlineScript();
+        ?> 
+        <!-- END: PAGE SCRIPTS -->
+    </body>
 </html>
