@@ -12,9 +12,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                 <th>Nome</th>
                 <th>Data Envio</th>
                 <th>Foto Perfil</th>
-                <th></th>
                 <th>Upload</th>
-                <th></th>
                 <th>Mensagem</th>
                 <th>Situacao</th>
               </tr>
@@ -26,9 +24,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                   echo '<tr>';
                   echo '<td>'.$campanha->getNome(). '</td>';
                   echo '<td>'.$campanha->getData_envio()->format('d/m/Y').'</td>';
-                  echo '<td>'.$campanha->getFoto_perfil().'</td>';
                   echo '<td><img src="assets/'.$campanha->getFoto_perfil().'" width="124px" height="124px" /></td>';
-                  echo '<td>'.$campanha->getUpload().'</td>';
                   echo '<td><img src="assets/'.$campanha->getUpload().'" width="124px" height="124px"/></td>';
                   echo '<td>'.$campanha->getMensagem().'</td>';
                   echo '<td>'.$campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome();
@@ -40,7 +36,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                 }
               }else{
                 echo '<tr>';
-                echo '<td colspan="4" class="text-center">'.'Sem campanhas cadastradas!'.'</td>';
+                echo '<td colspan="6" class="text-center">'.'Sem campanhas cadastradas!'.'</td>';
                 echo '</tr>'; 
               }
               ?>                                

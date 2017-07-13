@@ -24,23 +24,23 @@ class Menu extends AbstractHelper {
 
     $html .= '<div class="navbar-branding">';
     $html .= '<a class="navbar-brand" href="#" style="padding-top: 22px;">';
-    $html .= '<img src="/img/logos/new_logo-circuito.png" title="' .
-      $this->view->translate(KleoController::nomeAplicacao) . '" class="img-responsive" style="max-width:100%;">';
+    $html .= '<img src="/img/site/logonova2.png" title="' ;
+    $html .= $this->view->translate(KleoController::nomeAplicacao) ;
+    $html .= '" class="img-responsive" style="max-width:100%;">';
     $html .= '</a>';
     $html .= '<span id="toggle_sidemenu_l" class="ad ad-lines"></span>';
     $html .= '</div>';
     $html .= '<ul class="nav navbar-nav navbar-right">';
     $html .= '<li class="dropdown menu-merge">';
     $html .= '<a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">';      
-    $html .= '<img src="/img/avatars/' . $stringFoto . '" alt="" class="mw30 br64">' .
-      'GERACAO DE VALOR';
-    $html .= '<span class="pl5">- FLAVIO AUGUSTO</span>';
+    $html .= $this->view->responsavel->getNomeEmpresa();
+    $html .= '<span class="pl5">- '.$this->view->responsavel->getNome().'</span>';
     $html .= '<span class="caret caret-tp"></span>';
     $html .= '</a>'; 
 
     $html .= '<ul class="dropdown-menu list-group dropdown-persist w250" role="menu">';
     $html .= '<li class="dropdown-footer">';
-    $html .= '<a href="" class="">';
+    $html .= '<a href="/admsair">';
     $html .= '<span class="fa fa-power-off pr5"></span>' . 'Sair' . '</a>';
     $html .= '</li>';
     $html .= '</ul>';
@@ -60,15 +60,12 @@ class Menu extends AbstractHelper {
 
     // Sidebar Widget - Author 
     $html .= '<div class="sidebar-widget author-widget">';
-    $html .= '<div class="media">';
-    $html .= '<a class="media-left" href="#">';
-    $html .= '<img src="/img/avatars/' . $stringFoto . '" class="img-responsive">';
-    $html .= '</a>';
+    $html .= '<div class="media">';  
     $html .= '<div class="media-body">';
     $html .= '<div class="media-links">';
-    $html .= '<a href="/preSaida">Sair</a>';
+    $html .= '<a href="/admsair">Sair</a>';
     $html .= '</div>';
-    $html .= '<div class="media-author">FLAVIO AUGUSTO</div>';
+    $html .= '<div class="media-author">'.$this->view->responsavel->getNome().'</div>';
     $html .= '</div>';
     $html .= '</div>';
     $html .= '</div>';
@@ -89,19 +86,17 @@ class Menu extends AbstractHelper {
     $html .= '<ul class="nav sidebar-menu">';
     $html .= '<li class="sidebar-label pt20">Menu</li>';
 
-    $html .= '<li class="sidebar-label pt20">Campanhas</li>';
-
     $html .= '<li>';
-    $html .= '<a href="/admCampanhas">';
-    $html .= '<span class="fa fa-home"></span>';
-    $html .= '<span class="sidebar-title">Listagem</span>';
+    $html .= '<a href="/admcampanhas">';
+    $html .= '<span class="fa fa-paper-plane"></span>';
+    $html .= '<span class="sidebar-title">Campanhas</span>';
     $html .= '</a>';
     $html .= '</li>';   
 
     $html .= '<li>';
-    $html .= '<a href="/admCampanha">';
-    $html .= '<span class="fa fa-home"></span>';
-    $html .= '<span class="sidebar-title">Cadastrar</span>';
+    $html .= '<a href="/admlistas">';
+    $html .= '<span class="fa fa-users"></span>';
+    $html .= '<span class="sidebar-title">Contatos</span>';
     $html .= '</a>';
     $html .= '</li>';   
 
@@ -110,7 +105,7 @@ class Menu extends AbstractHelper {
 
     // Start: Sidebar Collapse Button
     $html .= '<div class="sidebar-toggle-mini">';
-    $html .= '<a href="#">';
+    $html .= '<a href="/admsair">';
     $html .= '<span class="fa fa-sign-out"></span>';
     $html .= '</a>';
     $html .= '</div>';

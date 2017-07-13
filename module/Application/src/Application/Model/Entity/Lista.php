@@ -34,7 +34,7 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
 
 
   public function __construct() {
-  
+
   }
 
   /** @ORM\Column(type="string") */
@@ -42,6 +42,9 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
 
   /** @ORM\Column(type="string") */
   protected $descricao;
+
+  /** @ORM\Column(type="string") */
+  protected $upload;
 
   /** @ORM\Column(type="integer") */
   protected $responsavel_id;
@@ -62,6 +65,14 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
     return $this->descricao;
   }
 
+  function setUpload($upload) {
+    $this->upload = $upload;
+  }
+
+  function getUpload() {
+    return $this->upload;
+  }
+
   function setResponsavel($responsavel) {
     $this->responsavel = $responsavel;
   }
@@ -73,6 +84,7 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
   public function exchangeArray($data) {
     $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
     $this->descricao = (!empty($data[KleoForm::inputDescricao]) ? $data[KleoForm::inputDescricao] : null);
+    $this->upload = (!empty($data[KleoForm::inputUpload]) ? $data[KleoForm::inputUpload] : null);
   }
 
   public function setInputFilter(InputFilterInterface $inputFilter) {
@@ -131,6 +143,20 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
       ),
       ),
       ),
+      ));
+
+      $inputFilter->add(array(
+        'name' => KleoForm::inputUpload,
+        'required' => true,
+        'filter' => array(
+        array('name' => 'StripTags'), // removel xml e html string
+        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
+      ),
+        'validators' => array(
+        array(
+        'name' => 'NotEmpty',
+      ),
+      ),               
       ));
 
       $this->inputFilterCadastrarLista = $inputFilter;

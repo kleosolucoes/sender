@@ -36,6 +36,17 @@ class ResponsavelSenhaAtualizacaoForm extends CadastroResponsavelForm {
     }
 
     $this->add(
+      (new Email())
+      ->setName(self::inputRepetirEmail)
+      ->setAttributes([
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputRepetirEmail,
+      self::stringRequired => self::stringRequired,
+      self::stringOnblur => self::stringValidacoesFormulario,
+    ])
+    );
+
+    $this->add(
       (new Text())
       ->setName(self::inputUltimoNome)
       ->setAttributes([

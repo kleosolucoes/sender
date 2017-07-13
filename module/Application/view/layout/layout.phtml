@@ -103,10 +103,13 @@ $versao = '?v=1.2.4';
         var splitUrl = url.split('/');
         if (splitUrl[3].includes('pub')
             || splitUrl[3].includes('adm')) {
-
           $('body')
             .removeClass('external-page')
             .removeClass('external-alt');
+        }
+        if (splitUrl[3].includes('adm')) {
+          $('body')
+            .removeClass('sb-l-c');
         }
       });
     </script>

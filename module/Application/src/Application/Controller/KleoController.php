@@ -10,6 +10,8 @@ use Zend\Json\Json;
 use Zend\File\Transfer\Adapter\Http;
 use Application\Model\Entity\KleoEntity;
 use Application\Form\KleoForm;
+use Application\Model\Entity\Campanha;
+use Application\Model\Entity\Lista;
 
 /**
  * Nome: KleoController.php
@@ -35,9 +37,10 @@ class KleoController extends AbstractActionController {
   const rotaPub = 'pub';
   const rotaAdm = 'adm';
   const url = 'http://sender-falecomleonardopereira890682.codeanyapp.com/';
+  //   const url = 'http://zapmarketing.com.br/';
   const stringMensagem = 'mensagem';
   const diretorioDocumentos = '/../../../../public/assets';
-  const emailTitulo = 'Sender';
+  const emailTitulo = 'Zapmarketing';
   const emailLeo = 'falecomleonardopereira@gmail.com';
   const emailKort = 'diegokort@zapmarketing.com.br';
   const emailSilverio = 'comercial@zapmarketing.com.br';
@@ -140,8 +143,16 @@ class KleoController extends AbstractActionController {
           $filename = $entidade->getId() . '_fotoPerfil.' . $extension;
           $entidade->setFoto_perfil($filename);
         }
-        if ($file === KleoForm::inputUpload) {
+        if ($file === KleoForm::inputUpload && $entidade instanceof Campanha) {
           $filename = $entidade->getId() . '_upload.' . $extension;
+          $entidade->setUpload($filename);
+        }
+        
+        if ($file === KleoForm::inputUpload && $entidade instanceof Lista) {
+          if($extension != 'csv'){
+            return false;
+          }
+          $filename = $entidade->getId() . '_contatos.' . $extension;
           $entidade->setUpload($filename);
         }
 
@@ -174,7 +185,7 @@ class KleoController extends AbstractActionController {
   public function getDoctrineORMEntityManager() {
     return $this->_doctrineORMEntityManager;
   }
-  
+
   /**
      * Seta o layout da administracao
      */

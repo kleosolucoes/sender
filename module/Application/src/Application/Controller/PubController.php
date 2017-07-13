@@ -39,7 +39,7 @@ class PubController extends KleoController {
      * GET /
      */
   public function indexAction() {
-    
+
     $this->setLayoutSite();
 
     $formulario = $this->params()->fromRoute(self::stringFormulario);
@@ -73,7 +73,7 @@ class PubController extends KleoController {
 
         /* validação */
         if ($cadastrarResponsavelForm->isValid()) {
-          
+
           $validatedData = $cadastrarResponsavelForm->getData();
           $responsavel->exchangeArray($cadastrarResponsavelForm->getData());
 
@@ -94,9 +94,9 @@ class PubController extends KleoController {
 
           self::enviarEmail($emails, $titulo, $mensagem);
           unset($emails);
-//          $emails[] = self::emailLeo;
-          $emails[] = self::emailKort;
-          $emails[] = self::emailSilverio;
+          $emails[] = self::emailLeo;
+          //           $emails[] = self::emailKort;
+          //           $emails[] = self::emailSilverio;
           $urlResponsaveis = self::url . 'admResponsaveis';
 
           $titulo = 'Primeiro Contato';
@@ -215,7 +215,7 @@ class PubController extends KleoController {
           $contaCorrente->setResponsavel($responsavel);
           $contaCorrente->setValor(10);
           $repositorioORM->getContaCorrenteORM()->persistir($contaCorrente);
-                    
+
           $situacaoAtivo = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::ativo);
           $contaCorrenteSituacao = new ContaCorrenteSituacao();
           $contaCorrenteSituacao->setConta_corrente($contaCorrente);
@@ -228,7 +228,7 @@ class PubController extends KleoController {
           $mensagem = '';
           $mensagem = '<p>Senha Cadastra com Sucesso</p>';
           $mensagem .= '<p>Usuario: ' . $responsavel->getEmail() . '</p>';
-          $mensagem .= '<p>Senha: ' . $responsavel->getSenha() . '</p>';
+          $mensagem .= '<p>Senha: ' . $post_data[KleoForm::inputSenha] . '</p>';
           $mensagem .= '<p><a href="' . self::url . 'login">Clique aqui acessar</a></p>';
           self::enviarEmail($emails, $titulo, $mensagem);
 

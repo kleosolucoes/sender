@@ -25,6 +25,7 @@ use Zend\Mvc\I18n\Translator;
 use Zend\Session\Config\SessionConfig;
 use Zend\Session\Container;
 use Zend\Session\SessionManager;
+use Application\Model\ORM\RepositorioORM;
 
 class Module {
 
@@ -51,6 +52,13 @@ class Module {
 		if (empty($sessao->idResponsavel)) {
 			$viewModel->mostrarMenu = 0;
 		}
+		if (!empty($sessao->idResponsavel)) {
+			$serviceManager = $e->getApplication()->getServiceManager();
+
+			$repositorioORM = new RepositorioORM($serviceManager->get('Doctrine\ORM\EntityManager'));
+			$responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($sessao->idResponsavel);
+			$viewModel->responsavel = $responsavel;
+		}
 	}
 
 	public function checkUserAuth(MvcEvent $e) {
@@ -59,9 +67,7 @@ class Module {
 		//this is a whitelist for routes that are allowed without authentication
 		//!!! Your authentication route must be whitelisted
 		$allowedRoutesConfig = array(			
-			'home',
 			'pub',
-			'adm',
 		);
 		if (!isset($matchedRoute) || in_array($matchedRoute->getMatchedRouteName(), $allowedRoutesConfig)) {
 			// no auth check required

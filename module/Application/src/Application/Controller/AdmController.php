@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use Application\Model\Entity\Responsavel;
 use Application\Model\Entity\ResponsavelSituacao;
 use Application\Model\Entity\Campanha;
+use Application\Model\Entity\Lista;
 use Application\Model\Entity\CampanhaSituacao;
 use Application\Model\Entity\Situacao;
 use Application\Model\ORM\RepositorioORM;
@@ -15,6 +16,7 @@ use Application\Form\ResponsavelSituacaoForm;
 use Application\Form\CampanhaSituacaoForm;
 use Application\Form\ResponsavelSenhaAtualizacaoForm;
 use Application\Form\CadastroCampanhaForm;
+use Application\Form\CadastroListaForm;
 use Application\Form\KleoForm;
 
 /**
@@ -347,6 +349,120 @@ class AdmController extends KleoController {
         echo $exc->getMessage();
       }
     }
+  }
+
+  /**
+     * Tela com listagem de contatos
+     * GET /admlistas
+     */
+  public function listasAction() {
+    $sessao = $this->getSessao();
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+
+    return new ViewModel(
+      array(
+      'listas' => $listas,
+    )
+    );
+  }
+
+  /**
+     * Tela com listagem de campanha
+     * GET /admlista
+     */
+  public function listaAction() {
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+
+    if ($formulario) {
+      $cadastroListaForm = $formulario;
+    } else {
+      $cadastroListaForm = new CadastroListaForm('cadastroLista');
+    }
+    return new ViewModel(
+      array(self::stringFormulario => $cadastroListaForm,)
+    );
+  }
+
+  /**
+     * Função para validar e finalizar cadastro
+     * GET /admListaFinalizar
+     */
+  public function listaFinalizarAction() {
+    $sessao = $this->getSessao();
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+      try {
+        $repositorioORM->iniciarTransacao();
+
+        $lista = new Lista();
+
+        $cadastrarListaForm = new CadastroListaForm(null);
+        $cadastrarListaForm->setInputFilter($lista->getInputFilterCadastrarLista());
+
+        $post = array_merge_recursive(
+          $request->getPost()->toArray(), $request->getFiles()->toArray()
+        );
+
+        $cadastrarListaForm->setData($post);
+
+        /* validação */
+        if ($cadastrarListaForm->isValid()) {
+          $validatedData = $cadastrarListaForm->getData();
+          $lista->exchangeArray($cadastrarListaForm->getData());
+
+          $apenasAjustarEntidade = false;
+          $resposta = self::escreveDocumentos($lista, $apenasAjustarEntidade);
+          if(!$resposta){
+            $repositorioORM->desfazerTransacao();
+            $cadastrarListaForm->get(KleoForm::inputUpload)->setMessages(array('Não é arquivo CSV'));
+            return $this->forward()->dispatch(self::controllerAdm, array(
+              self::stringAction => 'lista',
+              self::stringFormulario => $cadastrarListaForm,
+            ));
+          }
+          $lista = $resposta;
+
+          $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($sessao->idResponsavel);
+          $lista->setResponsavel($responsavel);
+          $repositorioORM->getListaORM()->persistir($lista);
+
+          $lista = self::escreveDocumentos($lista);
+          $repositorioORM->getListaORM()->persistir($lista);        
+
+          $repositorioORM->fecharTransacao();
+          return $this->redirect()->toRoute(self::rotaAdm, array(
+            self::stringAction => 'listas',
+          ));
+        } else {
+          $repositorioORM->desfazerTransacao();
+          return $this->forward()->dispatch(self::controllerAdm, array(
+            self::stringAction => 'lista',
+            self::stringFormulario => $cadastrarListaForm,
+          ));
+        }
+      } catch (Exception $exc) {
+        $repositorioORM->desfazerTransacao();
+        echo $exc->getMessage();
+      }
+    }
+    return new ViewModel();
+  }
+
+  /**
+     * Função que direciona a tela de acesso
+     * GET /sair
+     */
+  public function sairAction() {
+    /* Fechando a sessão */
+    $sessao = $this->getSessao();
+    $sessao->getManager()->destroy();
+
+    /* Redirecionamento */
+    return $this->redirect()->toRoute(self::rotaPub, array(
+      self::stringAction => self::stringLogin,
+    ));
   }
 
 }

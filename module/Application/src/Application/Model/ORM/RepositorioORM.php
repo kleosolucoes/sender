@@ -19,6 +19,7 @@ class RepositorioORM {
   private $_campanhaSituacaoORM;
   private $_contaCorrenteORM;
   private $_contaCorrenteSituacaoORM;
+  private $_listaORM;
 
   /**
      * Contrutor
@@ -71,6 +72,17 @@ class RepositorioORM {
       $this->_responsavelSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\ResponsavelSituacao');
     }
     return $this->_responsavelSituacaoORM;
+  }
+    
+  /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+  public function getListaORM() {
+    if (is_null($this->_listaORM)) {
+      $this->_listaORM = new ListaORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Lista');
+    }
+    return $this->_listaORM;
   }
 
   /**

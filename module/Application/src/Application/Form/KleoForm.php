@@ -69,6 +69,8 @@ class KleoForm extends Form {
   const traducaoFotoPerfil = 'Foto de Perfil';
   const traducaoUpload = 'Imagem / Video / Audio';
   const traducaoMensagem = 'Mensagem';
+    
+  const traducaoArquivoCSV = 'Arquivo CSV';
   
   const traducaoBrasil = 'BRASIL';
 
