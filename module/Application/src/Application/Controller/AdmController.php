@@ -10,6 +10,8 @@ use Application\Model\Entity\Campanha;
 use Application\Model\Entity\Lista;
 use Application\Model\Entity\CampanhaSituacao;
 use Application\Model\Entity\Situacao;
+use Application\Model\Entity\Contato;
+use Application\Model\Entity\CampanhaLista;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
 use Application\Form\ResponsavelSituacaoForm;
@@ -51,7 +53,7 @@ class AdmController extends KleoController {
     $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodos();
     return new ViewModel(
       array(
-      'responsaveis' => $responsaveis,
+      self::stringResponsaveis => $responsaveis,
     )
     );
   }
@@ -69,7 +71,7 @@ class AdmController extends KleoController {
     $idResponsavel = $sessao->idSessao;
     if (empty($idResponsavel)) {
       return $this->redirect()->toRoute(self::rotaAdm, array(
-        self::stringAction => 'responsaveis',
+        self::stringAction => self::stringResponsaveis,
       ));
     }
     unset($sessao->idSessao);
@@ -81,7 +83,7 @@ class AdmController extends KleoController {
     return new ViewModel(
       array(
       self::stringFormulario => $responsavelSituacaoForm,
-      'responsavel' => $responsavel,
+      self::stringResponsavel => $responsavel,
     ));
   }
 
@@ -137,7 +139,7 @@ class AdmController extends KleoController {
           $repositorioORM->desfazerTransacao();
         }
         return $this->redirect()->toRoute(self::rotaAdm, array(
-          self::stringAction => 'responsaveis',
+          self::stringAction => self::stringResponsaveis,
         ));
       } catch (Exception $exc) {
         $repositorioORM->desfazerTransacao();
@@ -159,7 +161,7 @@ class AdmController extends KleoController {
     $idResponsavel = $sessao->idSessao;
     if (empty($idResponsavel)) {
       return $this->redirect()->toRoute(self::rotaAdm, array(
-        self::stringAction => 'responsaveis',
+        self::stringAction => self::stringResponsaveis,
       ));
     }
     unset($sessao->idSessao);
@@ -168,7 +170,7 @@ class AdmController extends KleoController {
 
     return new ViewModel(
       array(
-      'responsavel' => $responsavel,
+      self::stringResponsavel => $responsavel,
     ));
   }
 
@@ -179,11 +181,17 @@ class AdmController extends KleoController {
   public function campanhasAction() {
     $sessao = $this->getSessao();
     $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-    $campanhas = $repositorioORM->getCampanhaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+    if($sessao->idResponsavel != self::idResponsavelAdmin){
+      $campanhas = $repositorioORM->getCampanhaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);  
+    }
+    if($sessao->idResponsavel == self::idResponsavelAdmin){
+      $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodos();  
+    }
 
     return new ViewModel(
       array(
-      'campanhas' => $campanhas,
+      self::stringCampanhas => $campanhas,
+      'idResponsavel' => $sessao->idResponsavel,
     )
     );
   }
@@ -193,13 +201,19 @@ class AdmController extends KleoController {
      * GET /admCampanha
      */
   public function campanhaAction() {
+    $sessao = $this->getSessao();
     $formulario = $this->params()->fromRoute(self::stringFormulario);
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
 
     if ($formulario) {
       $cadastroCampanhaForm = $formulario;
+      $cadastroCampanhaForm->setarListas($listas);
     } else {
-      $cadastroCampanhaForm = new CadastroCampanhaForm('cadastroCampanha');
+      $cadastroCampanhaForm = new CadastroCampanhaForm('cadastroCampanha', $listas);
     }
+
     return new ViewModel(
       array(self::stringFormulario => $cadastroCampanhaForm,)
     );
@@ -219,7 +233,8 @@ class AdmController extends KleoController {
 
         $campanha = new Campanha();
 
-        $cadastrarCampanhaForm = new CadastroCampanhaForm(null);
+        $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+        $cadastrarCampanhaForm = new CadastroCampanhaForm(null, $listas);
         $cadastrarCampanhaForm->setInputFilter($campanha->getInputFilterCadastrarCampanha());
 
         $post = array_merge_recursive(
@@ -248,15 +263,22 @@ class AdmController extends KleoController {
           $campanhaSituacao->setCampanha($campanha);
           $campanhaSituacao->setSituacao($situacaoPendente);
           $repositorioORM->getCampanhaSituacaoORM()->persistir($campanhaSituacao);
+          
+          /* Listas de contatos */
+          $lista = $repositorioORM->getListaORM()->encontrarPorId($validatedData[KleoForm::inputListaId]);          
+          $campanhaLista = new CampanhaLista();
+          $campanhaLista->setCampanha($campanha);
+          $campanhaLista->setLista($lista);
+          $repositorioORM->getCampanhaListaORM()->persistir($campanhaLista);
 
           $repositorioORM->fecharTransacao();
           return $this->redirect()->toRoute(self::rotaAdm, array(
-            self::stringAction => 'campanhas',
+            self::stringAction => self::stringCampanhas,
           ));
         } else {
           $repositorioORM->desfazerTransacao();
           return $this->forward()->dispatch(self::controllerAdm, array(
-            self::stringAction => 'campanha',
+            self::stringAction => self::stringCampanha,
             self::stringFormulario => $cadastrarCampanhaForm,
           ));
         }
@@ -281,7 +303,7 @@ class AdmController extends KleoController {
     $idSessao = $sessao->idSessao;
     if (empty($idSessao)) {
       return $this->redirect()->toRoute(self::rotaAdm, array(
-        self::stringAction => 'campanhas',
+        self::stringAction => self::stringCampanhas,
       ));
     }
     unset($sessao->idSessao);
@@ -293,7 +315,7 @@ class AdmController extends KleoController {
     return new ViewModel(
       array(
       self::stringFormulario => $campanhaSituacaoForm,
-      'campanha' => $campanha,
+      self::stringCampanha => $campanha,
     ));
   }
 
@@ -342,7 +364,7 @@ class AdmController extends KleoController {
           $repositorioORM->desfazerTransacao();
         }
         return $this->redirect()->toRoute(self::rotaAdm, array(
-          self::stringAction => 'campanhas',
+          self::stringAction => self::stringCampanhas,
         ));
       } catch (Exception $exc) {
         $repositorioORM->desfazerTransacao();
@@ -358,11 +380,19 @@ class AdmController extends KleoController {
   public function listasAction() {
     $sessao = $this->getSessao();
     $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-    $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+
+    if($sessao->idResponsavel != self::idResponsavelAdmin){
+      $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+    }    
+
+    if($sessao->idResponsavel == self::idResponsavelAdmin){
+      $listas = $repositorioORM->getListaORM()->encontrarTodos();  
+    }
 
     return new ViewModel(
       array(
-      'listas' => $listas,
+      self::stringListas => $listas,
+      'idResponsavel' => $sessao->idResponsavel,
     )
     );
   }
@@ -418,7 +448,7 @@ class AdmController extends KleoController {
             $repositorioORM->desfazerTransacao();
             $cadastrarListaForm->get(KleoForm::inputUpload)->setMessages(array('Não é arquivo CSV'));
             return $this->forward()->dispatch(self::controllerAdm, array(
-              self::stringAction => 'lista',
+              self::stringAction => self::stringLista,
               self::stringFormulario => $cadastrarListaForm,
             ));
           }
@@ -429,16 +459,35 @@ class AdmController extends KleoController {
           $repositorioORM->getListaORM()->persistir($lista);
 
           $lista = self::escreveDocumentos($lista);
-          $repositorioORM->getListaORM()->persistir($lista);        
+          $repositorioORM->getListaORM()->persistir($lista);    
+
+          /* Lendo o CSV */
+          $arquivo = file(self::url . 'assets/' . $lista->getUpload());
+          // To check the number of lines           
+          foreach($arquivo as $linha){
+            if(strlen($linha) > 11){
+              $repositorioORM->desfazerTransacao();
+              $cadastrarListaForm->get(KleoForm::inputUpload)->setMessages(array('Número com formato inválido. Use o Formato DDD + Número: ###########'));
+              return $this->forward()->dispatch(self::controllerAdm, array(
+                self::stringAction => self::stringLista,
+                self::stringFormulario => $cadastrarListaForm,
+              ));
+            }
+            $contato = new Contato();
+            $contato->setLista($lista);            
+            $contato->setNumero(substr($linha, 2));
+            $repositorioORM->getContatoORM()->persistir($contato);           
+          }          
 
           $repositorioORM->fecharTransacao();
+
           return $this->redirect()->toRoute(self::rotaAdm, array(
-            self::stringAction => 'listas',
+            self::stringAction => self::stringListas,
           ));
         } else {
           $repositorioORM->desfazerTransacao();
           return $this->forward()->dispatch(self::controllerAdm, array(
-            self::stringAction => 'lista',
+            self::stringAction => self::stringLista,
             self::stringFormulario => $cadastrarListaForm,
           ));
         }

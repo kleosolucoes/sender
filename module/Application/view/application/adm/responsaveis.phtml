@@ -18,17 +18,19 @@ echo $this->cabecalhoPagina('Listagem de Responsaveis'); ?>
             <tbody>
               <?php
               foreach($this->responsaveis as $responsavel){
-                echo '<tr>';
-                echo '<td class="hidden-xs">'.$responsavel->getData_criacaoFormatada(). '</td>';
-                echo '<td class="hidden-xs">'.$responsavel->getNome().'</td>';
-                echo '<td class="hidden-xs">'.$responsavel->getTelefone().'</td>';
-                echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome();
-                if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === Situacao::primeiroContato){                  
-                  echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admResponsavelSituacao", '.$responsavel->getId().')'));
+                if($responsavel->getId() !== 1){
+                  echo '<tr>';
+                  echo '<td class="hidden-xs">'.$responsavel->getData_criacaoFormatada(). '</td>';
+                  echo '<td class="hidden-xs">'.$responsavel->getNome().'</td>';
+                  echo '<td class="hidden-xs">'.$responsavel->getTelefone().'</td>';
+                  echo '<td>'.$responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getNome();
+                  if($responsavel->getResponsavelSituacaoAtivo()->getSituacao()->getId() === Situacao::primeiroContato){                  
+                    echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admResponsavelSituacao", '.$responsavel->getId().')'));
+                  }
+                  echo $this->botao('Ver', $this->funcaoOnClick('kleo("admResponsavelVer", '.$responsavel->getId().')'));
+                  echo '</td>';
+                  echo '</tr>';
                 }
-                echo $this->botao('Ver', $this->funcaoOnClick('kleo("admResponsavelVer", '.$responsavel->getId().')'));
-                echo '</td>';
-                echo '</tr>';
               }
               ?>                                
             </tbody>

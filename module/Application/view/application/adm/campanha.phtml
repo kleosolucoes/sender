@@ -38,6 +38,7 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
               <img id="image_upload_preview_upload" src="" />
             </div>             
             <?php
+             echo $this->inputFormulario(KleoForm::traducaoLista, $formulario->get(KleoForm::inputListaId));  
             echo $this->inputFormulario(KleoForm::traducaoMensagem, $formulario->get(KleoForm::inputMensagem));              
 
             echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));

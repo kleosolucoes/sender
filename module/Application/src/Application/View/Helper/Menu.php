@@ -8,6 +8,7 @@ use Application\Controller\KleoController;
  * Descricao: Classe helper view para mostrar o menu
  */
 class Menu extends AbstractHelper {
+  
   public function __construct() {
 
   }
@@ -85,6 +86,15 @@ class Menu extends AbstractHelper {
     /* Start: Sidebar Menu */
     $html .= '<ul class="nav sidebar-menu">';
     $html .= '<li class="sidebar-label pt20">Menu</li>';
+
+    if($this->view->responsavel->getId() === KleoController::idResponsavelAdmin){
+      $html .= '<li>';
+      $html .= '<a href="/admresponsaveis">';
+      $html .= '<span class="fa fa-users"></span>';
+      $html .= '<span class="sidebar-title">Responsaveis</span>';
+      $html .= '</a>';
+      $html .= '</li>'; 
+    }
 
     $html .= '<li>';
     $html .= '<a href="/admcampanhas">';

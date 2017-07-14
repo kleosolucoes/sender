@@ -1,5 +1,8 @@
 <?php 
+
 use Application\Model\Entity\Situacao;
+use Application\Controller\KleoController;
+
 echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admlista", 0);'))); ?>  
 <div class="content transition animate-panel fadeIn">
   <div class="row">
@@ -9,7 +12,13 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <th>Nome</th>
+                <?php
+                if($this->idResponsavel == KleoController::idResponsavelAdmin){
+                  echo '<th>Empresa</th>';
+                  echo '<th>Responsavel</th>';                  
+                }
+                ?>
+                <th>Lista</th>
                 <th>Descri&ccedil;&atilde;o</th>
                 <th>Contatos</th>
                 <th>Zap</th>
@@ -20,10 +29,14 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
               if($this->listas){
                 foreach($this->listas as $lista){
                   echo '<tr>';
-                  echo '<td>' .$lista->getNome(). '</td>';
-                  echo '<td>' .$lista->getDescricao(). '</td>';
-                  echo '<td></td>';
-                  echo '<td></td>';
+                  if($this->idResponsavel == KleoController::idResponsavelAdmin){
+                    echo '<td>'. $lista->getResponsavel()->getNomeEmpresa() . '</td>';
+                    echo '<td>'. $lista->getResponsavel()->getNome() . '</td>';
+                  }
+                  echo '<td>' . $lista->getNome() . '</td>';
+                  echo '<td>' . $lista->getDescricao() . '</td>';
+                  echo '<td>' . count($lista->getContato()) . '</td>';
+                  echo '<td>' . count($lista->getContatoComZap()) . '</td>';
                   echo '</tr>'; 
                 }
               }else{

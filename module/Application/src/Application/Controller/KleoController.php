@@ -25,11 +25,20 @@ class KleoController extends AbstractActionController {
 
   const nomeAplicacao = 'Zapmarketing';
   const nomeAplicacaoDescricao = 'Envios em Massa pelo WhatsApp'; 
+  
+  const idResponsavelAdmin = 1;
+  
   const stringFormulario = 'formulario';
   const stringAction = 'action';
   const stringId = 'id';
   const stringToken = 'token';
   const stringLogin = 'login';
+  const stringResponsavel = 'responsavel';
+  const stringResponsaveis = 'responsaveis';
+  const stringLista = 'lista';
+  const stringListas = 'listas';
+  const stringCampanha = 'campanha';
+  const stringCampanhas = 'campanhas';
   const stringIndex = 'index';
   const stringIdResponsavel = 'responsavel_id';
   const controllerPub = 'Application\Controller\Pub';

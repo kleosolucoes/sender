@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS `campanha_lista` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `campanha_id` bigint(10) unsigned NOT NULL,
+  `lista_id` bigint(10) unsigned NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_campanha_lista_campanha_id` (`campanha_id`),
+  KEY `index_campanha_lista_lista_id` (`lista_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `campanha_lista`
+  ADD CONSTRAINT `fk_campanha_lista_lista_id` FOREIGN KEY (`lista_id`) REFERENCES `lista` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_campanha_lista_campanha_id` FOREIGN KEY (`campanha_id`) REFERENCES `campanha` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

@@ -20,6 +20,8 @@ class RepositorioORM {
   private $_contaCorrenteORM;
   private $_contaCorrenteSituacaoORM;
   private $_listaORM;
+  private $_contatoORM;
+  private $_campanhaListaORM;
 
   /**
      * Contrutor
@@ -76,13 +78,25 @@ class RepositorioORM {
     
   /**
      * Metodo public para obter a instancia do KleoORM
-     * @return KleoORM
+     * @return ListaORM
      */
   public function getListaORM() {
     if (is_null($this->_listaORM)) {
       $this->_listaORM = new ListaORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Lista');
     }
     return $this->_listaORM;
+  }
+
+    
+  /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+  public function getContatoORM() {
+    if (is_null($this->_contatoORM)) {
+      $this->_contatoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Contato');
+    }
+    return $this->_contatoORM;
   }
 
   /**
@@ -105,6 +119,17 @@ class RepositorioORM {
       $this->_campanhaSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\CampanhaSituacao');
     }
     return $this->_campanhaSituacaoORM;
+  }
+  
+  /**
+     * Metodo public para obter a instancia do KleoORM
+     * @return KleoORM
+     */
+  public function getCampanhaListaORM() {
+    if (is_null($this->_campanhaListaORM)) {
+      $this->_campanhaListaORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\CampanhaLista');
+    }
+    return $this->_campanhaListaORM;
   }
   
   /**

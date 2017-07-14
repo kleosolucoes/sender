@@ -36,9 +36,15 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
      * @ORM\OneToMany(targetEntity="CampanhaSituacao", mappedBy="campanha") 
      */
   protected $campanhaSituacao;
+  
+  /**
+     * @ORM\OneToMany(targetEntity="CampanhaLista", mappedBy="campanha") 
+     */
+  protected $campanhaLista;
 
   public function __construct() {
     $this->campanhaSituacao = new ArrayCollection();
+    $this->campanhaLista = new ArrayCollection();
   }
 
   /** @ORM\Column(type="string") */
@@ -120,6 +126,14 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
 
   function getCampanhaSituacao() {
     return $this->campanhaSituacao;
+  }
+
+  function setCampanhaLista($campanhaLista) {
+    $this->campanhaLista = $campanhaLista;
+  }
+
+  function getCampanhaLista() {
+    return $this->campanhaLista;
   }
 
   function setResponsavel($responsavel) {

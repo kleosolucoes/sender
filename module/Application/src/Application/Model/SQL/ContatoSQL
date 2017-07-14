@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS `contato` (
   `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `data_criacao` date DEFAULT NULL,
-  `hora_criacao` time DEFAULT NULL,
-  `data_inativacao` date NOT NULL,
-  `hora_inativaaco` time NOT NULL,
-  `numero` bigint(11) unsigned DEFAULT NULL,
-  `lista_id` bigint(10) unsigned DEFAULT NULL,
+  `numero` bigint(11) unsigned NOT NULL,
+  `lista_id` bigint(10) unsigned NOT NULL,
   `whatsapp` enum('N','S') DEFAULT 'N',
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativaaco` time DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `lista_id` (`lista_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

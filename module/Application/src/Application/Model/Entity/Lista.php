@@ -32,9 +32,19 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
      */
   private $responsavel;
 
+  /**
+     * @ORM\OneToMany(targetEntity="Contato", mappedBy="lista") 
+     */
+  protected $contato;
+  
+   /**
+     * @ORM\OneToMany(targetEntity="CampanhaLista", mappedBy="campanha") 
+     */
+  protected $campanhaLista;
 
   public function __construct() {
-
+    $this->contato = new ArrayCollection();
+    $this->campanhaLista = new ArrayCollection();
   }
 
   /** @ORM\Column(type="string") */
@@ -79,6 +89,32 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
 
   function getResponsavel() {
     return $this->responsavel;
+  }  
+
+  function setContato($contato) {
+    $this->contato = $contato;
+  }
+
+  function getContato() {
+    return $this->contato;
+  }
+
+  function setCampanhaLista($campanhaLista) {
+    $this->campanhaLista = $campanhaLista;
+  }
+
+  function getCampanhaLista() {
+    return $this->campanhaLista;
+  }
+    
+  function getContatoComZap() {
+    $contatosComZap = array();
+    foreach($this->getContato() as $contato){
+      if($contato->temWhatsapp()){
+        $contatosComZap[] = $contato;
+      }
+    } 
+    return $contatosComZap;
   }
 
   public function exchangeArray($data) {

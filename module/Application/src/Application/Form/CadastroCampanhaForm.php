@@ -16,7 +16,7 @@ use Zend\Form\Element\Select;
  */
 class CadastroCampanhaForm extends KleoForm {
 
-  public function __construct($name = null) {
+  public function __construct($name = null, $listas = null) {
     parent::__construct($name);
 
     $this->add(
@@ -70,7 +70,29 @@ class CadastroCampanhaForm extends KleoForm {
       self::stringRequired => self::stringRequired,
     ])
     );
+    
+    $inputSelectLista = new Select();
+    $inputSelectLista->setName(self::inputListaId);
+    $inputSelectLista->setAttributes(array(
+      self::stringClass => self::stringClassFormControl,
+      self::stringId => self::inputListaId,
+      self::stringRequired => self::stringRequired,
+    ));
+    $inputSelectLista->setEmptyOption(self::traducaoSelecione);
+    $this->add($inputSelectLista);
+    $this->setarListas($listas);
 
+  }
+  
+  public function setarListas($listas){
+    $arrayListas = [];
+    if($listas){
+      foreach($listas as $lista){        
+          $arrayListas[$lista->getId()] = $lista->getNome();      
+      }
+    }
+    $inpuLista = $this->get(self::inputListaId);
+    $inpuLista->setValueOptions($arrayListas);
   }
 
 }

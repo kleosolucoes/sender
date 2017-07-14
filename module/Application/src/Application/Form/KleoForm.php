@@ -35,6 +35,7 @@ class KleoForm extends Form {
   const inputFotoPerfil = 'inputFotoPerfil';
   const inputUpload = 'inputUpload';
   const inputMensagem = 'inputMensagem';
+  const inputListaId = 'inputListaId';
   const onChange = 'onChange';
 
   const stringClass = 'class';
@@ -68,6 +69,7 @@ class KleoForm extends Form {
   const traducaoDataEnvio = 'Data de Envio';
   const traducaoFotoPerfil = 'Foto de Perfil';
   const traducaoUpload = 'Imagem / Video / Audio';
+  const traducaoLista = 'Lista de Contato';
   const traducaoMensagem = 'Mensagem';
     
   const traducaoArquivoCSV = 'Arquivo CSV';
