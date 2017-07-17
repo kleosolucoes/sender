@@ -23,7 +23,7 @@ class KleoController extends AbstractActionController {
   private $_doctrineORMEntityManager;
   private $sessao;
 
-  const nomeAplicacao = 'Zapmarketing';
+  const nomeAplicacao = 'ZapMarketing';
   const nomeAplicacaoDescricao = 'Envios em Massa pelo WhatsApp'; 
   
   const idResponsavelAdmin = 1;

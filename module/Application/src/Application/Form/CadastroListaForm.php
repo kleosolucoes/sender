@@ -33,8 +33,6 @@ class CadastroListaForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputDescricao,
-      self::stringRequired => self::stringRequired,
-      self::stringOnblur => self::stringValidacoesFormulario,
     ])
     );
 

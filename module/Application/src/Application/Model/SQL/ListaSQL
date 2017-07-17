@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `lista` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(80) NOT NULL,
-  `descricao` varchar(80) NOT NULL,
+  `descricao` varchar(80) DEFAULT NULL,
   `upload` varchar(60) DEFAULT NULL,
   `responsavel_id` int(6) unsigned DEFAULT NULL,
   `data_criacao` date NOT NULL,

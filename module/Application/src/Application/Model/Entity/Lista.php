@@ -36,8 +36,8 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
      * @ORM\OneToMany(targetEntity="Contato", mappedBy="lista") 
      */
   protected $contato;
-  
-   /**
+
+  /**
      * @ORM\OneToMany(targetEntity="CampanhaLista", mappedBy="campanha") 
      */
   protected $campanhaLista;
@@ -106,7 +106,7 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
   function getCampanhaLista() {
     return $this->campanhaLista;
   }
-    
+
   function getContatoComZap() {
     $contatosComZap = array();
     foreach($this->getContato() as $contato){
@@ -119,7 +119,7 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
 
   public function exchangeArray($data) {
     $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
-    $this->descricao = (!empty($data[KleoForm::inputDescricao]) ? $data[KleoForm::inputDescricao] : null);
+    $this->descricao = (!empty($data[KleoForm::inputDescricao]) ? strtoupper($data[KleoForm::inputDescricao]) : null);
     $this->upload = (!empty($data[KleoForm::inputUpload]) ? $data[KleoForm::inputUpload] : null);
   }
 
@@ -137,29 +137,6 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
       $inputFilter = new InputFilter();
       $inputFilter->add(array(
         'name' => KleoForm::inputNome,
-        'required' => true,
-        'filter' => array(
-        array('name' => 'StripTags'), // removel xml e html string
-        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
-        array('name' => 'StringToUpper'), // transforma em maiusculo
-      ),
-        'validators' => array(
-        array(
-        'name' => 'NotEmpty',
-      ),
-        array(
-        'name' => 'StringLength',
-        'options' => array(
-        'encoding' => 'UTF-8',
-        'min' => 10,
-        'max' => 80,
-      ),
-      ),
-      ),
-      ));
-
-      $inputFilter->add(array(
-        'name' => KleoForm::inputDescricao,
         'required' => true,
         'filter' => array(
         array('name' => 'StripTags'), // removel xml e html string

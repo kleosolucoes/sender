@@ -30,5 +30,16 @@ class ListaORM extends KleoORM {
             echo $exc->getMessage();
         }
     }
-
+  
+  
+    public function encontrarPorIdResponsavelEAtivos($idResponsavel) {
+      $listasAtivas = null;
+      $todasAsListasPorId = $this->encontrarPorIdResponsavel($idResponsavel);
+      foreach($todasAsListasPorId as $lista){
+        if($lista->verificarSeEstaAtivo()){
+          $listasAtivas[] = $lista;
+        }
+      }      
+      return $listasAtivas;      
+    }
 }

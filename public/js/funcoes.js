@@ -1,48 +1,57 @@
 
 
 function kleo(action, id) {  
-  $(".splash").css("display", "block");
-  $.post(
-    '/admKleo',
-    {
-      action: action,
-      id: id                  
-    },
-    function (data) {
-      if (data.response) {
-        location.href = data.url;                
-      }
-    }, 'json');    
+	$(".splash").css("display", "block");
+	$.post(
+		'/admKleo',
+		{
+			action: action,
+			id: id                  
+		},
+		function (data) {
+			if (data.response) {
+				location.href = data.url;                
+			}
+		}, 'json');    
+}
+
+function validarExclusao(action, id){
+	var resposta = confirm('Confirma Exclusao?');
+	if(resposta){
+		kleo(action, id);
+	}else{
+		return false;
+	}		 
 }
 
 function mudarPaginaComLoader(url){
-  $(".splash").css("display", "block");
-  location.href = url;
+	$(".splash").css("display", "block");
+	location.href = url;
 }
 
 function submeterFormulario(form){
-  $(".splash").css("display", "block");
-  form.submit();
+	$(".splash").css("display", "block");
+	form.submit();
 }
 
 function isEmail(email){
-  er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}$/; 
+	er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}$/; 
 	if( !er.exec(email) ){
-    return false;
-  }else{
-    return true;
-  }
+		return false;
+	}else{
+		return true;
+	}
 }
 
 $(window).bind("load", function () {
-  // Remove splash screen after load
-  $('.splash').css('display', 'none')
+	// Remove splash screen after load
+	$('.splash').css('display', 'none')
 });
 
 function carregarFoto(input, qualFoto) {
-  var file = input.files[0];
-  var imagefile = file.type;
-  var match= ["image/jpeg","image/png","image/jpg"];
+	var file = input.files[0];
+	var imagefile = file.type;
+	var match= ["image/jpeg","image/png","image/jpg"];
 	var tipoPreviewer = '';
 	if(qualFoto == 1){
 		tipoPreviewer = 'fotoPerfil';
@@ -50,19 +59,19 @@ function carregarFoto(input, qualFoto) {
 	if(qualFoto == 2){
 		tipoPreviewer = 'upload';
 	}
-	
-  if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
-    alert('tipo errado');
-    return false;
-  }else{
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        $('#image_upload_preview_'+tipoPreviewer).attr('src', e.target.result);
-        $('#image_upload_preview_'+tipoPreviewer).attr('width', '100px');
-        $('#image_upload_preview_'+tipoPreviewer).attr('height', '100px');
-      }
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
+
+	if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
+		alert('tipo errado');
+		return false;
+	}else{
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				$('#image_upload_preview_'+tipoPreviewer).attr('src', e.target.result);
+				$('#image_upload_preview_'+tipoPreviewer).attr('width', '100px');
+				$('#image_upload_preview_'+tipoPreviewer).attr('height', '100px');
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 }

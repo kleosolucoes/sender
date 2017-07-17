@@ -205,7 +205,7 @@ class AdmController extends KleoController {
     $formulario = $this->params()->fromRoute(self::stringFormulario);
 
     $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-    $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+    $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);
 
     if ($formulario) {
       $cadastroCampanhaForm = $formulario;
@@ -233,7 +233,7 @@ class AdmController extends KleoController {
 
         $campanha = new Campanha();
 
-        $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+        $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);
         $cadastrarCampanhaForm = new CadastroCampanhaForm(null, $listas);
         $cadastrarCampanhaForm->setInputFilter($campanha->getInputFilterCadastrarCampanha());
 
@@ -263,7 +263,7 @@ class AdmController extends KleoController {
           $campanhaSituacao->setCampanha($campanha);
           $campanhaSituacao->setSituacao($situacaoPendente);
           $repositorioORM->getCampanhaSituacaoORM()->persistir($campanhaSituacao);
-          
+
           /* Listas de contatos */
           $lista = $repositorioORM->getListaORM()->encontrarPorId($validatedData[KleoForm::inputListaId]);          
           $campanhaLista = new CampanhaLista();
@@ -382,7 +382,7 @@ class AdmController extends KleoController {
     $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
 
     if($sessao->idResponsavel != self::idResponsavelAdmin){
-      $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);
+      $listas = $repositorioORM->getListaORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);
     }    
 
     if($sessao->idResponsavel == self::idResponsavelAdmin){
@@ -440,6 +440,19 @@ class AdmController extends KleoController {
         /* validação */
         if ($cadastrarListaForm->isValid()) {
           $validatedData = $cadastrarListaForm->getData();
+
+          $inputDescriacao = $post[KleoForm::inputDescricao];
+          if($inputDescriacao != ''){
+            if(strlen($inputDescriacao) < 3 || strlen($inputDescriacao) > 80){
+              $repositorioORM->desfazerTransacao();
+              $cadastrarListaForm->get(KleoForm::inputDescricao)->setMessages(array('Descrição pode ser vazia ou de tamanho entre 3 a 80 caracteres'));
+              return $this->forward()->dispatch(self::controllerAdm, array(
+                self::stringAction => self::stringLista,
+                self::stringFormulario => $cadastrarListaForm,
+              ));
+            }
+          }
+
           $lista->exchangeArray($cadastrarListaForm->getData());
 
           $apenasAjustarEntidade = false;
@@ -452,37 +465,36 @@ class AdmController extends KleoController {
               self::stringFormulario => $cadastrarListaForm,
             ));
           }
-          $lista = $resposta;
+          $lista = $resposta;    
 
           $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($sessao->idResponsavel);
           $lista->setResponsavel($responsavel);
           $repositorioORM->getListaORM()->persistir($lista);
 
           $lista = self::escreveDocumentos($lista);
+
+          /* Cadastro inativado caso confirme a lista ativa ela */
+          $lista->setDataEHoraDeInativacao();
+
           $repositorioORM->getListaORM()->persistir($lista);    
 
           /* Lendo o CSV */
           $arquivo = file(self::url . 'assets/' . $lista->getUpload());
-          // To check the number of lines           
-          foreach($arquivo as $linha){
-            if(strlen($linha) > 11){
-              $repositorioORM->desfazerTransacao();
-              $cadastrarListaForm->get(KleoForm::inputUpload)->setMessages(array('Número com formato inválido. Use o Formato DDD + Número: ###########'));
-              return $this->forward()->dispatch(self::controllerAdm, array(
-                self::stringAction => self::stringLista,
-                self::stringFormulario => $cadastrarListaForm,
-              ));
+          // To check the number of lines  
+          if($arquivo){
+            foreach($arquivo as $numero){
+              $contato = new Contato();
+              $contato->setLista($lista);            
+              $contato->setNumero($numero);
+              $repositorioORM->getContatoORM()->persistir($contato); 
             }
-            $contato = new Contato();
-            $contato->setLista($lista);            
-            $contato->setNumero(substr($linha, 2));
-            $repositorioORM->getContatoORM()->persistir($contato);           
-          }          
+          }
 
           $repositorioORM->fecharTransacao();
 
+          $sessao->idSessao = $lista->getId();
           return $this->redirect()->toRoute(self::rotaAdm, array(
-            self::stringAction => self::stringListas,
+            self::stringAction => 'listaConfirmacao',
           ));
         } else {
           $repositorioORM->desfazerTransacao();
@@ -497,6 +509,104 @@ class AdmController extends KleoController {
       }
     }
     return new ViewModel();
+  }
+
+
+  /**
+     * Tela para confirmacao da lista
+     * GET /admlistaConfirmacao
+     */
+  public function listaConfirmacaoAction() {
+    $sessao = $this->getSessao();
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+
+    $idLista = (int) $sessao->idSessao;
+    $lista = $repositorioORM->getListaORM()->encontrarPorId($idLista);
+
+    $numerosDuplicados = array();
+    foreach($lista->getContato() as $contato){
+      $numerosDuplicados[$contato->getNumero()] = 1;
+      foreach($lista->getContato() as $contatoVerificacao){
+        if($contato->getId() != $contatoVerificacao->getId() &&
+           $contato->getNumero() == $contatoVerificacao->getNumero()){
+          $numerosDuplicados[$contato->getNumero()] += 1;
+          $contato->setDataEHoraDeInativacao();
+          $repositorioORM->getContatoORM()->persistir($contato, false); 
+        }
+      }
+    }  
+    $numeros = null;
+    foreach($numerosDuplicados as $key => $valor){
+      if($valor > 1){
+        /* duplicados */
+        $numeros[$key] = $valor;
+      }
+    }
+
+    return new ViewModel(
+      array(
+      self::stringLista => $lista,
+      'numeros' => $numeros,
+    )
+    );
+  }
+
+  /**
+     * Tela para confirmacao da lista
+     * GET /admlistaAtivacao
+     */
+  public function listaAtivacaoAction() {
+    $sessao = $this->getSessao();
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    try {
+      $repositorioORM->iniciarTransacao();  
+
+      $idLista = (int) $sessao->idSessao;
+      unset($sessao->idSessao);
+      $lista = $repositorioORM->getListaORM()->encontrarPorId($idLista);
+      $lista->setData_inativacao(null);
+      $lista->setHora_inativacao(null);
+
+      $repositorioORM->getListaORM()->persistir($lista, false);   
+
+      $repositorioORM->fecharTransacao();       
+      return $this->redirect()->toRoute(self::rotaAdm, array(
+        self::stringAction => self::stringListas,
+      ));
+    }catch (Exception $exc) {
+      $repositorioORM->desfazerTransacao();
+      echo $exc->getMessage();
+    }
+  }
+
+  /**
+     * Função para excluir lista
+     * GET /admListaExcluir
+     */
+  public function listaExcluirAction() {
+    $sessao = $this->getSessao();
+    $request = $this->getRequest();
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    try {
+      $repositorioORM->iniciarTransacao();
+
+      $idLista = (int) $sessao->idSessao;
+      $listaParaExcluir = $repositorioORM->getListaORM()->encontrarPorId($idLista);
+      $listaParaExcluir->setDataEHoraDeInativacao();
+
+      $repositorioORM->getListaORM()->persistir($listaParaExcluir, false);
+
+      $repositorioORM->fecharTransacao();
+      return $this->redirect()->toRoute(self::rotaAdm, array(
+        self::stringAction => self::stringListas,
+      ));
+    } catch (Exception $exc) {
+      $repositorioORM->desfazerTransacao();
+      echo $exc->getMessage();
+    }
   }
 
   /**
