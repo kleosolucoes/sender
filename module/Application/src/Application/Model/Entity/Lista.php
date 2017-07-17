@@ -98,6 +98,19 @@ class Lista extends KleoEntity implements InputFilterAwareInterface {
   function getContato() {
     return $this->contato;
   }
+  
+  function getContatoAtivos() {
+    $contatosAtivos = null;
+    $contatos = $this->getContato();
+    if($contatos){
+      foreach($contatos as $contato){
+        if($contato->verificarSeEstaAtivo()){
+          $contatosAtivos[] = $contato;  
+        }        
+      }
+    }
+    return $contatosAtivos;
+  }
 
   function setCampanhaLista($campanhaLista) {
     $this->campanhaLista = $campanhaLista;

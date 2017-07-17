@@ -483,9 +483,20 @@ class AdmController extends KleoController {
           // To check the number of lines  
           if($arquivo){
             foreach($arquivo as $numero){
-              $contato = new Contato();
-              $contato->setLista($lista);            
-              $contato->setNumero($numero);
+              $contato = new Contato();            
+              if(intval($numero)){
+                if(strlen(intval($numero)) == 11){
+                  $contato->setNumero($numero);
+                }else{
+                  $contato->setNumero(0);
+                  $contato->setDataEHoraDeInativacao();
+                }
+              }else{
+                $contato->setNumero(0);
+                $contato->setDataEHoraDeInativacao();
+              }
+
+              $contato->setLista($lista);  
               $repositorioORM->getContatoORM()->persistir($contato); 
             }
           }
@@ -524,30 +535,39 @@ class AdmController extends KleoController {
     $idLista = (int) $sessao->idSessao;
     $lista = $repositorioORM->getListaORM()->encontrarPorId($idLista);
 
-    $numerosDuplicados = array();
+    $numeros = array();
+    $numerosInvalidos = 0;
     foreach($lista->getContato() as $contato){
-      $numerosDuplicados[$contato->getNumero()] = 1;
-      foreach($lista->getContato() as $contatoVerificacao){
-        if($contato->getId() != $contatoVerificacao->getId() &&
-           $contato->getNumero() == $contatoVerificacao->getNumero()){
-          $numerosDuplicados[$contato->getNumero()] += 1;
-          $contato->setDataEHoraDeInativacao();
-          $repositorioORM->getContatoORM()->persistir($contato, false); 
+      if($contato->verificarSeEstaAtivo()){
+        $numeros[$contato->getNumero()] = 1;
+        foreach($lista->getContato() as $contatoVerificacao){
+          if($contato->getId() != $contatoVerificacao->getId() &&
+             $contato->getNumero() == $contatoVerificacao->getNumero()){
+            $numeros[$contato->getNumero()] += 1;
+            $contatoVerificacao->setDataEHoraDeInativacao();
+            $repositorioORM->getContatoORM()->persistir($contatoVerificacao, false); 
+          }
+        }
+      }else{
+        if($contato->getNumero() == 0){
+          $numerosInvalidos++;
         }
       }
-    }  
-    $numeros = null;
-    foreach($numerosDuplicados as $key => $valor){
+    } 
+
+    $numerosDuplicados = null;
+    foreach($numeros as $key => $valor){
       if($valor > 1){
         /* duplicados */
-        $numeros[$key] = $valor;
+        $numerosDuplicados[$key] = $valor;
       }
     }
 
     return new ViewModel(
       array(
       self::stringLista => $lista,
-      'numeros' => $numeros,
+      'numerosDuplicados' => $numerosDuplicados,
+      'numerosInvalidos' => $numerosInvalidos,
     )
     );
   }

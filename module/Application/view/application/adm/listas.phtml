@@ -21,7 +21,7 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
                 <th>Lista</th>
                 <th>Descri&ccedil;&atilde;o</th>
                 <th>Contatos</th>
-                <th>Zap</th>
+                <th>Obs</th>
                 <th></th>
               </tr>
             </thead>
@@ -36,8 +36,8 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
                   }
                   echo '<td>' . $lista->getNome() . '</td>';
                   echo '<td>' . $lista->getDescricao() . '</td>';
-                  echo '<td>' . count($lista->getContato()) . '</td>';
-                  echo '<td>' . count($lista->getContatoComZap()) . '</td>';
+                  echo '<td>' . count($lista->getContatoAtivos()) . '</td>';
+                  echo '<td>--/--</td>';
                   echo '<td>';
                   echo $this->botao('Excluir', $this->funcaoOnClick('validarExclusao("admlistaexcluir", '.$lista->getId().')'));
                   echo '</td>';
