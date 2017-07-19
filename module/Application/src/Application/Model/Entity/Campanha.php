@@ -79,6 +79,21 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
     }
     return $campanhaSituacao;
   }
+  
+  /**
+     * Retorna a lista ativo
+     * @return CampanhaLista
+     */
+  public function getCampanhaListaAtivo() {
+    $campanhaListaAtivo = null;
+    foreach ($this->getCampanhaLista() as $campanhaLista) {
+      if ($campanhaLista->verificarSeEstaAtivo()) {
+        $campanhaListaAtivo = $campanhaLista;
+        break;
+      }
+    }
+    return $campanhaListaAtivo;
+  }
 
   function setNome($nome) {
     $this->nome = $nome;
@@ -147,7 +162,7 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
   public function exchangeArray($data) {
     $this->nome = (!empty($data[KleoForm::inputNome]) ? strtoupper($data[KleoForm::inputNome]) : null);
     if(!empty($data[KleoForm::inputDataEnvio])){
-      $this->data_envio = DateTime::createFromFormat('Y-m-d', $data[KleoForm::inputDataEnvio]);  
+      $this->data_envio = DateTime::createFromFormat('d/m/Y', $data[KleoForm::inputDataEnvio]);  
     }    
     $this->foto_perfil = (!empty($data[KleoForm::inputFotoPerfil]) ? $data[KleoForm::inputFotoPerfil] : null);
     $this->upload = (!empty($data[KleoForm::inputUpload]) ? $data[KleoForm::inputUpload] : null);
@@ -183,7 +198,7 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
         'name' => 'StringLength',
         'options' => array(
         'encoding' => 'UTF-8',
-        'min' => 10,
+        'min' => 1,
         'max' => 60,
       ),
       ),
@@ -203,57 +218,7 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
       ),
       ),
       ));
-
-      $inputFilter->add(array(
-        'name' => KleoForm::inputFotoPerfil,
-        'required' => true,
-        'filter' => array(
-        array('name' => 'StripTags'), // removel xml e html string
-        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
-      ),
-        'validators' => array(
-        array(
-        'name' => 'NotEmpty',
-      ),
-      ),
-      ));
-
-      $inputFilter->add(array(
-        'name' => KleoForm::inputUpload,
-        'required' => true,
-        'filter' => array(
-        array('name' => 'StripTags'), // removel xml e html string
-        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
-      ),
-        'validators' => array(
-        array(
-        'name' => 'NotEmpty',
-      ),
-      ),               
-      ));
       
-      $inputFilter->add(array(
-        'name' => KleoForm::inputMensagem,
-        'required' => true,
-        'filter' => array(
-        array('name' => 'StripTags'), // removel xml e html string
-        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string
-      ),
-        'validators' => array(
-        array(
-        'name' => 'NotEmpty',
-      ),
-        array(
-        'name' => 'StringLength',
-        'options' => array(
-        'encoding' => 'UTF-8',
-        'min' => 10,
-        'max' => 300,
-      ),
-      ),
-      ),
-      ));
-
       $this->inputFilterCadastrarCampanha = $inputFilter;
     }
     return $this->inputFilterCadastrarCampanha;

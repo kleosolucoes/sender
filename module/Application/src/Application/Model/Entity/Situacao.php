@@ -30,15 +30,10 @@ class Situacao extends KleoEntity {
      */
     protected $campanhaSituacao;
   
-    /**
-     * @ORM\OneToMany(targetEntity="ContaCorrenteSituacao", mappedBy="contaCorrenteSituacao") 
-     */
-    protected $contaCorrenteSituacao;
 
     public function __construct() {
         $this->responsavelSituacao = new ArrayCollection();
         $this->campanhaSituacao = new ArrayCollection();
-        $this->contaCorrenteSituacao = new ArrayCollection();
     }
 
     /** @ORM\Column(type="string") */
@@ -66,14 +61,6 @@ class Situacao extends KleoEntity {
 
     function setCampanhaSituacao($campanhaSituacao) {
         $this->campanhaSituacao = $campanhaSituacao;
-    }
-
-    function getContaCorrenteSituacao() {
-        return $this->contaCorrenteSituacao;
-    }
-
-    function setContaCorrenteSituacao($contaCorrenteSituacao) {
-      $this->contaCorrenteSituacao = $contaCorrenteSituacao;
     }
 
 }

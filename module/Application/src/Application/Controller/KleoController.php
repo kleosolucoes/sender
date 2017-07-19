@@ -25,9 +25,9 @@ class KleoController extends AbstractActionController {
 
   const nomeAplicacao = 'ZapMarketing';
   const nomeAplicacaoDescricao = 'Envios em Massa pelo WhatsApp'; 
-  
+
   const idResponsavelAdmin = 1;
-  
+
   const stringFormulario = 'formulario';
   const stringAction = 'action';
   const stringId = 'id';
@@ -73,15 +73,24 @@ class KleoController extends AbstractActionController {
   public static function enviarEmail($emails, $titulo, $mensagem) {
     $mail = new PHPMailer;
     try {
-      //            $mail->SMTPDebug = 1;
+      //      $mail->SMTPDebug = 1;
+      //       $mail->isSMTP();
+      //       $mail->Host = '200.147.36.31';
+      //       $mail->SMTPAuth = true;
+      //       $mail->Username = 'leonardo@circuitodavisao.com.br';
+      //       $mail->Password = 'Leonardo142857';    
+      //       $mail->SMTPSecure = 'tls';                            
+      //       $mail->Port = 587;
+
       $mail->isSMTP();
-      $mail->Host = '200.147.36.31';
+      $mail->Host = 'mail.zapmarketing.com.br';
       $mail->SMTPAuth = true;
-      $mail->Username = 'leonardo@circuitodavisao.com.br';
-      $mail->Password = 'Leonardo142857';
-      //      $mail->SMTPSecure = 'tls';                            
-      $mail->Port = 587;
-      $mail->setFrom('leonardo@circuitodavisao.com.br', self::nomeAplicacao);
+      $mail->Username = 'comercial@zapmarketing.com.br';
+      $mail->Password = '123comercial';
+      //       $mail->SMTPSecure = 'tls';                            
+      $mail->Port = 25;
+
+      $mail->setFrom('informativo@zapmarketing.com.br', self::nomeAplicacao);
 
       foreach ($emails as $email) {
         $mail->addAddress($email);
@@ -113,6 +122,7 @@ class KleoController extends AbstractActionController {
      * @return Json
      */
   public function kleoAction() {
+    $sessao = self::getSessao();
     $request = $this->getRequest();
     $response = $this->getResponse();
     if ($request->isPost()) { 
@@ -120,7 +130,6 @@ class KleoController extends AbstractActionController {
         $post_data = $request->getPost();
         $action = $post_data[self::stringAction];
         $id = $post_data[self::stringId];
-        $sessao = self::getSessao();
         $sessao->idSessao = $id;
         $response->setContent(Json::encode(
           array(
@@ -149,14 +158,19 @@ class KleoController extends AbstractActionController {
         $filename = '';
 
         if ($file === KleoForm::inputFotoPerfil) {
+          if($extension != 'jpeg' && $extension != 'jpg'){   
+            return false;
+          }
           $filename = $entidade->getId() . '_fotoPerfil.' . $extension;
           $entidade->setFoto_perfil($filename);
         }
-        if ($file === KleoForm::inputUpload && $entidade instanceof Campanha) {
+        if ($file === KleoForm::inputUpload && $entidade instanceof Campanha) {          
+          if($extension != 'jpeg' && $extension != 'jpg' && $extension != 'mp4'){             
+            return false;
+          }
           $filename = $entidade->getId() . '_upload.' . $extension;
           $entidade->setUpload($filename);
         }
-        
         if ($file === KleoForm::inputUpload && $entidade instanceof Lista) {
           if($extension != 'csv'){
             return false;

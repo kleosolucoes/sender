@@ -94,9 +94,9 @@ class PubController extends KleoController {
 
           self::enviarEmail($emails, $titulo, $mensagem);
           unset($emails);
-          $emails[] = self::emailLeo;
-          //           $emails[] = self::emailKort;
-          //           $emails[] = self::emailSilverio;
+          //$emails[] = self::emailLeo;
+          $emails[] = self::emailKort;
+          $emails[] = self::emailSilverio;
           $urlResponsaveis = self::url . 'admResponsaveis';
 
           $titulo = 'Primeiro Contato';
@@ -260,10 +260,11 @@ class PubController extends KleoController {
     } else {
       $loginForm = new LoginForm('login');
     }
-
+    $token = $this->getEvent()->getRouteMatch()->getParam(self::stringToken);
     return new ViewModel(
       array(
       self::stringFormulario => $loginForm,
+      'error' => $token,
     )
     );
   }
@@ -293,7 +294,9 @@ class PubController extends KleoController {
         $sessao = $this->getSessao();
         $sessao->idResponsavel = $responsavel->getId();
 
-        return $this->redirect()->toRoute(self::rotaAdm);
+        return $this->redirect()->toRoute(self::rotaAdm, array(
+          self::stringAction => self::stringCampanhas,
+        ));
       } else {
         return $this->forward()->dispatch(self::controllerPub, array(
           self::stringAction => self::stringLogin,
@@ -302,6 +305,7 @@ class PubController extends KleoController {
     } else {
       return $this->forward()->dispatch(KleoController::controllerPub, array(
         self::stringAction => self::stringLogin,
+        self::stringToken => 'Login invalido',
       ));
     }
   }

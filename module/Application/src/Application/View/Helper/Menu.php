@@ -8,7 +8,7 @@ use Application\Controller\KleoController;
  * Descricao: Classe helper view para mostrar o menu
  */
 class Menu extends AbstractHelper {
-  
+
   public function __construct() {
 
   }
@@ -67,6 +67,7 @@ class Menu extends AbstractHelper {
     $html .= '<a href="/admsair">Sair</a>';
     $html .= '</div>';
     $html .= '<div class="media-author">'.$this->view->responsavel->getNome().'</div>';
+    $html .= '<div class="media-author">'.number_format($this->view->responsavel->getSaldo(), 0, '.','.').' Créditos'.'</div>';
     $html .= '</div>';
     $html .= '</div>';
     $html .= '</div>';
@@ -77,7 +78,7 @@ class Menu extends AbstractHelper {
 
     $html .= '<li class="sidebar-label pt20">Principal</li>';
     $html .= '<li>';
-    $html .= '<a href="/adm">';
+    $html .= '<a href="/admCampanhas">';
     $html .= '<span class="fa fa-home"></span>';
     $html .= '<span class="sidebar-title">Principal</span>';
     $html .= '</a>';
@@ -89,7 +90,7 @@ class Menu extends AbstractHelper {
 
     if($this->view->responsavel->getId() === KleoController::idResponsavelAdmin){
       $html .= '<li>';
-      $html .= '<a href="/admresponsaveis">';
+      $html .= '<a href="/admResponsaveis">';
       $html .= '<span class="fa fa-users"></span>';
       $html .= '<span class="sidebar-title">Responsaveis</span>';
       $html .= '</a>';
@@ -97,18 +98,27 @@ class Menu extends AbstractHelper {
     }
 
     $html .= '<li>';
-    $html .= '<a href="/admcampanhas">';
+    $html .= '<a href="/admCampanhas">';
     $html .= '<span class="fa fa-paper-plane"></span>';
     $html .= '<span class="sidebar-title">Campanhas</span>';
     $html .= '</a>';
     $html .= '</li>';   
 
     $html .= '<li>';
-    $html .= '<a href="/admlistas">';
+    $html .= '<a href="/admListas">';
     $html .= '<span class="fa fa-users"></span>';
     $html .= '<span class="sidebar-title">Contatos</span>';
     $html .= '</a>';
-    $html .= '</li>';   
+    $html .= '</li>';  
+
+    if($this->view->responsavel->getId() === KleoController::idResponsavelAdmin){
+      $html .= '<li>';
+      $html .= '<a href="/admContaCorrente">';
+      $html .= '<span class="fa fa-money"></span>';
+      $html .= '<span class="sidebar-title">Conta-Corrente</span>';
+      $html .= '</a>';
+      $html .= '</li>';   
+    }
 
     $html .= '</ul>';
     // End: Sidebar Menu

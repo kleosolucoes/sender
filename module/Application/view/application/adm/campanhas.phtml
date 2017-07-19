@@ -12,6 +12,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
+                <th>ID</th>
                 <?php
                 if($this->idResponsavel == KleoController::idResponsavelAdmin){
                   echo '<th>Empresa</th>';
@@ -32,6 +33,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
               if($this->campanhas){
                 foreach($this->campanhas as $campanha){
                   echo '<tr>';
+                  echo '<td>'.$campanha->getId(). '</td>';
                   if($this->idResponsavel == KleoController::idResponsavelAdmin){
                     echo '<td>'.$campanha->getResponsavel()->getNomeEmpresa(). '</td>';
                     echo '<td>'.$campanha->getResponsavel()->getNome(). '</td>';
@@ -44,7 +46,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                   echo '<td>'.$campanha->getCampanhaLista()[0]->getLista()->getNome().'</td>';
                   echo '<td>'.$campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome();                  
                   if($this->idResponsavel == KleoController::idResponsavelAdmin && 
-                    $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::pendente){                  
+                     $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::pendente){                  
                     echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admCampanhaSituacao", '.$campanha->getId().')'));
                   }
                   echo  '</td>';

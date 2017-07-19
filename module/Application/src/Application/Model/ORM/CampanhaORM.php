@@ -30,5 +30,16 @@ class CampanhaORM extends KleoORM {
             echo $exc->getMessage();
         }
     }
+    
+    public function encontrarPorIdResponsavelEAtivos($idResponsavel) {
+      $campanhasAtivas = null;
+      $todasAsCampanhasPorId = $this->encontrarPorIdResponsavel($idResponsavel);
+      foreach($todasAsCampanhasPorId as $campanha){
+        if($campanha->verificarSeEstaAtivo()){
+          $campanhasAtivas[] = $campanha;
+        }
+      }      
+      return $campanhasAtivas;      
+    }
 
 }

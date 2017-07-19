@@ -27,7 +27,6 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
 
   protected $inputFilter;
   protected $inputFilterCadastrarResponsavel;
-  protected $inputFilterAtualizarResponsavel;
   protected $inputFilterCadastrarSenhaResponsavel;
   /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavel") 
@@ -44,7 +43,13 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
      */
   protected $lista;
 
+  /**
+     * @ORM\OneToMany(targetEntity="ContaCorrente", mappedBy="responsavel") 
+     */
+  protected $contaCorrente;
+
   public function __construct() {
+    $this->contaCorrente = new ArrayCollection();
     $this->responsavelSituacao = new ArrayCollection();
     $this->campanha = new ArrayCollection();
     $this->lista = new ArrayCollection();
@@ -76,16 +81,30 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
      * @return ResponsavelSituacao
      */
   public function getResponsavelSituacaoAtivo() {
-    $responsavelSituacao = null;
-    foreach ($this->getResponsavelSituacao() as $rs) {
-      if ($rs->verificarSeEstaAtivo()) {
-        $responsavelSituacao = $rs;
+    $responsavelSituacaoAtiva = null;
+    foreach ($this->getResponsavelSituacao() as $responsavelSituacao) {
+      if ($responsavelSituacao->verificarSeEstaAtivo()) {
+        $responsavelSituacaoAtiva = $responsavelSituacao;
         break;
       }
     }
-    return $responsavelSituacao;
+    return $responsavelSituacaoAtiva;
   }
-
+  
+  public function getSaldo() {
+    $saldo = null;
+    if($this->getContaCorrente()){
+      foreach($this->getContaCorrente() as $contaCorrente){
+        if($contaCorrente->getCredito() === 'S'){
+           $saldo += $contaCorrente->getValor();
+        }
+        if($contaCorrente->getCredito() === 'N'){
+          $saldo -= $contaCorrente->getValor();
+        }
+      }
+    }    
+    return $saldo;
+  }
 
   function setNome($nome) {
     $this->nome = $nome;
@@ -132,6 +151,13 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
   }
   function setResponsavelSituacao($responsavelSituacao) {
     $this->responsavelSituacao = $responsavelSituacao;
+  }
+
+  function getContaCorrente() {
+    return $this->contaCorrente;
+  }
+  function setContaCorrente($contaCorrente) {
+    $this->contaCorrente = $contaCorrente;
   }
 
   function getToken() {
@@ -252,8 +278,8 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         'name' => 'StringLength',
         'options' => array(
         'encoding' => 'UTF-8',
-        'min' => 4,
-        'max' => 8, 
+        'min' => 1,
+        'max' => 16, 
       ),
       ),
       ),
@@ -342,7 +368,7 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         'name' => 'StringLength',
         'options' => array(
         'encoding' => 'UTF-8',
-        'min' => 14,
+        'min' => 11,
         'max' => 14,
       ),
       ),

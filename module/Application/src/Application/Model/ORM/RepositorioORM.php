@@ -18,7 +18,6 @@ class RepositorioORM {
   private $_campanhaORM;
   private $_campanhaSituacaoORM;
   private $_contaCorrenteORM;
-  private $_contaCorrenteSituacaoORM;
   private $_listaORM;
   private $_contatoORM;
   private $_campanhaListaORM;
@@ -52,17 +51,6 @@ class RepositorioORM {
       $this->_situacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Situacao');
     }
     return $this->_situacaoORM;
-  }
-
-  /**
-     * Metodo public para obter a instancia do KleoORM
-     * @return KleoORM
-     */
-  public function getPaisORM() {
-    if (is_null($this->_paisORM)) {
-      $this->_paisORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\Pais');
-    }
-    return $this->_paisORM;
   }
 
   /**
@@ -141,17 +129,6 @@ class RepositorioORM {
       $this->_contaCorrenteORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\ContaCorrente');
     }
     return $this->_contaCorrenteORM;
-  }
-
-  /**
-     * Metodo public para obter a instancia do KleoORM
-     * @return KleoORM
-     */
-  public function getContaCorrenteSituacaoORM() {
-    if (is_null($this->_contaCorrenteSituacaoORM)) {
-      $this->_contaCorrenteSituacaoORM = new KleoORM($this->getDoctrineORMEntityManager(), 'Application\Model\Entity\ContaCorrenteSituacao');
-    }
-    return $this->_contaCorrenteSituacaoORM;
   }
 
   /**

@@ -12,6 +12,7 @@ use Application\Model\Entity\CampanhaSituacao;
 use Application\Model\Entity\Situacao;
 use Application\Model\Entity\Contato;
 use Application\Model\Entity\CampanhaLista;
+use Application\Model\Entity\ContaCorrente;
 use Application\Model\ORM\RepositorioORM;
 use Application\Form\CadastroResponsavelForm;
 use Application\Form\ResponsavelSituacaoForm;
@@ -19,6 +20,7 @@ use Application\Form\CampanhaSituacaoForm;
 use Application\Form\ResponsavelSenhaAtualizacaoForm;
 use Application\Form\CadastroCampanhaForm;
 use Application\Form\CadastroListaForm;
+use Application\Form\TransferenciaForm;
 use Application\Form\KleoForm;
 
 /**
@@ -182,7 +184,7 @@ class AdmController extends KleoController {
     $sessao = $this->getSessao();
     $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
     if($sessao->idResponsavel != self::idResponsavelAdmin){
-      $campanhas = $repositorioORM->getCampanhaORM()->encontrarPorIdResponsavel($sessao->idResponsavel);  
+      $campanhas = $repositorioORM->getCampanhaORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);  
     }
     if($sessao->idResponsavel == self::idResponsavelAdmin){
       $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodos();  
@@ -249,32 +251,38 @@ class AdmController extends KleoController {
           $campanha->exchangeArray($cadastrarCampanhaForm->getData());
 
           $apenasAjustarEntidade = false;
-          $campanha = self::escreveDocumentos($campanha, $apenasAjustarEntidade);
+          $resposta = self::escreveDocumentos($campanha, $apenasAjustarEntidade);
+          if($resposta){
+            $campanha = $resposta;
 
-          $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($sessao->idResponsavel);
-          $campanha->setResponsavel($responsavel);
-          $repositorioORM->getCampanhaORM()->persistir($campanha);
+            $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($sessao->idResponsavel);
+            $campanha->setResponsavel($responsavel);
+            $campanha->setDataEHoraDeInativacao();
+            $repositorioORM->getCampanhaORM()->persistir($campanha);
 
-          $campanha = self::escreveDocumentos($campanha);
-          $repositorioORM->getCampanhaORM()->persistir($campanha);
+            $campanha = self::escreveDocumentos($campanha);
+            $repositorioORM->getCampanhaORM()->persistir($campanha);
 
-          $situacaoPendente = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::pendente);
-          $campanhaSituacao = new CampanhaSituacao();
-          $campanhaSituacao->setCampanha($campanha);
-          $campanhaSituacao->setSituacao($situacaoPendente);
-          $repositorioORM->getCampanhaSituacaoORM()->persistir($campanhaSituacao);
+            $situacaoPendente = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::pendente);
+            $campanhaSituacao = new CampanhaSituacao();
+            $campanhaSituacao->setCampanha($campanha);
+            $campanhaSituacao->setSituacao($situacaoPendente);
+            $repositorioORM->getCampanhaSituacaoORM()->persistir($campanhaSituacao);
 
-          /* Listas de contatos */
-          $lista = $repositorioORM->getListaORM()->encontrarPorId($validatedData[KleoForm::inputListaId]);          
-          $campanhaLista = new CampanhaLista();
-          $campanhaLista->setCampanha($campanha);
-          $campanhaLista->setLista($lista);
-          $repositorioORM->getCampanhaListaORM()->persistir($campanhaLista);
+            /* Listas de contatos */
+            $lista = $repositorioORM->getListaORM()->encontrarPorId($validatedData[KleoForm::inputListaId]);          
+            $campanhaLista = new CampanhaLista();
+            $campanhaLista->setCampanha($campanha);
+            $campanhaLista->setLista($lista);
+            $repositorioORM->getCampanhaListaORM()->persistir($campanhaLista);
 
-          $repositorioORM->fecharTransacao();
-          return $this->redirect()->toRoute(self::rotaAdm, array(
-            self::stringAction => self::stringCampanhas,
-          ));
+            $repositorioORM->fecharTransacao();
+            $sessao->idSessao = $campanha->getId();
+            return $this->redirect()->toRoute(self::rotaAdm, array(
+              self::stringAction => 'CampanhaConfirmacao',
+            ));
+          }
+
         } else {
           $repositorioORM->desfazerTransacao();
           return $this->forward()->dispatch(self::controllerAdm, array(
@@ -289,6 +297,55 @@ class AdmController extends KleoController {
     }
     return new ViewModel();
   }
+
+  /**
+     * Tela para confirmacao da campanha
+     * GET /admCampanhaConfirmacao
+     */
+  public function campanhaConfirmacaoAction() {
+    $sessao = $this->getSessao();
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+
+    $idCampanha = (int) $sessao->idSessao;
+    $campanha = $repositorioORM->getCampanhaORM()->encontrarPorId($idCampanha);
+
+    return new ViewModel(
+      array(
+      self::stringCampanha => $campanha,
+    )
+    );
+  }
+  
+  /**
+     * Tela para confirmacao da campanha
+     * GET /admCampanhaAtivacao
+     */ 
+  public function campanhaAtivacaoAction() {
+    $sessao = $this->getSessao();
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    try {
+      $repositorioORM->iniciarTransacao();  
+
+      $idCampanha = (int) $sessao->idSessao;
+      unset($sessao->idSessao);
+      $campanha = $repositorioORM->getCampanhaORM()->encontrarPorId($idCampanha);
+      $campanha->setData_inativacao(null);
+      $campanha->setHora_inativacao(null);
+
+      $repositorioORM->getCampanhaORM()->persistir($campanha, false);   
+
+      $repositorioORM->fecharTransacao();       
+      return $this->redirect()->toRoute(self::rotaAdm, array(
+        self::stringAction => self::stringCampanhas,
+      ));
+    }catch (Exception $exc) {
+      $repositorioORM->desfazerTransacao();
+      echo $exc->getMessage();
+    }
+  }
+
 
   /**
      * Formulario para alterar situacao
@@ -482,6 +539,14 @@ class AdmController extends KleoController {
           $arquivo = file(self::url . 'assets/' . $lista->getUpload());
           // To check the number of lines  
           if($arquivo){
+            if(count($arquivo) > 25000){
+              $repositorioORM->desfazerTransacao();
+              $cadastrarListaForm->get(KleoForm::inputUpload)->setMessages(array('Arquivo não pode ter mais de 25 mil contatos'));
+              return $this->forward()->dispatch(self::controllerAdm, array(
+                self::stringAction => self::stringLista,
+                self::stringFormulario => $cadastrarListaForm,
+              ));
+            }
             foreach($arquivo as $numero){
               $contato = new Contato();            
               if(intval($numero)){
@@ -575,7 +640,7 @@ class AdmController extends KleoController {
   /**
      * Tela para confirmacao da lista
      * GET /admlistaAtivacao
-     */
+     */ 
   public function listaAtivacaoAction() {
     $sessao = $this->getSessao();
 
@@ -627,6 +692,127 @@ class AdmController extends KleoController {
       $repositorioORM->desfazerTransacao();
       echo $exc->getMessage();
     }
+  }
+
+  /**
+     * Função padrão, traz a tela principal
+     * GET /admcontaCorrente
+     */
+  public function contaCorrenteAction() {
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodos();
+    return new ViewModel(
+      array(
+      self::stringResponsaveis => $responsaveis,
+    )
+    );
+  }
+
+  /**
+     * Formulario para ver responsavel
+     * GET /admExtrato
+     */
+  public function extratoAction() {
+    $sessao = self::getSessao();
+    $idResponsavel = $sessao->idSessao;
+    if (empty($idResponsavel)) {
+      return $this->redirect()->toRoute(self::rotaAdm, array(
+        self::stringAction => 'ContaCorrente',
+      ));
+    }
+
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+    unset($sessao->idSessao);
+
+    $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResponsavel);
+
+    return new ViewModel(
+      array(
+      self::stringResponsavel => $responsavel,
+    ));
+  }
+
+  /**
+     * Tela com cadastro de credito
+     * GET /admTransferencia
+     */
+  public function transferenciaAction() {
+    $sessao = self::getSessao();  
+
+    $formulario = $this->params()->fromRoute(self::stringFormulario);
+    $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+
+    if ($formulario) {
+      $transferenciaForm = $formulario;
+      $idResponsavel = $transferenciaForm->get(KleoForm::inputId)->getValue();
+      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResponsavel);
+    } else {
+      $idResponsavel = $sessao->idSessao;
+      if (empty($idResponsavel)) {
+        return $this->redirect()->toRoute(self::rotaAdm, array(
+          self::stringAction => 'ContaCorrente',
+        ));
+      }          
+      unset($sessao->idSessao);    
+      $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($idResponsavel);
+      $transferenciaForm = new TransferenciaForm('transferencia', $responsavel);
+    }
+
+    return new ViewModel(
+      array(
+      self::stringFormulario => $transferenciaForm,
+      self::stringResponsavel => $responsavel,
+    )
+    );
+  }
+
+  /**
+     * Finalizando o cadastro de credito 
+     * GET /admTransferenciaFinalizar
+     */
+  public function transferenciaFinalizarAction() {   
+    $sessao = $this->getSessao();
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+      try {
+        $repositorioORM->iniciarTransacao();
+
+        $post_data = $request->getPost();
+        $contaCorrente = new ContaCorrente();
+
+        $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($post_data[KleoForm::inputId]);
+
+        $transferenciaForm = new TransferenciaForm(null, $responsavel);
+        $transferenciaForm->setInputFilter($contaCorrente->getInputFilterTransferencia());
+
+        $transferenciaForm->setData($post_data);
+
+        /* validação */
+        if ($transferenciaForm->isValid()) {
+          $validatedData = $transferenciaForm->getData();
+          $contaCorrente->exchangeArray($validatedData);
+
+          $contaCorrente->setResponsavel($responsavel);
+          $repositorioORM->getContaCorrenteORM()->persistir($contaCorrente);
+
+          $repositorioORM->fecharTransacao();
+          return $this->redirect()->toRoute(self::rotaAdm, array(
+            self::stringAction => 'ContaCorrente',
+          )); 
+        } else {
+          $repositorioORM->desfazerTransacao();
+          return $this->forward()->dispatch(self::controllerAdm, array(
+            self::stringAction => 'Transferencia',
+            self::stringFormulario => $transferenciaForm,
+          ));
+        }
+      } catch (Exception $exc) {
+        $repositorioORM->desfazerTransacao();
+        echo $exc->getMessage();
+      }
+    }
+    return new ViewModel();
   }
 
   /**

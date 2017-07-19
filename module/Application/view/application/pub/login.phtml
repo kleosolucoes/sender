@@ -18,6 +18,9 @@ echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
       <div class="hpanel">
         <div class="panel-body">
           <?php
+          if($this->error){
+            echo '<p class="alert alert-danger">'.$this->error.'</p>';
+          }
           echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
           echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha));
           echo $this->botao('Logar', $this->funcaoOnClickSubmeterFormulario());

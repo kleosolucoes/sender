@@ -37,6 +37,10 @@ class KleoForm extends Form {
   const inputMensagem = 'inputMensagem';
   const inputListaId = 'inputListaId';
   const onChange = 'onChange';
+    
+  const inputValor = 'inputValor';
+  const inputPreco = 'inputPreco';
+  const inputCredito = 'inputCredito';
 
   const stringClass = 'class';
   const stringClassFormControl = 'form-control';
@@ -67,10 +71,15 @@ class KleoForm extends Form {
   const traducaoNomeCampanha = 'Nome da campanha';
   const traducaoDescricao = 'Desci&ccedil;&atilde;o';
   const traducaoDataEnvio = 'Data de Envio';
-  const traducaoFotoPerfil = 'Foto de Perfil';
-  const traducaoUpload = 'Imagem / Video / Audio';
+  const traducaoFotoPerfil = 'Foto de perfil .jpg - Tamanho: 220 x 220 px';
+  const traducaoUpload = 'Imagem -  .jpg até 450 x 600  , Peso máx: 200kb';
+  const traducaoUploadVideo = 'Vídeo: .mp4 - Peso máx. até 1.5 Mb';
   const traducaoLista = 'Lista de Contato';
   const traducaoMensagem = 'Mensagem';
+    
+  const traducaoValor = 'Valor';
+  const traducaoPreco = 'Preço 0.000 use ponto em vez de virgula';
+  const traducaoCredito = 'Crédito';
     
   const traducaoArquivoCSV = 'Arquivo CSV';
   

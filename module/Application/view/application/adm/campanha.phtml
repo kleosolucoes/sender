@@ -20,7 +20,7 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
           <div class="panel-heading">
             <h3>Nova Campanha</h3>
           </div>
-          <div class="panel-body">              
+          <div class="panel-body">           
             <?php            
             echo $this->inputFormulario(KleoForm::traducaoNomeCampanha, $formulario->get(KleoForm::inputNome));
 
@@ -30,16 +30,24 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
             ?>
             <div class="col-md-3">
               <img id="image_upload_preview_fotoPerfil" src="" />
-            </div>             
-            <?php
-            echo $this->inputFormulario(KleoForm::traducaoUpload, $formulario->get(KleoForm::inputUpload), 9);
-            ?>
-            <div class="col-md-3">
+            </div>
+            <div class="col-md-12">
+              <input type='radio' name='tipo' onclick='mostrarEsconderUpload(0);'> Apenas Texto
+              <input type='radio' name='tipo' onclick='mostrarEsconderUpload(1);'> Imagem
+              <input type='radio' name='tipo' onclick='mostrarEsconderUpload(2);'> Video
+            </div>
+            <div id='divUpload' class="hidden">
+              <?php
+              echo $this->inputFormulario('', $formulario->get(KleoForm::inputUpload));
+              ?>
+            </div> 
+            <div class="col-md-12">
               <img id="image_upload_preview_upload" src="" />
             </div>             
             <?php
-             echo $this->inputFormulario(KleoForm::traducaoLista, $formulario->get(KleoForm::inputListaId));  
             echo $this->inputFormulario(KleoForm::traducaoMensagem, $formulario->get(KleoForm::inputMensagem));              
+
+            echo $this->inputFormulario(KleoForm::traducaoLista, $formulario->get(KleoForm::inputListaId));  
 
             echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
             ?>

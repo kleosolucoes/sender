@@ -1,11 +1,13 @@
 CREATE TABLE IF NOT EXISTS `conta_corrente` (
-  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,  
+  `responsavel_id` int(6) unsigned NOT NULL,
   `valor` bigint(10) unsigned NOT NULL,
+  `preco` DECIMAL( 4, 3 ) NOT NULL,
+  `credito` ENUM(  'S',  'N' ) NOT NULL DEFAULT  'S',
   `data_criacao` date NOT NULL,
   `hora_criacao` time NOT NULL,
   `data_inativacao` date DEFAULT NULL,
   `hora_inativacao` time DEFAULT NULL,
-  `responsavel_id` int(6) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_conta_corrente_responsavel_id` (`responsavel_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -24,30 +24,26 @@ use DateTime;
 class ContaCorrente extends KleoEntity implements InputFilterAwareInterface {
 
   protected $inputFilter;
-  protected $inputFilterCadastrarContaCorrente;
-
+  protected $inputFilterTransferencia;
   /**
      * @ORM\ManyToOne(targetEntity="Responsavel", inversedBy="contaCorrente")
      * @ORM\JoinColumn(name="responsavel_id", referencedColumnName="id")
      */
   private $responsavel;
 
-  /**
-     * @ORM\OneToMany(targetEntity="ContaCorrenteSituacao", mappedBy="contaCorrente") 
-     */
-  protected $contaCorrenteSituacao;
-
-  public function __construct() {
-    $this->contaCorrenteSituacao = new ArrayCollection();
-  }
-
   /** @ORM\Column(type="integer") */
   protected $valor;
 
+  /** @ORM\Column(type="float") */
+  protected $preco;
+
+  /** @ORM\Column(type="string") */
+  protected $credito;
+
   /** @ORM\Column(type="integer") */
   protected $responsavel_id;
-  
-   function setValor($valor) {
+
+  function setValor($valor) {
     $this->valor = $valor;
   }
 
@@ -55,27 +51,20 @@ class ContaCorrente extends KleoEntity implements InputFilterAwareInterface {
     return $this->valor;
   }
 
-  /**
-     * Retorna a situacao ativo
-     * @return ContaCorrenteSituacao
-     */
-  public function getContaCorrenteSituacaoAtivo() {
-    $contaCorrenteSituacao = null;
-    foreach ($this->getContaCorrenteSituacao() as $contaCorrenteSitucao) {
-      if ($contaCorrenteSitucao->verificarSeEstaAtivo()) {
-        $contaCorrenteSituacao = $contaCorrenteSitucao;
-        break;
-      }
-    }
-    return $contaCorrenteSituacao;
+  function setPreco($preco) {
+    $this->preco = $preco;
   }
 
-  function setContaCorrenteSituacao($contaCorrenteSitucao) {
-    $this->contaCorrenteSitucao = $contaCorrenteSitucao;
+  function getPreco() {
+    return $this->preco;
   }
 
-  function getContaCorrenteSituacao() {
-    return $this->contaCorrenteSitucao;
+  function setCredito($credito) {
+    $this->credito = $credito;
+  }
+
+  function getCredito() {
+    return $this->credito;
   }
 
   function setResponsavel($responsavel) {
@@ -87,20 +76,14 @@ class ContaCorrente extends KleoEntity implements InputFilterAwareInterface {
   }
 
   public function exchangeArray($data) {
-    $this->valor = (!empty($data[KleoForm::inputValor]) ? strtoupper($data[KleoForm::inputValor]) : null);
+    $this->valor = (!empty($data[KleoForm::inputValor]) ? $data[KleoForm::inputValor] : null);
+    $this->preco = (!empty($data[KleoForm::inputPreco]) ? $data[KleoForm::inputPreco] : null);
+    $this->credito = (!empty($data[KleoForm::inputCredito]) ? $data[KleoForm::inputCredito] : null);
   }
 
-  public function setInputFilter(InputFilterInterface $inputFilter) {
-    throw new Exception("Nao utilizado");
-  }
 
-  public function getInputFilter() {
-
-  }
-
-  public function getInputFilterCadastrarContaCorrente() {
-    if (!$this->inputFilterCadastrarContaCorrente) {
-
+  public function getInputFilterTransferencia() {
+    if (!$this->inputFilterTransferencia) {
       $inputFilter = new InputFilter();
       $inputFilter->add(array(
         'name' => KleoForm::inputValor,
@@ -119,15 +102,49 @@ class ContaCorrente extends KleoEntity implements InputFilterAwareInterface {
         'options' => array(
         'encoding' => 'UTF-8',
         'min' => 1,
-        'max' => 1000000000,
+        'max' => 1000000,
       ),
       ),
       ),
       ));
 
-      $this->inputFilterCadastrarContaCorrente = $inputFilter;
+      $inputFilter->add(array(
+        'name' => KleoForm::inputPreco,
+        'required' => true,
+        'filter' => array(
+        array('name' => 'StripTags'), // removel xml e html string
+        array('name' => 'StringTrim'), // removel espaco do inicio e do final da string  
+        array('name' => 'Float'),  
+      ),
+        'validators' => array(
+        array(
+        'name' => 'NotEmpty',
+      ),
+      ),
+      )); 
+
+      $inputFilter->add(array(
+        'name' => KleoForm::inputCredito,
+        'required' => true,
+        'validators' => array(
+        array(
+        'name' => 'NotEmpty',
+      ),
+      ),
+      ));     
+
+
+      $this->inputFilterTransferencia = $inputFilter;
     }
-    return $this->inputFilterCadastrarContaCorrente;
+    return $this->inputFilterTransferencia;
+  }
+
+  public function setInputFilter(InputFilterInterface $inputFilter) {
+    throw new Exception("Nao utilizado");
+  }
+
+  public function getInputFilter() {
+
   }
 
 }

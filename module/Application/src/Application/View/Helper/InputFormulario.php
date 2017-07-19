@@ -42,7 +42,7 @@ class InputFormulario extends AbstractHelper {
       $tamanhoGrid = $this->getTamanhoGrid();
     }
     $html .= '<div class="form-group col-lg-' . $tamanhoGrid . ' col-md-' . $tamanhoGrid . '">';
-    $html .= '<label for="">' . $this->getLabel() . '</label>';
+    $html .= '<label id="label'.$this->getInput()->getName().'" for="'.$this->getInput()->getName().'">' . $this->getLabel() . '</label>';
     if ($this->getInput() instanceOf Text
         || $this->getInput() instanceOf Tel
         || $this->getInput() instanceOf Number

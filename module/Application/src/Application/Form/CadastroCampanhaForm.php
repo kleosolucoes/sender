@@ -30,7 +30,7 @@ class CadastroCampanhaForm extends KleoForm {
     );
 
     $this->add(
-      (new Date())
+      (new Text())
       ->setName(self::inputDataEnvio)
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
@@ -45,7 +45,6 @@ class CadastroCampanhaForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputFotoPerfil,
-      self::stringRequired => self::stringRequired,
       self::onChange => 'carregarFoto(this, 1);',
     ])
     );
@@ -56,7 +55,6 @@ class CadastroCampanhaForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputUpload,
-      self::stringRequired => self::stringRequired,
       self::onChange => 'carregarFoto(this, 2);',
     ])
     );
@@ -67,10 +65,9 @@ class CadastroCampanhaForm extends KleoForm {
       ->setAttributes([
       self::stringClass => self::stringClassFormControl,
       self::stringId => self::inputMensagem,
-      self::stringRequired => self::stringRequired,
     ])
     );
-    
+
     $inputSelectLista = new Select();
     $inputSelectLista->setName(self::inputListaId);
     $inputSelectLista->setAttributes(array(
@@ -83,12 +80,12 @@ class CadastroCampanhaForm extends KleoForm {
     $this->setarListas($listas);
 
   }
-  
+
   public function setarListas($listas){
     $arrayListas = [];
     if($listas){
       foreach($listas as $lista){        
-          $arrayListas[$lista->getId()] = $lista->getNome();      
+        $arrayListas[$lista->getId()] = $lista->getNome() . ' - ' . count($lista->getContatoAtivos()) . ' Números';      
       }
     }
     $inpuLista = $this->get(self::inputListaId);
