@@ -187,7 +187,7 @@ class AdmController extends KleoController {
       $campanhas = $repositorioORM->getCampanhaORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);  
     }
     if($sessao->idResponsavel == self::idResponsavelAdmin){
-      $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodos();  
+      $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodosAtivos();  
     }
 
     return new ViewModel(

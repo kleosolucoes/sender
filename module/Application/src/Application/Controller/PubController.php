@@ -94,7 +94,7 @@ class PubController extends KleoController {
 
           self::enviarEmail($emails, $titulo, $mensagem);
           unset($emails);
-          //$emails[] = self::emailLeo;
+          $emails[] = self::emailLeo;
           $emails[] = self::emailKort;
           $emails[] = self::emailSilverio;
           $urlResponsaveis = self::url . 'admResponsaveis';
@@ -214,13 +214,9 @@ class PubController extends KleoController {
           $contaCorrente = new ContaCorrente();
           $contaCorrente->setResponsavel($responsavel);
           $contaCorrente->setValor(10);
-          $repositorioORM->getContaCorrenteORM()->persistir($contaCorrente);
-
-          $situacaoAtivo = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::ativo);
-          $contaCorrenteSituacao = new ContaCorrenteSituacao();
-          $contaCorrenteSituacao->setConta_corrente($contaCorrente);
-          $contaCorrenteSituacao->setSituacao($situacaoAtivo);
-          $repositorioORM->getContaCorrenteSituacaoORM()->persistir($contaCorrenteSituacao);
+          $contaCorrente->setPreco(0);
+          $contaCorrente->setCredito('S');
+          $repositorioORM->getContaCorrenteORM()->persistir($contaCorrente);         
           /* Fim creditos */
 
           $emails[] = $responsavel->getEmail();

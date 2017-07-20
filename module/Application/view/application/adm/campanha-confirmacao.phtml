@@ -1,50 +1,60 @@
 <!-- MAIN CONTENT SECTION -->
 <section class="mainContent clearfix signUp">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3>Confirmação Nova Campanha</h3>
-          </div>
-          <div class="panel-body">              
-            <?php            
-            echo '<pre>';
-            echo 'Nome: ' . $this->campanha->getNome();
-            echo '<br />Nome: ' . $this->campanha->getNome();
-            echo '<br />Data de Envio: ' . $this->campanha->getData_envio()->format('d/m/Y');
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Confirmação Nova Campanha</h3>
+                    </div>
+                    <div class="panel-body">              
+                        <?php
+                        echo '<pre>';
+                        echo 'Nome: ' . $this->campanha->getNome();
+                        echo '<br />Data de Envio: ' . $this->campanha->getData_envio()->format('d/m/Y');
 
-            echo '<br />';
-            if($this->campanha->getFoto_perfil()){
-              echo "Foto de Perfil: ";    
-              echo '<img src="assets/'.$this->campanha->getFoto_perfil().'" />';
-            }else{
-              echo 'Sem Foto de Perfil';
-            }
-            echo '<br />';
-            if($this->campanha->getUpload()){
-              echo "Upload: ";     
-              echo '<img src="assets/'.$this->campanha->getUpload().'" />';
-            }else{
-              echo 'Sem Upload';
-            }
-            echo '<br />';
-            if($this->campanha->getMensagem()){
-              echo 'Mensagem: ' . $this->campanha->getMensagem();
-            }else{
-              echo 'Sem Mensagem';
-            }
-            echo '<br />';
-            echo 'Quantidade de Contatos: '.count($this->campanha->getCampanhaListaAtivo()->getLista()->getContatoAtivos());
-            echo '</pre>';
+                        echo '<br />';
+                        if ($this->campanha->getFoto_perfil()) {
+                            echo "Foto de Perfil: ";
+                            echo '<img src="assets/' . $this->campanha->getFoto_perfil() . '" />';
+                        } else {
+                            echo 'Sem Foto de Perfil';
+                        }
+                        echo '<br />';
+                        if ($this->campanha->getUpload()) {
+                            echo "Upload: ";
+                            echo '<img src="assets/' . $this->campanha->getUpload() . '" />';
+                        } else {
+                            echo 'Sem Upload';
+                        }
+                        echo '<br />';
+                        if ($this->campanha->getMensagem()) {
+                            echo 'Mensagem: ' . $this->campanha->getMensagem();
+                        } else {
+                            echo 'Sem Mensagem';
+                        }
+                        echo '<br />';
+                        $quantidadeContatosAtivos = count($this->campanha->getCampanhaListaAtivo()->getLista()->getContatoAtivos());
+                        echo 'Quantidade de Contatos: ' . $quantidadeContatosAtivos;
+                        echo '</pre>';
 
-            echo '<div>';
-            echo $this->botao('Confirmar', $this->funcaoOnClick('kleo("admcampanhaAtivacao", '.$this->campanha->getId().')'));
-            echo '</div>';
-            ?>
-          </div>
+                        $saldo = (int) $this->campanha->getResponsavel()->getSaldo();
+                        $diferenca = $saldo - $quantidadeContatosAtivos;
+
+                        echo '<br />';
+                        if ($diferenca >= 0) {
+                            echo "Saldo Suficiente";
+                            echo '<div>';
+                            echo $this->botao('Confirmar', $this->funcaoOnClick('kleo("admcampanhaAtivacao", ' . $this->campanha->getId() . ')'));
+                            echo '</div>';
+                        }
+                        if ($diferenca < 0) {
+                            echo "Saldo insuficiente - compre creditos";
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>

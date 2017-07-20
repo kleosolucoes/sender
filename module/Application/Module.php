@@ -68,7 +68,6 @@ class Module {
 		//!!! Your authentication route must be whitelisted
 		$allowedRoutesConfig = array(			
 			'pub',
-			'adm',
 		);
 		if (!isset($matchedRoute) || in_array($matchedRoute->getMatchedRouteName(), $allowedRoutesConfig)) {
 			// no auth check required
@@ -82,7 +81,7 @@ class Module {
 			$response = $e->getResponse();
 			$response->setStatusCode(302);
 			//this is the login screen redirection url
-			$url = $e->getRequest()->getBaseUrl() . '/pubLogin';
+			$url = $e->getRequest()->getBaseUrl() . '/login';
 			$response->getHeaders()->addHeaderLine('Location', $url);
 			$app = $e->getTarget();
 			//dont do anything other - just finish here
