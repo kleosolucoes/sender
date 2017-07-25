@@ -13,28 +13,33 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
 
 <!-- MAIN CONTENT SECTION -->
 <section class="mainContent clearfix signUp">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3>Nova Lista</h3>
-          </div>
-          <div class="panel-body">              
-            <?php            
-            echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="admin-form theme-success mw1000 center-block" style="padding-bottom: 175px;">
 
-            echo $this->inputFormulario(KleoForm::traducaoDescricao, $formulario->get(KleoForm::inputDescricao));
+                    <div class="panel heading-border panel-success">  
 
-            echo $this->inputFormulario(KleoForm::traducaoArquivoCSV, $formulario->get(KleoForm::inputUpload));  
-              
-            echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
-            ?>
-          </div>
+                        <div class="panel-body bg-light">
+
+                            <div class="section-divider mt20 mb40">
+                                <span> Nova Lista </span>
+                            </div>                                      
+                            <?php
+                            echo $this->inputFormulario(KleoForm::traducaoNome, $formulario->get(KleoForm::inputNome));
+
+                            echo $this->inputFormulario(KleoForm::traducaoDescricao, $formulario->get(KleoForm::inputDescricao));
+
+                            echo $this->inputFormulario(KleoForm::traducaoArquivoCSV, $formulario->get(KleoForm::inputUpload));                            
+
+                            echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
+                            ?>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>
 
 <?php

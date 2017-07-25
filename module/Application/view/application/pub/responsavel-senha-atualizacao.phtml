@@ -13,43 +13,92 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
 
 <!-- MAIN CONTENT SECTION -->
 <section class="mainContent clearfix signUp">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3>Cadastrar Senha</h3>
-          </div>
-          <div class="panel-body">              
-            <?php
-            echo "<p class='text-center'>Usu&aacute;rio: $this->inputEmail</p>";
-            
-             echo $this->inputFormulario(KleoForm::traducaoPrimeiroNome, $formulario->get(KleoForm::inputNome), 6);
-            echo $this->inputFormulario(KleoForm::traducaoUltimoNome, $formulario->get(KleoForm::inputUltimoNome), 6);  
-            
-            echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
-            
-            echo $this->inputFormulario(KleoForm::traducaoRepetirEmail, $formulario->get(KleoForm::inputRepetirEmail));
-            
-            echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 6);  
-            echo $this->inputFormulario(KleoForm::traducaoSelecioneOPais, $formulario->get(KleoForm::inputPais), 6);  
-            
-            echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha));
-            echo $this->inputFormulario(KleoForm::traducaoRepetirSenha, $formulario->get(KleoForm::inputRepetirSenha));
-            
-            echo $this->inputFormulario(KleoForm::traducaoNomeEmpresa, $formulario->get(KleoForm::inputNomeEmpresa), 6);
-            echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ), 6);            
-            
-            echo $this->inputFormulario(KleoForm::traducaoTermo, $formulario->get(KleoForm::inputTermo));
-            
-            echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
-            ?>
-          </div>
-        </div>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <a href="/"><img src="../../../../../public/img/site/logo_zapmarketing_painel3.png" class="embed-responsive-item center-block"></a>
+                <div class="panel panel-default">
+                    
+                    <div class="admin-form theme-info mw700" style="margin-top: 3%;" id="login1">                        
+
+                        <div class="panel-body p25 bg-light">
+                            <div class="section-divider mt10 mb40">
+                                <span>Cadastre sua senha</span>
+                            </div>
+                            <!-- .section-divider -->
+
+
+                            <div class="section row">
+                                <?php echo $this->inputFormulario(KleoForm::traducaoPrimeiroNome, $formulario->get(KleoForm::inputNome), 6); ?>            
+
+                                <?php echo $this->inputFormulario(KleoForm::traducaoUltimoNome, $formulario->get(KleoForm::inputUltimoNome), 6); ?>
+
+                                <!-- end section -->
+                            </div>
+
+
+                            <!-- end .section row section -->
+
+                            <div class="section row">
+
+                                <?php echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail)); ?>
+                                <?php echo $this->inputFormulario(KleoForm::traducaoRepetirEmail, $formulario->get(KleoForm::inputRepetirEmail)); ?>
+
+                            </div>
+                            <!-- end section -->                                 
+
+                            <div class="section row">
+
+
+                                <?php echo $this->inputFormulario(KleoForm::traducaoTelefone, $formulario->get(KleoForm::inputTelefone), 6); ?>
+                                <?php echo $this->inputFormulario(KleoForm::traducaoSelecioneOPais, $formulario->get(KleoForm::inputPais), 6); ?>
+
+                            </div>
+                            <div class="section row">                  
+
+                                <?php echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha)); ?>
+                                <?php echo $this->inputFormulario(KleoForm::traducaoRepetirSenha, $formulario->get(KleoForm::inputRepetirSenha)); ?>
+
+
+                            </div>                                        
+
+
+                            <div class="section row">
+
+                                <?php echo $this->inputFormulario(KleoForm::traducaoNomeEmpresa, $formulario->get(KleoForm::inputNomeEmpresa), 6); ?>
+                                <?php echo $this->inputFormulario(KleoForm::traducaoCNPJ, $formulario->get(KleoForm::inputCNPJ), 6); ?>
+                            </div>
+                            <!-- end section -->                        
+                        
+                    <div class="section-divider mv40">
+                        <span>Revise os termos</span>
+                    </div>
+                    <!-- .section-divider -->
+
+                    <div class="section mb15">                                          
+                            <?php echo $this->inputFormulario(KleoForm::traducaoTermo, $formulario->get(KleoForm::inputTermo)); ?>               
+                        
+                    </div>
+                    <!-- end section -->
+
+                </div>
+                <!-- end .form-body section -->
+                <div class="panel-footer clearfix">
+                    <?php echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)')); ?>
+                </div>
+                <!-- end .form-footer section -->            
+            </div>
+        </div> 
     </div>
-  </div>
-</section>
+</div>
+</div>   
+
+<!-- End: Content -->              
 
 <?php
-echo $this->form()->closeTag();
+// echo "<p class='text-center'>Usu&aacute;rio: $this->inputEmail</p>";         
+?>
+<   
+</section>
+
+<?php echo $this->form()->closeTag(); ?>

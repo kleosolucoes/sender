@@ -99,8 +99,8 @@ function carregarFoto(input, qualFoto) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     $('#image_upload_preview_' + tipoPreviewer).attr('src', e.target.result);
-                    $('#image_upload_preview_' + tipoPreviewer).attr('width', tamanhoWidth + 'px');
-                    $('#image_upload_preview_' + tipoPreviewer).attr('height', tamanhoHeight + 'px');
+//                    $('#image_upload_preview_' + tipoPreviewer).attr('width', tamanhoWidth + 'px');
+//                    $('#image_upload_preview_' + tipoPreviewer).attr('height', tamanhoHeight + 'px');
                 }
                 reader.readAsDataURL(input.files[0]);
             }

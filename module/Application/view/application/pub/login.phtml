@@ -10,25 +10,87 @@ echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 ?>
 <div class="login-container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="text-center m-b-md">
-        <h3>Login - ToNoShop.com</h3>
-      </div>
-      <div class="hpanel">
-        <div class="panel-body">
-          <?php
-          if($this->error){
-            echo '<p class="alert alert-danger">'.$this->error.'</p>';
-          }
-          echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
-          echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha));
-          echo $this->botao('Logar', $this->funcaoOnClickSubmeterFormulario());
-          ?> 
+    <div class="row">
+        <div class="col-md-12">           
+
+
+
+
+            <!-- Start: Main -->
+            <div id="main" class="animated fadeIn">
+
+                <!-- Start: Content-Wrapper -->
+                <section id="content_wrapper">
+
+                    <!-- Begin: Content -->
+                    <section id="content">
+
+                        <div class="admin-form theme-info" id="login1">
+
+                            <div class="row mb15 table-layout">          
+
+                            </div>            
+                            <a href="/"><img src="../../../../../public/img/site/logo_zapmarketing_painel3.png" style="margin-left: 1cm" class="embed-responsive-item"><br/></a>
+                            <div class="panel panel-info mt10 br-n">               
+
+                                <!-- end .form-header section -->            
+                                <div class="panel-body bg-light p30">
+
+                                    <div class="row">                    
+                                        <div class="col-sm-7 pr30">
+
+                                            <div class="section">                  
+                                                <?php
+                                                if ($this->error) {
+                                                    echo '<p class="alert alert-danger">' . $this->error . '</p>';
+                                                }
+                                                echo $this->inputFormulario(KleoForm::traducaoEmail, $formulario->get(KleoForm::inputEmail));
+                                                ?>                      
+                                            </div>
+                                            <!-- end section -->
+
+                                            <div class="section">
+
+                                                <?php echo $this->inputFormulario(KleoForm::traducaoSenha, $formulario->get(KleoForm::inputSenha)); ?>
+
+                                            </div>
+                                            <!-- end section -->
+
+                                        </div>
+                                        <div class="col-sm-5 br-l br-grey pl30">
+                                            <h3 class="mb25">Você terá acesso a:</h3>
+                                            <p class="mb15">
+                                                <span class="fa fa-check text-success pr5"></span> Envios em Massa</p>
+                                            <p class="mb15">
+                                                <span class="fa fa-check text-success pr5"></span> Garantia de Entrega</p>
+                                            <p class="mb15">
+                                                <span class="fa fa-check text-success pr5"></span> Relatórios de Envio</p>                    
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end .form-body section -->
+                                <div class="panel-footer clearfix p10 ph15">
+                                    <?php echo $this->botao('Entrar', $this->funcaoOnClickSubmeterFormulario()); ?>
+                                    <label class="pull-left input-align mt10">                                    
+                                        <span><a href="#" style="color: #626262; margin-left: 1cm;">Esqueceu a senha?</a></span>   
+                                    </label>             
+                                </div>
+                                <!-- end .form-footer section -->            
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- End: Content -->
+
+                </section>
+                <!-- End: Content-Wrapper -->
+
+            </div>
+            <!-- End: Main -->
+
+
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <?php
 echo $this->form()->closeTag();
