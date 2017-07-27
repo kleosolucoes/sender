@@ -18,6 +18,7 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
                     <table class="table footable admin-form theme-warning tc-checkbox-1 fs13 table-hover" data-page-navigation=".pagination" data-page-size="6" data-filter="#fooFilter">
                         <thead>
                             <tr class="bg-light">
+                                <th>ID</th>
                                 <?php
                                 if ($this->idResponsavel == KleoController::idResponsavelAdmin) {
                                     echo '<th>Empresa</th>';
@@ -36,6 +37,7 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
                             if ($this->listas) {
                                 foreach ($this->listas as $lista) {
                                     echo '<tr>';
+                                    echo '<td>' . $lista->getId() . '</td>';
                                     if ($this->idResponsavel == KleoController::idResponsavelAdmin) {
                                         echo '<td>' . $lista->getResponsavel()->getNomeEmpresa() . '</td>';
                                         echo '<td>' . $lista->getResponsavel()->getNome() . '</td>';
@@ -45,7 +47,7 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
                                     echo '<td>' . count($lista->getContatoAtivos()) . '</td>';
                                     echo '<td>--/--</td>';
                                     echo '<td>';
-                                    echo $this->botao('Excluir', $this->funcaoOnClick('validarExclusao("admlistaexcluir", ' . $lista->getId() . ')'),2);
+                                    echo $this->botao('Excluir', $this->funcaoOnClick('validarExclusao("admlistaexcluir", ' . $lista->getId() . ')'), 2);
                                     echo '</td>';
                                     echo '</tr>';
                                 }

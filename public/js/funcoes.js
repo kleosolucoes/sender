@@ -16,7 +16,7 @@ function kleo(action, id) {
 }
 
 function validarExclusao(action, id) {
-    var resposta = confirm('Confirma Exclusao?');
+    var resposta = confirm('Confirma Exclusão?');
     if (resposta) {
         kleo(action, id);
     } else {
@@ -47,6 +47,25 @@ $(window).bind("load", function () {
     // Remove splash screen after load
     $('.splash').css('display', 'none')
 });
+
+function validarSeEArquivoCSV(input) {
+    var file = input.files[0];
+    var extensoes_permitidas = new Array(".csv");
+    var extensao = (file.name.substring(file.name.lastIndexOf("."))).toLowerCase();
+
+    var permitida = false;
+    for (var i = 0; i < extensoes_permitidas.length; i++) {
+        if (extensoes_permitidas[i] == extensao) {
+            permitida = true;
+            break;
+        }
+    }
+
+    if (!permitida) {
+        alert('Arquivo não é do formato CSV!');
+        input.value = null;
+    }
+}
 
 function carregarFoto(input, qualFoto) {
     var file = input.files[0];
@@ -99,8 +118,7 @@ function carregarFoto(input, qualFoto) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     $('#image_upload_preview_' + tipoPreviewer).attr('src', e.target.result);
-//                    $('#image_upload_preview_' + tipoPreviewer).attr('width', tamanhoWidth + 'px');
-//                    $('#image_upload_preview_' + tipoPreviewer).attr('height', tamanhoHeight + 'px');
+                    $('#div_' + tipoPreviewer).removeClass('hidden');
                 }
                 reader.readAsDataURL(input.files[0]);
             }

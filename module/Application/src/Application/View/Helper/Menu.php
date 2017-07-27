@@ -30,7 +30,7 @@ class Menu extends AbstractHelper {
 
         $html .= '<div class="navbar-branding">';
         $html .= '<a class="navbar-brand" href="#" style="padding-top: 22px;">';
-        $html .= '<img src="/img/site/logonova2.png" title="';
+        $html .= '<img src="/img/site/logo_adm_zap.png" width="170" heigth="30"  title="';
         $html .= $this->view->translate(KleoController::nomeAplicacao);
         $html .= '" class="img-responsive" style="max-width:100%;">';
         $html .= '</a>';
@@ -44,7 +44,7 @@ class Menu extends AbstractHelper {
         $html .= '<span class="caret caret-tp"></span>';
         $html .= '</a>';
 
-        $html .= '<ul class="dropdown-menu list-group dropdown-persist w250" role="menu">';
+        $html .= '<ul style="border-bottom-color: #70ca63;" class="dropdown-menu list-group dropdown-persist w250" role="menu">';
         $html .= '<li class="dropdown-footer">';
         $html .= '<a href="/admsair">';
         $html .= '<span class="fa fa-power-off pr5"></span>' . 'Sair' . '</a>';
@@ -56,7 +56,7 @@ class Menu extends AbstractHelper {
         $html .= '</header>';
 
         // Start: Sidebar
-        $html .= '<aside id="sidebar_left" class="nano nano-light affix">';
+        $html .= '<aside id="sidebar_left" class="nano nano-light affix"  style="background-color:green;">';
 
         // Start: Sidebar Left Content
         $html .= '<div class="sidebar-left-content nano-content">';

@@ -10,7 +10,12 @@ echo $this->form()->openTag($formulario);
 echo $this->formHidden($formulario->get(KleoForm::inputCSRF));
 echo $this->formHidden($formulario->get(KleoForm::inputId));
 ?>
-
+<style>
+    .ui-datepicker-calendar a {
+        color:white !important;
+        background-color:green !important;
+    }
+</style>
 <!-- MAIN CONTENT SECTION -->
 <section class="mainContent clearfix signUp">
     <div class="container">
@@ -28,40 +33,48 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
                             <?php
                             echo $this->inputFormulario(KleoForm::traducaoNomeCampanha, $formulario->get(KleoForm::inputNome));
 
+                            echo $this->inputFormulario(KleoForm::traducaoLista, $formulario->get(KleoForm::inputListaId));
+
                             echo $this->inputFormulario(KleoForm::traducaoDataEnvio, $formulario->get(KleoForm::inputDataEnvio));
 
                             echo $this->inputFormulario(KleoForm::traducaoFotoPerfil, $formulario->get(KleoForm::inputFotoPerfil), 9);
                             ?>
                             <div class="col-md-3">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div id="div_fotoPerfil" class="fileupload fileupload-new hidden" data-provides="fileupload">
                                     <div class="fileupload-preview thumbnail mb20" style="cursor:default;">
                                         <img id="image_upload_preview_fotoPerfil" src="" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="option-group field section-row" style=" padding-bottom: 20px;">
-                                    <label for="texto" class="option block option-success mt15">
-                                        <input type='radio' name='tipo' id="texto" onclick='mostrarEsconderUpload(0);'> 
-                                        <span class="radio"></span>Apenas Texto</label>
-                                    <label for="imagem" class="option block option-success mt15">
-                                        <input type='radio' name='tipo' id="imagem" onclick='mostrarEsconderUpload(1);'> 
-                                        <span class="radio"></span>Imagem</label>
-                                    <label for="video" class="option block option-success mt15">
-                                        <input type='radio' name='tipo' id="video" onclick='mostrarEsconderUpload(2);'> 
-                                        <span class="radio"></span>Video</label>                                    
+                                <div class="row wizard-options text-center">
+                                    <div class="col-xs-4 col-sm-4 ph10">
+                                        <a class="holder-style p15 holder-active" onclick='mostrarEsconderUpload(0);'>
+                                            <span class="fa fa-font holder-icon"></span>
+                                            <br /> Apenas Texto
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 ph10">
+                                        <a class="holder-style p15 holder-active" onclick='mostrarEsconderUpload(1);'>
+                                            <span class="fa fa-picture-o holder-icon"></span>
+                                            <br /> Imagem
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 ph10">
+                                        <a class="holder-style p15 holder-active" onclick='mostrarEsconderUpload(2);'>
+                                            <span class="fa fa-video-camera holder-icon"></span>
+                                            <br /> V&iacute;deo
+                                        </a>
+                                    </div>
                                 </div>
-                              <!--  <input type='radio' name='tipo' onclick='mostrarEsconderUpload(0);'> Apenas Texto
-                                <input type='radio' name='tipo' onclick='mostrarEsconderUpload(1);'> Imagem
-                                <input type='radio' name='tipo' onclick='mostrarEsconderUpload(2);'> Video -->
                             </div>
                             <div id='divUpload' class="hidden">
                                 <?php
                                 echo $this->inputFormulario('', $formulario->get(KleoForm::inputUpload));
                                 ?>
                             </div> 
-                            <div class="col-md-12">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="col-md-12 mt10">
+                                <div id="div_upload" class="fileupload fileupload-new hidden" data-provides="fileupload">
                                     <div class="fileupload-preview thumbnail mb20" style="cursor:default;">
                                         <img id="image_upload_preview_upload" src="" />
                                     </div>           
@@ -69,9 +82,6 @@ echo $this->formHidden($formulario->get(KleoForm::inputId));
                             </div>             
                             <?php
                             echo $this->inputFormulario(KleoForm::traducaoMensagem, $formulario->get(KleoForm::inputMensagem));
-
-                            echo $this->inputFormulario(KleoForm::traducaoLista, $formulario->get(KleoForm::inputListaId));
-
                             echo $this->botao('Cadastrar', $this->funcaoOnClick('submeterFormulario(this.form)'));
                             ?>
                         </div>

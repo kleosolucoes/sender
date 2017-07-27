@@ -59,7 +59,7 @@ function validacoesFormulario(campo){
       }
       break;
     case 'inputRepetirSenha':
-      if(campo.value.length === 0 || campo.value != document.getElementById(inputSenha).value){
+      if(campo.value.length === 0 || campo.value != document.getElementById('inputSenha').value){
         temErro = true;
         mensagemDeErro = 'Repita a senha';
       }

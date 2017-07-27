@@ -13,36 +13,40 @@ use Application\Model\Entity\Situacao;
  */
 class CampanhaSituacaoForm extends KleoForm {
 
-  public function __construct($name = null, $id, $todasSituacoes, $idSituacao) {
-    parent::__construct($name);
+    public function __construct($name = null, $id, $todasSituacoes, $idSituacao) {
+        parent::__construct($name);
 
-    $inputId = $this->get(self::inputId);
-    $inputId->setValue($id);
+        $inputId = $this->get(self::inputId);
+        $inputId->setValue($id);
 
-    $arraySituacoes = [];
-    foreach($todasSituacoes as $situacao){
-      $adicionar = false;
-      if($situacao->getId() === $idSituacao){
-        $adicionar = true;
-      }
-      if($situacao->getId() === ($idSituacao - 1)){
-        $adicionar = true;
-      }
-      if($situacao->getId() === ($idSituacao - 2)){
-        $adicionar = true;
-      }
-      if($adicionar){
-        $arraySituacoes[$situacao->getId()] = $situacao->getNome();  
-      }
+        $arraySituacoes = [];
+        foreach ($todasSituacoes as $situacao) {
+            $adicionar = false;
+            if ($situacao->getId() === Situacao::agendada) {
+                $adicionar = true;
+            }
+            if ($situacao->getId() === Situacao::recusado) {
+                $adicionar = true;
+            }
+            if ($situacao->getId() === Situacao::emExecucao) {
+                $adicionar = true;
+            }
+            if ($situacao->getId() === Situacao::enviada) {
+                $adicionar = true;
+            }
+            if ($adicionar) {
+                $arraySituacoes[$situacao->getId()] = $situacao->getNome();
+            }
+        }
+        $inputSelectSituacoes = new Select();
+        $inputSelectSituacoes->setName(self::inputSituacao);
+        $inputSelectSituacoes->setAttributes(array(
+            self::stringClass => self::stringClassFormControl,
+            self::stringId => self::inputSituacao,
+            self::stringValue => $idSituacao,
+        ));
+        $inputSelectSituacoes->setValueOptions($arraySituacoes);
+        $this->add($inputSelectSituacoes);
     }
-    $inputSelectSituacoes = new Select();
-    $inputSelectSituacoes->setName(self::inputSituacao);
-    $inputSelectSituacoes->setAttributes(array(
-      self::stringClass => self::stringClassFormControl,
-      self::stringId => self::inputSituacao,
-      self::stringValue => $idSituacao,
-    ));
-    $inputSelectSituacoes->setValueOptions($arraySituacoes);
-    $this->add($inputSelectSituacoes);
-  }
+
 }

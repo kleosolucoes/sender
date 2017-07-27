@@ -18,7 +18,9 @@ class Situacao extends KleoEntity {
     const primeiroContato = 1;
     const ativo = 2;
     const recusado = 3;
-    const pendente = 4;
+    const agendada = 4;
+    const emExecucao = 5;
+    const enviada = 6;
 
     /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavelSituacao") 
@@ -29,7 +31,6 @@ class Situacao extends KleoEntity {
      * @ORM\OneToMany(targetEntity="CampanhaSituacao", mappedBy="campanhaSituacao") 
      */
     protected $campanhaSituacao;
-  
 
     public function __construct() {
         $this->responsavelSituacao = new ArrayCollection();

@@ -81,7 +81,7 @@ class KleoForm extends Form {
   const traducaoPreco = 'Preço 0.000 use ponto em vez de virgula';
   const traducaoCredito = 'Crédito';
     
-  const traducaoArquivoCSV = 'Arquivo CSV';
+  const traducaoArquivoCSV = '<i>Arquivo CSV - Formato: DDD + NÚMERO (9 dígitos)<br /><br /> Exemplo: <br /> 61999999999<br /> 61988888888<br /> 61977777777</i>';
   
   const traducaoBrasil = 'BRASIL';
 

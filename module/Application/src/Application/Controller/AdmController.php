@@ -263,7 +263,7 @@ class AdmController extends KleoController {
                         $campanha = self::escreveDocumentos($campanha);
                         $repositorioORM->getCampanhaORM()->persistir($campanha);
 
-                        $situacaoPendente = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::pendente);
+                        $situacaoPendente = $repositorioORM->getSituacaoORM()->encontrarPorId(Situacao::agendada);
                         $campanhaSituacao = new CampanhaSituacao();
                         $campanhaSituacao->setCampanha($campanha);
                         $campanhaSituacao->setSituacao($situacaoPendente);

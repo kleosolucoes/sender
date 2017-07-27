@@ -27,7 +27,8 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                                 }
                                 ?>  
                                 <th>Nome da Campanha</th>
-                                <th>Cadastro-Agendamento</th>                                    
+                                <th>Cadastro</th>   
+                                <th>Agendamento</th>                                    
                                 <th>Status</th>
                                 <th>Resumo</th>
                                 <td></td> 
@@ -45,10 +46,13 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                                         echo '<td>' . $campanha->getResponsavel()->getNome() . '</td>';
                                     }
                                     echo '<td>' . $campanha->getNome() . '</td>';
+                                    echo '<td>' . $campanha->getData_criacao()->format('d/m/Y') . ' / ' . $campanha->getHora_criacao() . '</td>';
                                     echo '<td>' . $campanha->getData_envio()->format('d/m/Y') . '</td>';
                                     echo '<td>' . $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome();
                                     if ($this->idResponsavel == KleoController::idResponsavelAdmin &&
-                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::pendente) {
+                                            ($campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::agendada ||
+                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::emExecucao)
+                                    ) {
                                         echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admCampanhaSituacao", ' . $campanha->getId() . ')'));
                                     }
                                     echo '</td>';
