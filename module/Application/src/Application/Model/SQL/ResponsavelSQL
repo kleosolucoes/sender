@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `responsavel` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
-  `telefone` bigint(11) unsigned NOT NULL,
+  `telefone` bigint(12) unsigned NOT NULL,
   `email` varchar(80) NOT NULL,
   `nome_empresa` varchar(50) DEFAULT NULL,
   `cnpj` bigint(14) DEFAULT NULL,

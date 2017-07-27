@@ -242,8 +242,8 @@ class Responsavel extends KleoEntity implements InputFilterAwareInterface{
         'name' => 'StringLength',
         'options' => array(
         'encoding' => 'UTF-8',
-        'min' => 10, 
-        'max' => 11, 
+        'min' => 11, 
+        'max' => 12, 
       ),
       ),
       ),

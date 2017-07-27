@@ -58,8 +58,8 @@ class KleoForm extends Form {
   const traducaoTelefone = 'Telefone';
   const traducaoEmail = 'Email';
   const traducaoRepetirEmail = 'Repita o Email';
-  const traducaoNomeEmpresa = 'Nome Empresa';
-  const traducaoCNPJ = 'CNPJ';
+  const traducaoNomeEmpresa = 'Nome Empresa ou Respons&aacute;vel';
+  const traducaoCNPJ = 'CNPJ ou CPF';
   const traducaoSenha = 'Senha';
   const traducaoRepetirSenha = 'Repetir Senha';
   const traducaoSelecioneOPais = 'Selecione o Pais';

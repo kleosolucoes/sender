@@ -19,13 +19,13 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                     <table class="table footable admin-form theme-warning tc-checkbox-1 fs13 table-hover" data-page-navigation=".pagination" data-page-size="6" data-filter="#fooFilter">
                         <thead>
                             <tr class="bg-light">
+                                <th>ID</th>
                                 <?php
                                 if ($this->idResponsavel == KleoController::idResponsavelAdmin) {
                                     echo '<th>Empresa</th>';
                                     echo '<th>Responsavel</th>';
                                 }
-                                ?>                                
-                                <th>ID</th>
+                                ?>  
                                 <th>Nome da Campanha</th>
                                 <th>Cadastro-Agendamento</th>                                    
                                 <th>Status</th>
@@ -54,7 +54,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                                     echo '</td>';
                                     echo '<td>--/--</td>';
                                     echo '<td></td>';  // '<td><button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-right ml10">Relatórios</button></td>';
-                                    echo '<td></td>';// '<td><button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-left ml10">Excluir</button></td>';
+                                    echo '<td></td>'; // '<td><button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-left ml10">Excluir</button></td>';
                                     echo '</tr>';
                                 }
                             } else {

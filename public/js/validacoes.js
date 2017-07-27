@@ -43,13 +43,13 @@ function validacoesFormulario(campo){
     case 'inputNomeEmpresa':
       if(campo.value.length < 3 || campo.value.length > 50){
         temErro = true;
-        mensagemDeErro = 'Nome da Empresa precisa ter 3 a 50 caracteres';
+        mensagemDeErro = 'Nome da Empresa ou Responsavel precisa ter 3 a 50 caracteres';
       }
       break;
     case 'inputCNPJ':
-      if(campo.value.length != 14){
+      if(campo.value.length != 14 && campo.value.length != 11){
         temErro = true;
-        mensagemDeErro = 'Preencha o CNPJ corretamente';
+        mensagemDeErro = 'Preencha o CNPJ ou CPF corretamente';
       }
       break;
     case 'inputSenha':

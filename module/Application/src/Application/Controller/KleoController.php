@@ -68,26 +68,15 @@ class KleoController extends AbstractActionController {
     public static function enviarEmail($emails, $titulo, $mensagem) {
         $mail = new PHPMailer;
         try {
-//                  $mail->SMTPDebug = 1;
-                   $mail->isSMTP();
-                   $mail->Host = '200.147.36.31';
-                   $mail->SMTPAuth = true;
-                   $mail->Username = 'leonardo@circuitodavisao.com.br';
-                   $mail->Password = 'Leonardo142857';    
-//                   $mail->SMTPSecure = 'tls';                            
-                   $mail->Port = 587; 
-
-//            $mail->isSMTP();
-////            $mail->Host = 'br130.hostgator.com.br';
-//            $mail->Host = 'mail.zapmarketing.com.br';
-//            $mail->SMTPAuth = true;
-//            $mail->Username = 'informativo@zapmarketing.com.br';
-//            $mail->Password = 'UX_T6;[-P0#P';
-////            $mail->SMTPSecure = 'tls';
-////            $mail->Port = 465;
-//            $mail->Port = 25;
-
-            $mail->setFrom('leonardo@circuitodavisao.com.br', self::nomeAplicacao);
+//            $mail->SMTPDebug = 1;
+            $mail->isSMTP();
+            $mail->Host = '200.147.36.31';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'informativo@zapmarketing.com.br';
+            $mail->Password = '97zmCQUKY3LcsZ96';
+//            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+            $mail->setFrom('informativo@zapmarketing.com.br', self::nomeAplicacao);
 
             foreach ($emails as $email) {
                 $mail->addAddress($email);
