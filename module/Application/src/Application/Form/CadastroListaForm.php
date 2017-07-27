@@ -40,10 +40,10 @@ class CadastroListaForm extends KleoForm {
                 (new File())
                         ->setName(self::inputUpload)
                         ->setAttributes([
-                            self::stringClass => self::stringClassFormControl,
+                            self::stringClass => self::stringClassGuiFile,
                             self::stringId => self::inputUpload,
                             self::stringRequired => self::stringRequired,
-                            self::onChange => 'validarSeEArquivoCSV(this);',
+                            self::onChange => 'validarSeEArquivoCSV(this); document.getElementById(\'text_'.self::inputUpload.'\').value = this.value;',
                         ])
         );
     }

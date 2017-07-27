@@ -44,6 +44,7 @@ class KleoForm extends Form {
 
   const stringClass = 'class';
   const stringClassFormControl = 'form-control';
+  const stringClassGuiFile = 'gui-file';
   const stringId = 'id';
   const stringPlaceholder = 'placeholder';
   const stringAction = 'action';

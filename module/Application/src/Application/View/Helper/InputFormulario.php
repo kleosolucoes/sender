@@ -51,10 +51,7 @@ class InputFormulario extends AbstractHelper {
     }
     if ($this->getInput() instanceOf Select) {
       $html .= $this->view->formSelect($this->getInput());
-    }
-    if ($this->getInput() instanceOf File) {
-      $html .= $this->view->formFile($this->getInput());
-    }
+    }   
     if ($this->getInput() instanceOf Textarea) {
       $html .= $this->view->formTextarea($this->getInput());
     }
@@ -75,6 +72,18 @@ class InputFormulario extends AbstractHelper {
       ->setMessageCloseString('</small></p></div>')
       ->render($this->getInput());
     $html .= '</div>';
+
+    if ($this->getInput() instanceOf File) {
+      $html .= '<div class="col-lg-' . $tamanhoGrid . ' col-md-' . $tamanhoGrid . '">';
+      $html .= '<div class="section">';
+      $html .= '<label class="field file">';
+      $html .= $this->view->formFile($this->getInput());
+      $html .= '<span class="button btn-success">Escolher Arquivo</span>';
+      $html .= '<input type="text" class="gui-input" id="text_'.$this->getInput()->getName().'">';
+      $html .= '</label>';
+      $html .= '</div>';
+      $html .= '</div>';
+    }
     return $html;
   }
 
