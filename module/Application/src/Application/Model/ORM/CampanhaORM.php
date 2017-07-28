@@ -44,7 +44,7 @@ class CampanhaORM extends KleoORM {
     
      public function encontrarTodosAtivos() {
       $campanhasAtivas = null;
-      $todasAsCampanhasPorId = $this->encontrarTodos();
+      $todasAsCampanhasPorId = $this->encontrarTodosOrdenadosPorUltimo();
       foreach($todasAsCampanhasPorId as $campanha){
         if($campanha->verificarSeEstaAtivo()){
           $campanhasAtivas[] = $campanha;

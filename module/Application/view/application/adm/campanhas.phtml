@@ -51,7 +51,8 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                                     echo '<td>' . $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome();
                                     if ($this->idResponsavel == KleoController::idResponsavelAdmin &&
                                             ($campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::agendada ||
-                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::emExecucao)
+                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::emExecucao ||
+                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::aprovada)
                                     ) {
                                         echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admCampanhaSituacao", ' . $campanha->getId() . ')'));
                                     }

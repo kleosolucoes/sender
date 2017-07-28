@@ -52,7 +52,7 @@ class AdmController extends KleoController {
     public function responsaveisAction() {
 
         $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-        $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodos();
+        $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodosOrdenadosPorUltimoEAtivos();
         return new ViewModel(
                 array(
             self::stringResponsaveis => $responsaveis,
@@ -187,7 +187,7 @@ class AdmController extends KleoController {
             $campanhas = $repositorioORM->getCampanhaORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);
         }
         if ($sessao->idResponsavel == self::idResponsavelAdmin) {
-            $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodosAtivos();
+            $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodosOrdenadosPorUltimoEAtivos();
         }
 
         return new ViewModel(
@@ -441,7 +441,7 @@ class AdmController extends KleoController {
         }
 
         if ($sessao->idResponsavel == self::idResponsavelAdmin) {
-            $listas = $repositorioORM->getListaORM()->encontrarTodos();
+            $listas = $repositorioORM->getListaORM()->encontrarTodosOrdenadosPorUltimoEAtivos();
         }
 
         return new ViewModel(
@@ -475,6 +475,7 @@ class AdmController extends KleoController {
      */
     public function listaFinalizarAction() {
         $sessao = $this->getSessao();
+        set_time_limit(0);
         $request = $this->getRequest();
         if ($request->isPost()) {
             $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
@@ -591,7 +592,7 @@ class AdmController extends KleoController {
      */
     public function listaConfirmacaoAction() {
         $sessao = $this->getSessao();
-
+        set_time_limit(0);
         $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
 
         $idLista = (int) $sessao->idSessao;

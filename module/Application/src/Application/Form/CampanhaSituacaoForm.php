@@ -34,6 +34,9 @@ class CampanhaSituacaoForm extends KleoForm {
             if ($situacao->getId() === Situacao::enviada) {
                 $adicionar = true;
             }
+            if ($situacao->getId() === Situacao::aprovada) {
+                $adicionar = true;
+            }
             if ($adicionar) {
                 $arraySituacoes[$situacao->getId()] = $situacao->getNome();
             }
