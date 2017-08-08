@@ -1,0 +1,70 @@
+<?php
+
+use Application\Controller\KleoController;
+
+echo $this->cabecalhoPagina('Lista de Bots', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admbot", 0);')));
+?>  
+<div class="content transition animate-panel fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-menu">   
+                    <input id="fooFilter" type="text" class="form-control" placeholder="Buscar...">
+                </div>                     
+            </div>
+            <div class="panel-body pn">
+                <div class="table-responsive">
+                    <table class="table footable admin-form theme-warning tc-checkbox-1 fs13 table-hover" data-page-navigation=".pagination" data-page-size="6" data-filter="#fooFilter">
+                        <thead>
+                            <tr class="bg-light">
+                                <th>ID</th>
+                                <?php
+                                if ($this->idResponsavel == KleoController::idResponsavelAdmin) {
+                                    echo '<th>Empresa</th>';
+                                    echo '<th>Responsavel</th>';
+                                }
+                                ?>
+                                <th>Bot</th>
+                                <th>Opções</th>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($this->bots) {
+                                foreach ($this->bots as $bot) {
+                                    echo '<tr>';
+                                    echo '<td>' . $bot->getId() . '</td>';
+                                    if ($this->idResponsavel == KleoController::idResponsavelAdmin) {
+                                        echo '<td>' . $bot->getResponsavel()->getNomeEmpresa() . '</td>';
+                                        echo '<td>' . $bot->getResponsavel()->getNome() . '</td>';
+                                    }
+                                    echo '<td>' . $bot->getMensagem() . '</td>';
+                                    echo '<td>' . count($bot->getBotOpcao()) . '</td>';
+                                    echo '<td>';
+                                    echo $this->botao('Excluir', $this->funcaoOnClick('validarExclusao("admbotexcluir", ' . $bot->getId() . ')'), 2);
+                                    echo '</td>';
+                                    echo '</tr>';
+                                }
+                            } else {
+                                echo '<tr>';
+                                echo '<td colspan="5" class="text-center">' . 'Sem bots cadastrados!' . '</td>';
+                                echo '</tr>';
+                            }
+                            ?>                                
+                        </tbody>
+                        <tfoot class="footer-menu">
+                            <tr>
+                                <td colspan="12">
+                                    <nav class="text-right">
+                                        <ul class="pagination hide-if-no-paging"></ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

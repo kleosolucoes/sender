@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS `bot_opcao` (
+  `id` int(6) unsigned NOT NULL,
+  `bot_id` int(6) unsigned NOT NULL,
+  `titulo` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `resposta` text COLLATE utf8_unicode_ci NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+ALTER TABLE `bot_opcao`
+  ADD PRIMARY KEY (`id`), ADD KEY `index_bot_opcao_bot_id` (`bot_id`);
