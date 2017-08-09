@@ -56,6 +56,7 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                                     ) {
                                         echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admCampanhaSituacao", ' . $campanha->getId() . ')'));
                                     }
+                                       echo $this->botao('Ver', $this->funcaoOnClick('kleo("admCampanhaVer", ' . $campanha->getId() . ')'));
                                     echo '</td>';
                                     echo '<td>--/--</td>';
                                     echo '<td></td>';  // '<td><button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-right ml10">Relatórios</button></td>';

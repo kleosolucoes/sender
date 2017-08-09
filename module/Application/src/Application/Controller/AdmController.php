@@ -200,6 +200,43 @@ class AdmController extends KleoController {
     }
 
     /**
+     * Formulario para ver responsavel
+     * GET /admCampanhaVer
+     */
+    public function campanhaVerAction() {
+
+        $this->getSessao();
+
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+        $sessao = self::getSessao();
+        $idCampanha = $sessao->idSessao;
+        if (empty($idCampanha)) {
+            return $this->redirect()->toRoute(self::rotaAdm, array(
+                        self::stringAction => self::stringCampanhas,
+            ));
+        }
+        unset($sessao->idSessao);
+
+        $campanha = $repositorioORM->getCampanhaORM()->encontrarPorId($idCampanha);
+
+        $myfile = fopen("public/assets/campanha_" . $campanha->getId() . ".txt", "w");
+
+        $lista = $campanha->getCampanhaLista()[0]->getLista();
+        foreach ($lista->getContato() as $contato) {
+            if ($contato->getNumero() > 0) {
+                fwrite($myfile, $contato->getNumero() . "\n");
+            }
+        }
+        fclose($myfile);
+
+
+        return new ViewModel(
+                array(
+            self::stringCampanha => $campanha,
+        ));
+    }
+
+    /**
      * Tela com listagem de campanha
      * GET /admCampanha
      */

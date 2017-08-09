@@ -134,6 +134,15 @@ class Menu extends AbstractHelper {
             $html .= '</li>';
         }
 
+        if ($this->view->responsavel->getId() === KleoController::idResponsavelAdmin) {
+            $html .= '<li>';
+            $html .= '<a href="/admBots">';
+            $html .= '<span class="fa fa-users"></span>';
+            $html .= '<span class="sidebar-title">Bots</span>';
+            $html .= '</a>';
+            $html .= '</li>';
+        }
+
         $html .= '</ul>';
         // End: Sidebar Menu
         // Start: Sidebar Collapse Button
