@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS `bot` (
+  `id` int(6) unsigned NOT NULL UNSIGNED AUTO_INCREMENT,
+  `responsavel_id` int(6) unsigned NOT NULL,
+  `mensagem` text COLLATE utf8_unicode_ci NOT NULL,
+  `data_criacao` date NOT NULL,
+  `hora_criacao` time NOT NULL,
+  `data_inativacao` date DEFAULT NULL,
+  `hora_inativacao` time DEFAULT NULL
+  PRIMARY KEY (`id`),
+  KEY `index_bot_responsavel_id` (`responsavel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `bot`
+ADD CONSTRAINT `fk_bot_responsavel_id` FOREIGN KEY (`responsavel_id`) REFERENCES `responsavel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

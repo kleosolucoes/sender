@@ -1,9 +1,8 @@
-<img src="img/site/banner_compre_2.jpg"  class="img-responsive" onclick="location.href = '/admCredito';"/>
 <?php
 
 use Application\Controller\KleoController;
 
-echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admlista", 0);')));
+echo $this->cabecalhoPagina('Lista de Bots', $this->botao('Cadastrar', $this->funcaoOnClick('kleo("admbot", 0);')));
 ?>  
 <div class="content transition animate-panel fadeIn">
     <div class="row">
@@ -25,35 +24,31 @@ echo $this->cabecalhoPagina('Lista de Contatos', $this->botao('Cadastrar', $this
                                     echo '<th>Responsavel</th>';
                                 }
                                 ?>
-                                <th>Lista</th>
-                                <th>Descri&ccedil;&atilde;o</th>
-                                <th>Contatos</th>
-                                <th>Zap</th>
+                                <th>Bot</th>
+                                <th>Opções</th>
                                 <td></td>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            if ($this->listas) {
-                                foreach ($this->listas as $lista) {
+                            if ($this->bots) {
+                                foreach ($this->bots as $bot) {
                                     echo '<tr>';
-                                    echo '<td>' . $lista->getId() . '</td>';
+                                    echo '<td>' . $bot->getId() . '</td>';
                                     if ($this->idResponsavel == KleoController::idResponsavelAdmin) {
-                                        echo '<td>' . $lista->getResponsavel()->getNomeEmpresa() . '</td>';
-                                        echo '<td>' . $lista->getResponsavel()->getNome() . '</td>';
+                                        echo '<td>' . $bot->getResponsavel()->getNomeEmpresa() . '</td>';
+                                        echo '<td>' . $bot->getResponsavel()->getNome() . '</td>';
                                     }
-                                    echo '<td>' . $lista->getNome() . '</td>';
-                                    echo '<td>' . $lista->getDescricao() . '</td>';
-                                    echo '<td>' . count($lista->getContatoAtivos()) . '</td>';
-                                    echo '<td>--/--</td>';
+                                    echo '<td>' . $bot->getMensagem() . '</td>';
+                                    echo '<td>' . count($bot->getBotOpcao()) . '</td>';
                                     echo '<td>';
-                                    echo $this->botao('Excluir', $this->funcaoOnClick('validarExclusao("admlistaexcluir", ' . $lista->getId() . ')'), 2);
+                                    echo $this->botao('Excluir', $this->funcaoOnClick('validarExclusao("admbotexcluir", ' . $bot->getId() . ')'), 2);
                                     echo '</td>';
                                     echo '</tr>';
                                 }
                             } else {
                                 echo '<tr>';
-                                echo '<td colspan="7" class="text-center">' . 'Sem listas cadastradas!' . '</td>';
+                                echo '<td colspan="5" class="text-center">' . 'Sem bots cadastrados!' . '</td>';
                                 echo '</tr>';
                             }
                             ?>                                

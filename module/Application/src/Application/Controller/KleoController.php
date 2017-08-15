@@ -33,6 +33,8 @@ class KleoController extends AbstractActionController {
     const stringLogin = 'login';
     const stringResponsavel = 'responsavel';
     const stringResponsaveis = 'responsaveis';
+    const stringBot = 'bot';
+    const stringBots = 'bots';
     const stringLista = 'lista';
     const stringListas = 'listas';
     const stringCampanha = 'campanha';

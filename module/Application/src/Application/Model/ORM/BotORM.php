@@ -7,16 +7,16 @@ use Application\Model\Entity\Campanha;
 use Exception;
 
 /**
- * Nome: CampanhaORM.php
+ * Nome: BotORM.php
  * @author Leonardo Pereira Magalhães <falecomleonardopereira@gmail.com>
  * Descricao: Classe com acesso doctrine
  */
-class CampanhaORM extends KleoORM {
+class BotORM extends KleoORM {
 
     /**
-     * Localizar responsavel por token
-     * @param String $token
-     * @return Campanha[]
+     * Localizar por $idResponsavel
+     * @param String $idResponsavel
+     * @return Bot[]
      * @throws Exception
      */
     public function encontrarPorIdResponsavel($idResponsavel) {
@@ -30,27 +30,16 @@ class CampanhaORM extends KleoORM {
             echo $exc->getMessage();
         }
     }
-    
+  
+  
     public function encontrarPorIdResponsavelEAtivos($idResponsavel) {
-      $campanhasAtivas = null;
-      $todasAsCampanhasPorId = $this->encontrarPorIdResponsavel($idResponsavel);
-      foreach($todasAsCampanhasPorId as $campanha){
-        if($campanha->verificarSeEstaAtivo()){
-          $campanhasAtivas[] = $campanha;
+      $botsAtivos = null;
+      $todasOsBotsPorId = $this->encontrarPorIdResponsavel($idResponsavel);
+      foreach($todasOsBotsPorId as $bot){
+        if($bot->verificarSeEstaAtivo()){
+          $botsAtivos[] = $bot;
         }
       }      
-      return $campanhasAtivas;      
+      return $botsAtivos;      
     }
-    
-     public function encontrarTodosAtivos() {
-      $campanhasAtivas = null;
-      $todasAsCampanhasPorId = $this->encontrarTodosOrdenadosPorUltimo();
-      foreach($todasAsCampanhasPorId as $campanha){
-        if($campanha->verificarSeEstaAtivo()){
-          $campanhasAtivas[] = $campanha;
-        }
-      }      
-      return $campanhasAtivas;      
-    }
-
 }

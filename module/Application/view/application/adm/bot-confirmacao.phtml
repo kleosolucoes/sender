@@ -1,0 +1,29 @@
+<!-- MAIN CONTENT SECTION -->
+<section class="mainContent clearfix signUp">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Confirmação Novo Bot</h3>
+                    </div>
+                    <div class="panel-body">              
+                        <?php
+                        echo 'Mensagem: <pre>' . $this->bot->getMensagem() . '</pre>';
+                        $contagem = 1;
+                        foreach ($this->bot->getBotOpcao() as $botOpcao) {
+                            echo '<br /><br />Opcao ' . $contagem;
+                            echo '<br /><br />Titulo: <pre>' . $botOpcao->getTitulo() . '</pre>';
+                            echo '<br />Resposta: <pre>' . $botOpcao->getResposta() . '</pre>';
+                            $contagem++;
+                        }
+                        echo '<div>';
+                        echo $this->botao('Confirmar', $this->funcaoOnClick('kleo("admbotAtivacao", ' . $this->bot->getId() . ')'));
+                        echo '</div>';
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,4 +1,4 @@
-<!-- <img src="../../../../../public/img/banner-teste.jpg" class="img-responsive" style="width:100%; height: 200px;"> -->
+<img src="img/site/banner_compre_2.jpg"  class="img-responsive" onclick="location.href='/admCredito';"/>
 <?php
 
 use Application\Model\Entity\Situacao;
@@ -51,10 +51,12 @@ echo $this->cabecalhoPagina('Listagem de Campanhas', $this->botao('Cadastrar', $
                                     echo '<td>' . $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getNome();
                                     if ($this->idResponsavel == KleoController::idResponsavelAdmin &&
                                             ($campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::agendada ||
-                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::emExecucao)
+                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::emExecucao ||
+                                            $campanha->getCampanhaSituacaoAtivo()->getSituacao()->getId() === Situacao::aprovada)
                                     ) {
                                         echo $this->botao('Alterar', $this->funcaoOnClick('kleo("admCampanhaSituacao", ' . $campanha->getId() . ')'));
                                     }
+                                       echo $this->botao('Ver', $this->funcaoOnClick('kleo("admCampanhaVer", ' . $campanha->getId() . ')'));
                                     echo '</td>';
                                     echo '<td>--/--</td>';
                                     echo '<td></td>';  // '<td><button style="margin-left:10px; padding: 10px;" type="button" class="btn btn-default pull-right ml10">Relatórios</button></td>';

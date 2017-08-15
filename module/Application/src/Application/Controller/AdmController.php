@@ -2,26 +2,27 @@
 
 namespace Application\Controller;
 
-use Doctrine\ORM\EntityManager;
-use Zend\View\Model\ViewModel;
-use Application\Model\Entity\Responsavel;
-use Application\Model\Entity\ResponsavelSituacao;
-use Application\Model\Entity\Campanha;
-use Application\Model\Entity\Lista;
-use Application\Model\Entity\CampanhaSituacao;
-use Application\Model\Entity\Situacao;
-use Application\Model\Entity\Contato;
-use Application\Model\Entity\CampanhaLista;
-use Application\Model\Entity\ContaCorrente;
-use Application\Model\ORM\RepositorioORM;
-use Application\Form\CadastroResponsavelForm;
-use Application\Form\ResponsavelSituacaoForm;
-use Application\Form\CampanhaSituacaoForm;
-use Application\Form\ResponsavelSenhaAtualizacaoForm;
+use Application\Form\CadastroBotForm;
 use Application\Form\CadastroCampanhaForm;
 use Application\Form\CadastroListaForm;
-use Application\Form\TransferenciaForm;
+use Application\Form\CampanhaSituacaoForm;
 use Application\Form\KleoForm;
+use Application\Form\ResponsavelSituacaoForm;
+use Application\Form\TransferenciaForm;
+use Application\Model\Entity\Bot;
+use Application\Model\Entity\BotOpcao;
+use Application\Model\Entity\Campanha;
+use Application\Model\Entity\CampanhaLista;
+use Application\Model\Entity\CampanhaSituacao;
+use Application\Model\Entity\ContaCorrente;
+use Application\Model\Entity\Contato;
+use Application\Model\Entity\Lista;
+use Application\Model\Entity\ResponsavelSituacao;
+use Application\Model\Entity\Situacao;
+use Application\Model\ORM\RepositorioORM;
+use Doctrine\ORM\EntityManager;
+use Exception;
+use Zend\View\Model\ViewModel;
 
 /**
  * Nome: AdmController.php
@@ -52,7 +53,7 @@ class AdmController extends KleoController {
     public function responsaveisAction() {
 
         $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
-        $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodos();
+        $responsaveis = $repositorioORM->getResponsavelORM()->encontrarTodosOrdenadosPorUltimoEAtivos();
         return new ViewModel(
                 array(
             self::stringResponsaveis => $responsaveis,
@@ -187,7 +188,7 @@ class AdmController extends KleoController {
             $campanhas = $repositorioORM->getCampanhaORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);
         }
         if ($sessao->idResponsavel == self::idResponsavelAdmin) {
-            $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodosAtivos();
+            $campanhas = $repositorioORM->getCampanhaORM()->encontrarTodosOrdenadosPorUltimoEAtivos();
         }
 
         return new ViewModel(
@@ -196,6 +197,43 @@ class AdmController extends KleoController {
             'idResponsavel' => $sessao->idResponsavel,
                 )
         );
+    }
+
+    /**
+     * Formulario para ver responsavel
+     * GET /admCampanhaVer
+     */
+    public function campanhaVerAction() {
+
+        $this->getSessao();
+
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+        $sessao = self::getSessao();
+        $idCampanha = $sessao->idSessao;
+        if (empty($idCampanha)) {
+            return $this->redirect()->toRoute(self::rotaAdm, array(
+                        self::stringAction => self::stringCampanhas,
+            ));
+        }
+        unset($sessao->idSessao);
+
+        $campanha = $repositorioORM->getCampanhaORM()->encontrarPorId($idCampanha);
+
+        $myfile = fopen("public/assets/campanha_" . $campanha->getId() . ".txt", "w");
+
+        $lista = $campanha->getCampanhaLista()[0]->getLista();
+        foreach ($lista->getContato() as $contato) {
+            if ($contato->getNumero() > 0) {
+                fwrite($myfile, $contato->getNumero() . "\n");
+            }
+        }
+        fclose($myfile);
+
+
+        return new ViewModel(
+                array(
+            self::stringCampanha => $campanha,
+        ));
     }
 
     /**
@@ -441,7 +479,7 @@ class AdmController extends KleoController {
         }
 
         if ($sessao->idResponsavel == self::idResponsavelAdmin) {
-            $listas = $repositorioORM->getListaORM()->encontrarTodos();
+            $listas = $repositorioORM->getListaORM()->encontrarTodosOrdenadosPorUltimoEAtivos();
         }
 
         return new ViewModel(
@@ -475,6 +513,7 @@ class AdmController extends KleoController {
      */
     public function listaFinalizarAction() {
         $sessao = $this->getSessao();
+        set_time_limit(0);
         $request = $this->getRequest();
         if ($request->isPost()) {
             $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
@@ -591,7 +630,7 @@ class AdmController extends KleoController {
      */
     public function listaConfirmacaoAction() {
         $sessao = $this->getSessao();
-
+        set_time_limit(0);
         $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
 
         $idLista = (int) $sessao->idSessao;
@@ -866,6 +905,177 @@ class AdmController extends KleoController {
         self::enviarEmail($emails, $titulo, $mensagem);
 
         return new ViewModel();
+    }
+
+    /**
+     * Tela com listagem de bots
+     * GET /admbots
+     */
+    public function botsAction() {
+        $sessao = $this->getSessao();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+
+        if ($sessao->idResponsavel != self::idResponsavelAdmin) {
+            $bots = $repositorioORM->getBotORM()->encontrarPorIdResponsavelEAtivos($sessao->idResponsavel);
+        }
+
+        if ($sessao->idResponsavel == self::idResponsavelAdmin) {
+            $bots = $repositorioORM->getBotORM()->encontrarTodosOrdenadosPorUltimoEAtivos();
+        }
+
+        return new ViewModel(
+                array(
+            self::stringBots => $bots,
+            'idResponsavel' => $sessao->idResponsavel,
+                )
+        );
+    }
+
+    /**
+     * Tela com listagem de campanha
+     * GET /admbot
+     */
+    public function botAction() {
+        $formulario = $this->params()->fromRoute(self::stringFormulario);
+
+        if ($formulario) {
+            $cadastroBotForm = $formulario;
+        } else {
+            $cadastroBotForm = new CadastroBotForm('cadastroBot');
+        }
+        return new ViewModel(
+                array(self::stringFormulario => $cadastroBotForm,)
+        );
+    }
+
+    /**
+     * Função para validar e finalizar cadastro
+     * GET /admbotFinalizar
+     */
+    public function botFinalizarAction() {
+        $sessao = $this->getSessao();
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+            try {
+                $repositorioORM->iniciarTransacao();
+
+                $bot = new Bot();
+
+                $cadastrarBotForm = new CadastroBotForm(null);
+                $cadastrarBotForm->setInputFilter($bot->getInputFilterCadastrarBot());
+
+                $post_data = $request->getPost();
+                $cadastrarBotForm->setData($post_data);
+
+                /* validação */
+                if ($cadastrarBotForm->isValid()) {
+                    $validatedData = $cadastrarBotForm->getData();
+
+                    $bot->exchangeArray($validatedData);
+
+                    $responsavel = $repositorioORM->getResponsavelORM()->encontrarPorId($sessao->idResponsavel);
+                    $bot->setResponsavel($responsavel);
+                    $bot->setDataEHoraDeInativacao();
+                    $repositorioORM->getBotORM()->persistir($bot);
+
+                    for ($indice = 1; $indice <= 3; $indice++) {
+                        $botOpcao = new BotOpcao();
+                        $botOpcao->setBot($bot);
+                        $botOpcao->setTitulo($post_data[KleoForm::inputTitulo . $indice]);
+                        $botOpcao->setResposta($post_data[KleoForm::inputResposta . $indice]);
+                        $repositorioORM->getBotOpcaoORM()->persistir($botOpcao);
+                    }
+
+                    $repositorioORM->fecharTransacao();
+
+                    $sessao->idSessao = $bot->getId();
+                    return $this->redirect()->toRoute(self::rotaAdm, array(
+                                self::stringAction => 'botConfirmacao',
+                    ));
+                } else {
+                    $repositorioORM->desfazerTransacao();
+                    return $this->forward()->dispatch(self::controllerAdm, array(
+                                self::stringAction => self::stringBot,
+                                self::stringFormulario => $cadastrarBotForm,
+                    ));
+                }
+            } catch (Exception $exc) {
+                $repositorioORM->desfazerTransacao();
+                echo $exc->getMessage();
+            }
+        }
+        return new ViewModel();
+    }
+
+    /**
+     * Tela para confirmacao da bot
+     * GET /admbotConfirmacao
+     */
+    public function botConfirmacaoAction() {
+        $sessao = $this->getSessao();
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+
+        $id = (int) $sessao->idSessao;
+        $bot = $repositorioORM->getBotORM()->encontrarPorId($id);
+
+        return new ViewModel(array(self::stringBot => $bot,));
+    }
+
+    /**
+     * Tela para confirmacao do bot
+     * GET /admbotAtivacao
+     */
+    public function botAtivacaoAction() {
+        $sessao = $this->getSessao();
+
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+        try {
+            $repositorioORM->iniciarTransacao();
+
+            $id = (int) $sessao->idSessao;
+            unset($sessao->idSessao);
+            $bot = $repositorioORM->getBotORM()->encontrarPorId($id);
+            $bot->setData_inativacao(null);
+            $bot->setHora_inativacao(null);
+
+            $repositorioORM->getBotORM()->persistir($bot, false);
+
+            $repositorioORM->fecharTransacao();
+            return $this->redirect()->toRoute(self::rotaAdm, array(
+                        self::stringAction => self::stringBots,
+            ));
+        } catch (Exception $exc) {
+            $repositorioORM->desfazerTransacao();
+            echo $exc->getMessage();
+        }
+    }
+
+    /**
+     * Função para excluir bot
+     * GET /admbotExcluir
+     */
+    public function botExcluirAction() {
+        $sessao = $this->getSessao();
+
+        $repositorioORM = new RepositorioORM($this->getDoctrineORMEntityManager());
+        try {
+            $repositorioORM->iniciarTransacao();
+
+            $id = (int) $sessao->idSessao;
+            $botParaExcluir = $repositorioORM->getBotORM()->encontrarPorId($id);
+            $botParaExcluir->setDataEHoraDeInativacao();
+
+            $repositorioORM->getBotORM()->persistir($botParaExcluir, false);
+
+            $repositorioORM->fecharTransacao();
+            return $this->redirect()->toRoute(self::rotaAdm, array(
+                        self::stringAction => self::stringBots,
+            ));
+        } catch (Exception $exc) {
+            $repositorioORM->desfazerTransacao();
+            echo $exc->getMessage();
+        }
     }
 
     /**

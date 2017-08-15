@@ -21,6 +21,7 @@ class Situacao extends KleoEntity {
     const agendada = 4;
     const emExecucao = 5;
     const enviada = 6;
+    const aprovada = 7; 
 
     /**
      * @ORM\OneToMany(targetEntity="ResponsavelSituacao", mappedBy="responsavelSituacao") 
