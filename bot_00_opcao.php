@@ -20,7 +20,9 @@ if (!$link) {
 echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
 echo "Host information: " . mysqli_get_host_info($link) . PHP_EOL;
 
-$sqlBot = "SELECT * FROM bot WHERE id = 1;";
+$sqlBot = "SELECT mensagem FROM bot WHERE id = 1;";
+$result = mysqli_query($link, $sqlBot);
+$mensagem[0][0] = $result[0]['mensagem'];
 
 mysqli_close($link);
 
