@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS `bot` (
   `data_criacao` date NOT NULL,
   `hora_criacao` time NOT NULL,
   `data_inativacao` date DEFAULT NULL,
-  `hora_inativacao` time DEFAULT NULL
+  `hora_inativacao` time DEFAULT NULL,
+  `data_alteracao` date DEFAULT NULL,
+  `hora_alteracao` time DEFAULT NULL
   PRIMARY KEY (`id`),
   KEY `index_bot_responsavel_id` (`responsavel_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

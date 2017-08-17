@@ -45,6 +45,12 @@ class Bot extends KleoEntity implements InputFilterAwareInterface {
     /** @ORM\Column(type="integer") */
     protected $responsavel_id;
 
+    /** @ORM\Column(type="datetime", name="data_alteracao") */
+    protected $data_alteracao;
+
+    /** @ORM\Column(type="string") */
+    protected $hora_alteracao;
+
     function getResponsavel() {
         return $this->responsavel;
     }
@@ -75,6 +81,22 @@ class Bot extends KleoEntity implements InputFilterAwareInterface {
 
     function setBotOpcao($botOpcao) {
         $this->botOpcao = $botOpcao;
+    }
+
+    function getData_alteracao() {
+        return $this->data_alteracao;
+    }
+
+    function getHora_alteracao() {
+        return $this->hora_alteracao;
+    }
+
+    function setData_alteracao($data_alteracao) {
+        $this->data_alteracao = $data_alteracao;
+    }
+
+    function setHora_alteracao($hora_alteracao) {
+        $this->hora_alteracao = $hora_alteracao;
     }
 
     public function exchangeArray($data) {
