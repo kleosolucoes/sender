@@ -70,7 +70,7 @@ function validarSeEArquivoCSV(input) {
 function carregarFoto(input, qualFoto) {
     var file = input.files[0];
     var imagefile = file.type;
-    var match = ["image/jpeg", "image/png", "image/jpg", "video/mp4"];
+    var match = ["image/jpeg", "image/png", "image/jpg", "video/mp4", "application/pdf"];
     var tipoPreviewer = '';
     var maxFotoPerfil = 220 * 220 * 2;
     var maxUploadFoto = 450 * 600 * 2;
@@ -99,13 +99,13 @@ function carregarFoto(input, qualFoto) {
         tamanhoHeight = tamanhoHeighUploadFoto;
     }
 
-    if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
+    if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]) || (imagefile == match[4]))) {
         input.value = null;
         alert('Tipo invalido');
         return false;
     } else {
 
-        if ((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2])) {
+        if ((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3])) {
             if (input.files && input.files[0].size > validacaoTamanho) {
                 alert("Arquivo muito grande"); // Do your thing to handle the error.
                 input.value = null; // Clear the field.	
