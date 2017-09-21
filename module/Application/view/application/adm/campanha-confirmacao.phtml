@@ -61,7 +61,12 @@
                                 <?php
                             }
 
-                            if ($this->campanha->getUpload() != 'Array') {
+                            $validarNaoEhPDF = false;
+                            $explodeUpload = explode('.', $this->campanha->getUpload());
+                            if($explodeUpload[1] == 'pdf'){
+                              $validarNaoEhPDF = true;
+                            }                   
+                            if ($this->campanha->getUpload() != 'Array' && !$validarNaoEhPDF) {
                                 echo '<br />';
                                 ?>
 
