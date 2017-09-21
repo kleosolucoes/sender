@@ -153,7 +153,7 @@ class KleoController extends AbstractActionController {
                     $entidade->setFoto_perfil($filename);
                 }
                 if ($file === KleoForm::inputUpload && $entidade instanceof Campanha) {
-                    if ($extension != 'jpeg' && $extension != 'jpg' && $extension != 'mp4') {
+                    if ($extension != 'jpeg' && $extension != 'jpg' && $extension != 'mp4' && $extension != 'pdf') {
                         return false;
                     }
                     $filename = $entidade->getId() . '_upload.' . $extension;

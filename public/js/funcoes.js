@@ -128,12 +128,15 @@ function carregarFoto(input, qualFoto) {
 }
 
 function mostrarEsconderUpload(tipo) {
-    if (tipo === 1 || tipo === 2) {
+    if (tipo === 1 || tipo === 2 || tipo === 3) {
         if (tipo === 1) {
             $('#labelinputUpload').text('Imagem -  .jpg até 450 x 600  , Peso máx: 200kb');
         }
         if (tipo === 2) {
             $('#labelinputUpload').text('Vídeo: .mp4 - Peso máx. até 1.5 Mb');
+        }
+        if (tipo === 3) {
+            $('#labelinputUpload').text('PDF: .pdf - Peso máx. até 1.5 Mb');
         }
 
         $('#divUpload').removeClass('hidden');
