@@ -123,7 +123,7 @@
                     </span>
                     <?php
                     $stringDownload = 'https://www.zapmarketing.com.br/assets/campanha_' . $this->campanha->getId() . '.txt';
-                    echo $this->botao('Download', $this->funcaoOnClick('window.open(' . $stringDownload . ')'));
+                    echo $this->botao('Download', $this->funcaoOnClick('window.open("' . $stringDownload . '")'));
                     ?>
                   </div>
                 </div>
