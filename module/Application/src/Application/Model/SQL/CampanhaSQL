@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS `campanha` (
   `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(60) NOT NULL,
+  `nome` varchar(100) NOT NULL,
   `data_envio` date NOT NULL,
   `foto_perfil` varchar(60) DEFAULT NULL,
   `upload` varchar(60) NOT NULL,
-  `mensagem` varchar(300) DEFAULT NULL,
+  `mensagem` varchar(600) DEFAULT NULL,
   `responsavel_id` int(6) unsigned NOT NULL,
   `data_criacao` date NOT NULL,
   `hora_criacao` time NOT NULL,

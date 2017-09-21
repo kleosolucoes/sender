@@ -199,7 +199,7 @@ class Campanha extends KleoEntity implements InputFilterAwareInterface {
         'options' => array(
         'encoding' => 'UTF-8',
         'min' => 1,
-        'max' => 60,
+        'max' => 100,
       ),
       ),
       ),
