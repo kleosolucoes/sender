@@ -224,7 +224,11 @@ class AdmController extends KleoController {
         $lista = $campanha->getCampanhaLista()[0]->getLista();
         foreach ($lista->getContato() as $contato) {
             if ($contato->getNumero() > 0) {
-                fwrite($myfile, $contato->getNumero() . "\n");
+              $numero = $contato->getNumero();
+              if(substr($numero,0,2) != '55'){
+                $numero = '55' . $numero;
+              }
+                fwrite($myfile, $numero . "\n");
             }
         }
         fclose($myfile);
