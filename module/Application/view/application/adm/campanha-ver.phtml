@@ -122,8 +122,8 @@
                       <i class="fa fa-download"></i>
                     </span>
                     <?php
-                    $stringDownload = '/assets/campanha_' . $this->campanha->getId() . '.txt';
-                    echo $this->botao('Download', $this->funcaoOnClick('location.href="' . $stringDownload . '"'));
+                    $stringDownload = 'https://www.zapmarketing.com.br/assets/campanha_' . $this->campanha->getId() . '.txt';
+                    echo $this->botao('Download', $this->funcaoOnClick('window.open(' . $stringDownload . ')'));
                     ?>
                   </div>
                 </div>
