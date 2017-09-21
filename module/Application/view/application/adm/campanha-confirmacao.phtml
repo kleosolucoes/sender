@@ -1,168 +1,169 @@
 <!-- MAIN CONTENT SECTION -->
 <!-- MAIN CONTENT SECTION -->
 <section class="mainContent clearfix signUp">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-                <div class="admin-form theme-success mw1000 center-block" style="padding-bottom: 175px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+        <div class="admin-form theme-success mw1000 center-block" style="padding-bottom: 175px;">
 
-                    <div class="panel heading-border panel-success">  
+          <div class="panel heading-border panel-success">  
 
-                        <div class="panel-body bg-light">
+            <div class="panel-body bg-light">
 
-                            <div class="section-divider mt20 mb40">
-                                <span>Confirmação Nova Campanha</span>
-                            </div>            
-                            <div class="form-group" style="padding-bottom: 40px;">
-                                <label for="nome" class="col-lg-2 control-label">Nome:</label>
-                                <div class="col-lg-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon" style="color: #70ca63 !important;">
-                                            <i class="fa fa-paper-plane"></i>
-                                        </span>
-                                        <input type="text" id="nome" class="form-control date" maxlength="10" value=" <?php echo $this->campanha->getNome() ?>"  disabled style="cursor:default;">
-                                    </div>
-                                </div>
-                            </div>    
-
-                            <div class="form-group" style="padding-bottom: 40px;">
-                                <label for="nome" class="col-lg-2 control-label">Data de Envio:</label>
-                                <div class="col-lg-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon" style="color: #70ca63 !important;">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                        <input type="text"  class="form-control date" maxlength="10" value="<?php echo $this->campanha->getData_envio()->format('d/m/Y') ?>" disabled style="cursor:default;">
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                            if ($this->campanha->getFoto_perfil() != 'Array') {
-                                echo '<br />';
-                                echo '<br />';
-                                ?>
-
-                                <div class="panel" id="spy2">
-                                    <div class="panel-heading" style="text-align: center; padding: 0; color: #70ca63;">
-                                        <span class="panel-icon">
-                                            <i class="fa fa-picture-o"></i>
-                                        </span>
-                                        <span>Foto de Perfil Preview</span>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-preview thumbnail mb20" style="cursor:default;">
-                                                <img src="assets/<?php echo $this->campanha->getFoto_perfil(); ?>" />
-                                            </div>                                           
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <?php
-                            }
-
-                            $validarNaoEhPDF = false;
-                            $explodeUpload = explode('.', $this->campanha->getUpload());
-                            if($explodeUpload[1] == 'pdf'){
-                              $validarNaoEhPDF = true;
-                            }                   
-                            if ($this->campanha->getUpload() != 'Array' && !$validarNaoEhPDF) {
-                                echo '<br />';
-                                ?>
-
-                                <div class="panel" id="spy2">
-                                    <div class="panel-heading" style="text-align: center; padding: 0; color: #70ca63;">
-                                        <span class="panel-icon">
-                                            <i class="fa fa-picture-o"></i>
-                                        </span>
-                                        <span>Upload Preview</span>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-preview thumbnail mb20" style="cursor:default;">
-                                                <img src="assets/<?php echo $this->campanha->getUpload(); ?>" />
-                                            </div>                                           
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php
-                            }
-
-                            if ($this->campanha->getMensagem() != '') {
-                                ?>
-                                <div class="form-group" style="padding-bottom: 40px;">
-                                    <label for="nome" class="col-lg-2 control-label">Mensagem:</label>
-                                    <div class="col-lg-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" style="color: #70ca63 !important;">
-                                                <i class="fa fa-envelope"></i>
-                                            </span>
-                                            <input  class="form-control date" maxlength="10" value="<?php echo $this->campanha->getMensagem(); ?>" disabled style="cursor:default;">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                            <div class="form-group" style="padding-bottom: 40px;">
-                                <label for="nome" class="col-lg-2 control-label">Contatos:</label>
-                                <div class="col-lg-9">
-                                    <div class="input-group">
-                                        <span class="input-group-addon" style="color: #70ca63 !important;">
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                        <input type="text"  class="form-control date" maxlength="10" value="<?php
-                                        $quantidadeContatosAtivos = count($this->campanha->getCampanhaListaAtivo()->getLista()->getContatoAtivos());
-                                        echo $quantidadeContatosAtivos;
-                                        ?>" disabled style="cursor:default;">
-                                    </div>
-                                </div>
-                            </div>                            
-
-                            <?php
-                            $saldo = (int) $this->campanha->getResponsavel()->getSaldo();
-                            $diferenca = $saldo - $quantidadeContatosAtivos;
-
-                            if ($diferenca >= 0) {
-                                ?>
-
-                                <div class="form-group" style="padding-bottom: 40px;">
-                                    <label for="nome" class="col-lg-2 control-label">Saldo:</label>
-                                    <div class="col-lg-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" style="color: #70ca63 !important;">
-                                                <i class="fa fa-money"></i>
-                                            </span>
-                                            <input type="text"  class="form-control date" maxlength="10" value="<?php echo "Suficiente"; ?>" disabled style="cursor:default;">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <?php
-                                echo '<div>';
-                                echo $this->botao('Confirmar', $this->funcaoOnClick('kleo("admcampanhaAtivacao", ' . $this->campanha->getId() . ')'));
-                                echo '</div>';
-                            }
-                            if ($diferenca < 0) {
-                                ?>
-
-                                <div class="form-group" style="padding-bottom: 40px;">
-                                    <label for="nome" class="col-lg-2 control-label">Saldo:</label>
-                                    <div class="col-lg-9">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" style="color: #70ca63 !important;">
-                                                <i class="fa fa-money"></i>
-                                            </span>
-                                            <input type="text"  class="form-control date" maxlength="10" value="<?php echo "Insuficiente - Compre Créditos"; ?>" disabled style="cursor:default;">
-                                        </div>
-                                    </div>
-                                </div>                           
-
-                            <?php } ?>
-
-                        </div>
-                    </div>
+              <div class="section-divider mt20 mb40">
+                <span>Confirmação Nova Campanha</span>
+              </div>            
+              <div class="form-group" style="padding-bottom: 40px;">
+                <label for="nome" class="col-lg-2 control-label">Nome:</label>
+                <div class="col-lg-9">
+                  <div class="input-group">
+                    <span class="input-group-addon" style="color: #70ca63 !important;">
+                      <i class="fa fa-paper-plane"></i>
+                    </span>
+                    <input type="text" id="nome" class="form-control date" maxlength="10" value=" <?php echo $this->campanha->getNome() ?>"  disabled style="cursor:default;">
+                  </div>
                 </div>
+              </div>    
+
+              <div class="form-group" style="padding-bottom: 40px;">
+                <label for="nome" class="col-lg-2 control-label">Data de Envio:</label>
+                <div class="col-lg-9">
+                  <div class="input-group">
+                    <span class="input-group-addon" style="color: #70ca63 !important;">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                    <input type="text"  class="form-control date" maxlength="10" value="<?php echo $this->campanha->getData_envio()->format('d/m/Y') ?>" disabled style="cursor:default;">
+                  </div>
+                </div>
+              </div>
+              <?php
+  if ($this->campanha->getFoto_perfil() != 'Array') {
+    echo '<br />';
+    echo '<br />';
+              ?>
+
+              <div class="panel" id="spy2">
+                <div class="panel-heading" style="text-align: center; padding: 0; color: #70ca63;">
+                  <span class="panel-icon">
+                    <i class="fa fa-picture-o"></i>
+                  </span>
+                  <span>Foto de Perfil Preview</span>
+                </div>
+                <div class="panel-body">
+                  <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="fileupload-preview thumbnail mb20" style="cursor:default;">
+                      <img src="assets/<?php echo $this->campanha->getFoto_perfil(); ?>" />
+                    </div>                                           
+                  </div>
+                </div>
+              </div>
+
+              <?php
+  }
+
+                           $validarNaoEhPDF = false;
+                           $explodeUpload = explode('.', $this->campanha->getUpload());
+                           if($explodeUpload[1] == 'pdf'){
+                             $validarNaoEhPDF = true;
+                           }                   
+                           if ($this->campanha->getUpload() != 'Array' && !$validarNaoEhPDF) {
+                             echo '<br />';
+              ?>
+
+              <div class="panel" id="spy2">
+                <div class="panel-heading" style="text-align: center; padding: 0; color: #70ca63;">
+                  <span class="panel-icon">
+                    <i class="fa fa-picture-o"></i>
+                  </span>
+                  <span>Upload Preview</span>
+                </div>
+                <div class="panel-body">
+                  <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="fileupload-preview thumbnail mb20" style="cursor:default;">
+                      <img src="assets/<?php echo $this->campanha->getUpload(); ?>" />
+                    </div>                                           
+                  </div>
+                </div>
+              </div>
+              <?php
+                           }                        
+
+                           if ($this->campanha->getMensagem() != '') {
+              ?>
+              <div class="form-group" style="padding-bottom: 40px;">
+                <label for="nome" class="col-lg-2 control-label">Mensagem:</label>
+                <div class="col-lg-9">
+                  <div class="input-group">
+                    <span class="input-group-addon" style="color: #70ca63 !important;">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+                    <textarea rows="15"  class="form-control date" disabled style="cursor:default;">
+                      <?php echo $this->campanha->getMensagem(); ?>
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+              <?php } ?>
+              <div class="form-group" style="padding-bottom: 40px;">
+                <label for="nome" class="col-lg-2 control-label">Contatos:</label>
+                <div class="col-lg-9">
+                  <div class="input-group">
+                    <span class="input-group-addon" style="color: #70ca63 !important;">
+                      <i class="fa fa-user"></i>
+                    </span>
+                    <input type="text"  class="form-control date" maxlength="10" value="<?php
+                                                                                        $quantidadeContatosAtivos = count($this->campanha->getCampanhaListaAtivo()->getLista()->getContatoAtivos());
+                                                                                        echo $quantidadeContatosAtivos;
+                                                                                        ?>" disabled style="cursor:default;">
+                  </div>
+                </div>
+              </div>                            
+
+              <?php
+              $saldo = (int) $this->campanha->getResponsavel()->getSaldo();
+              $diferenca = $saldo - $quantidadeContatosAtivos;
+
+              if ($diferenca >= 0) {
+              ?>
+
+              <div class="form-group" style="padding-bottom: 40px;">
+                <label for="nome" class="col-lg-2 control-label">Saldo:</label>
+                <div class="col-lg-9">
+                  <div class="input-group">
+                    <span class="input-group-addon" style="color: #70ca63 !important;">
+                      <i class="fa fa-money"></i>
+                    </span>
+                    <input type="text"  class="form-control date" maxlength="10" value="<?php echo "Suficiente"; ?>" disabled style="cursor:default;">
+                  </div>
+                </div>
+              </div>
+
+              <?php
+                echo '<div>';
+                echo $this->botao('Confirmar', $this->funcaoOnClick('kleo("admcampanhaAtivacao", ' . $this->campanha->getId() . ')'));
+                echo '</div>';
+              }
+              if ($diferenca < 0) {
+              ?>
+
+              <div class="form-group" style="padding-bottom: 40px;">
+                <label for="nome" class="col-lg-2 control-label">Saldo:</label>
+                <div class="col-lg-9">
+                  <div class="input-group">
+                    <span class="input-group-addon" style="color: #70ca63 !important;">
+                      <i class="fa fa-money"></i>
+                    </span>
+                    <input type="text"  class="form-control date" maxlength="10" value="<?php echo "Insuficiente - Compre Créditos"; ?>" disabled style="cursor:default;">
+                  </div>
+                </div>
+              </div>                           
+
+              <?php } ?>
+
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
